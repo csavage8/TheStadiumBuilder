@@ -41,7 +41,6 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Ambient Background Glow */
     .bg-glow {
       position: fixed;
       top: 0;
@@ -56,7 +55,6 @@
         radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
     }
 
-    /* Header & Nav */
     header {
       position: sticky;
       top: 0;
@@ -77,7 +75,7 @@
       text-decoration: none;
     }
 
-    /* EASY TO CHANGE LOGO STYLING */
+    /* EDIT YOUR LOGO IMAGE SOURCE HERE */
     .brand-logo-img {
       width: 45px;
       height: 45px;
@@ -137,7 +135,6 @@
       box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
     }
 
-    /* Hero Section */
     .hero {
       position: relative;
       z-index: 1;
@@ -172,11 +169,6 @@
       text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
     }
 
-    .hero h1 span.highlight-green {
-      color: var(--green-pitch);
-      text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-    }
-
     .hero p {
       font-size: 1.2rem;
       color: var(--text-muted);
@@ -206,7 +198,6 @@
       border-color: var(--purple-light);
     }
 
-    /* Section Global */
     section {
       position: relative;
       z-index: 1;
@@ -229,7 +220,6 @@
       color: var(--text-muted);
     }
 
-    /* Portfolio Section */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -258,7 +248,7 @@
       overflow: hidden;
     }
 
-    /* EASY TO ADD/CHANGE STADIUM IMAGES */
+    /* EDIT YOUR STADIUM PICTURE PATHS HERE */
     .stadium-img {
       width: 100%;
       height: 100%;
@@ -299,7 +289,6 @@
       margin-bottom: 1rem;
     }
 
-    /* Calculator Section */
     .calculator-box {
       background: var(--bg-card);
       border: 1px solid var(--border-glow);
@@ -345,13 +334,12 @@
     }
 
     .calc-price {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: var(--green-pitch);
       margin: 1rem 0;
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 3rem 2rem;
@@ -366,10 +354,8 @@
 
   <div class="bg-glow"></div>
 
-  <!-- Header Section -->
   <header>
     <a href="#" class="brand-logo-container">
-      <!-- REPLACE LOGO IMAGE HERE -->
       <img src="path/to/your-logo.png" alt="TSB Logo" class="brand-logo-img" onerror="this.src='https://via.placeholder.com/100/a855f7/ffffff?text=TSB'">
       <div class="brand-title">TSB <span>STADIUMS</span></div>
     </a>
@@ -377,7 +363,6 @@
       <ul>
         <li><a href="#portfolio">Showcase</a></li>
         <li><a href="#calculator">Price Estimator</a></li>
-        <li><a href="#how-to-order">How to Order</a></li>
       </ul>
     </nav>
     <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord">
@@ -385,146 +370,140 @@
     </a>
   </header>
 
-  <!-- Hero Section -->
   <div class="hero">
     <div class="hero-badge">
-      <i class="fa-solid fa-bolt"></i> Premier VRFS Stadium Builders
+      <i class="fa-solid fa-bolt"></i> Premier Custom VRFS Stadium Builders
     </div>
-    <h1>Custom <span class="highlight-purple">VRFS Stadiums</span> Built For Your League</h1>
-    <p>Bring your VR Football Simulator matches to life with custom pitch lighting, branded stands, custom logos, and VIP seating. Paid with USD or VRFS Credits.</p>
+    <h1>Build Your Custom <span class="highlight-purple">VRFS Stadium</span></h1>
+    <p>Get custom pitch layouts, grandstands, floodlights, and team branding. Pay with VRFS Credits, GBP (£), or USD ($).</p>
     <div class="hero-btns">
       <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord" style="padding: 0.9rem 2rem; font-size: 1.1rem;">
         <i class="fa-brands fa-discord"></i> Order on Discord
       </a>
-      <a href="#calculator" class="btn-secondary">Calculate Cost</a>
+      <a href="#calculator" class="btn-secondary">Check Pricing</a>
     </div>
   </div>
 
-  <!-- Stadium Showcase Section -->
   <section id="portfolio">
     <div class="section-title">
       <h2>Stadium Showcase</h2>
-      <p>Explore recent custom builds for VRFS teams and tournaments</p>
+      <p>Explore recent custom builds for VRFS teams and leagues</p>
     </div>
 
     <div class="portfolio-grid">
-      
-      <!-- STADIUM CARD 1 -->
       <div class="stadium-card">
         <div class="stadium-img-wrapper">
-          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
-          <img src="path/to/stadium-1.jpg" alt="The Apex Arena" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Stadium+Image+1'">
-          <span class="stadium-tag">Pro Tier</span>
+          <img src="path/to/stadium-1.jpg" alt="Small Stadium" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Small+Stadium'">
+          <span class="stadium-tag">12 Credits</span>
         </div>
         <div class="stadium-content">
-          <h3>The Apex Arena</h3>
-          <p>Full 360-degree tiered seating, intense corner floodlights, custom pitch logos, and league team banners.</p>
+          <h3>Small Stadium</h3>
+          <p>Compact setup with standard pitch layout, basic side stands, and essential floodlighting.</p>
         </div>
       </div>
 
-      <!-- STADIUM CARD 2 -->
       <div class="stadium-card">
         <div class="stadium-img-wrapper">
-          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
-          <img src="path/to/stadium-2.jpg" alt="Neon Floodlight Dome" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/22c55e?text=Stadium+Image+2'">
-          <span class="stadium-tag">Custom Lighting</span>
+          <img src="path/to/stadium-2.jpg" alt="Medium Stadium" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/22c55e?text=Medium+Stadium'">
+          <span class="stadium-tag">14 Credits</span>
         </div>
         <div class="stadium-content">
-          <h3>Neon Floodlight Dome</h3>
-          <p>Cyberpunk aesthetic with glowing purple and green roof accents, ideal for night league matches.</p>
+          <h3>Medium Stadium</h3>
+          <p>Expanded spectator capacity with multi-tier stands and custom team branding options.</p>
         </div>
       </div>
 
-      <!-- STADIUM CARD 3 -->
       <div class="stadium-card">
         <div class="stadium-img-wrapper">
-          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
-          <img src="path/to/stadium-3.jpg" alt="Community Park Stadium" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Stadium+Image+3'">
-          <span class="stadium-tag">Starter Tier</span>
+          <img src="path/to/stadium-3.jpg" alt="Large Stadium" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Large+Stadium'">
+          <span class="stadium-tag">16 Credits</span>
         </div>
         <div class="stadium-content">
-          <h3>Community Park Stadium</h3>
-          <p>Clean, performant design with essential bleachers, sponsor boards, and sharp pitch lining.</p>
+          <h3>Large Stadium</h3>
+          <p>Full 360-degree stadium atmosphere, grandstand seating, custom banners, and roof lighting.</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- Interactive Price Calculator -->
   <section id="calculator">
     <div class="section-title">
       <h2>Price Estimator</h2>
-      <p>Customize your build options to get an instant quote</p>
+      <p>Select stadium size and stand options to estimate cost in Credits or Cash</p>
     </div>
 
     <div class="calculator-box">
       <div class="calc-inputs">
         <div class="calc-option">
-          <label for="size">Stadium Tier / Size</label>
+          <label for="size">Stadium Size</label>
           <select id="size" onchange="calculatePrice()">
-            <option value="10">Basic Grounds (Small Stand & Lights)</option>
-            <option value="20" selected>Pro Stadium (Full Stands & Custom Colors)</option>
-            <option value="35">Elite Arena (360 Seating, Custom Roof & VIP)</option>
+            <option value="12">Small Stadium (12 Credits)</option>
+            <option value="14" selected>Medium Stadium (14 Credits)</option>
+            <option value="16">Large Stadium (16 Credits)</option>
           </select>
         </div>
 
         <div class="calc-option">
-          <label for="addons">Extras & Customization</label>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-weight: normal;"><input type="checkbox" id="logo" onchange="calculatePrice()" checked> Custom Team Logos & Banners (+$5)</label>
-            <label style="font-weight: normal;"><input type="checkbox" id="lights" onchange="calculatePrice()" checked> Custom Lighting Rigs (+$5)</label>
-            <label style="font-weight: normal;"><input type="checkbox" id="express" onchange="calculatePrice()"> Express Delivery (24 Hours) (+$10)</label>
-          </div>
+          <label for="stands">Stands & Extras</label>
+          <select id="stands" onchange="calculatePrice()">
+            <option value="0">Standard Stands (Included)</option>
+            <option value="2">Upgraded / Extra Stands (+2 Credits)</option>
+            <option value="4">Custom Custom Grandstands (+4 Credits)</option>
+          </select>
         </div>
 
         <div class="calc-option">
-          <label for="currency">Payment Method</label>
+          <label for="currency">Payment Currency</label>
           <select id="currency" onchange="calculatePrice()">
-            <option value="usd">Real Money ($ USD)</option>
             <option value="credits">VRFS Credits</option>
+            <option value="gbp">GBP (£)</option>
+            <option value="usd">USD ($)</option>
           </select>
         </div>
       </div>
 
       <div class="calc-summary">
         <div>
-          <h3>Estimated Cost</h3>
-          <div class="calc-price" id="total-price">$30 USD</div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">*Final pricing confirmed when opening a Discord commission ticket.</p>
+          <h3>Estimated Total</h3>
+          <div class="calc-price" id="total-price">14 VRFS Credits</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            *Rate: 1 Credit = 0.07p (£0.0007) or $0.09 USD. Final total confirmed in Discord ticket.
+          </p>
         </div>
         <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
-          Order This Build
+          Open Discord Ticket
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 TSB Stadiums. Built for the VRFS Community.</p>
+    <p>&copy; 2026 TSB Stadiums. Custom VRFS Builds.</p>
   </footer>
 
   <script>
     function calculatePrice() {
-      const sizeVal = parseInt(document.getElementById('size').value);
-      const hasLogo = document.getElementById('logo').checked ? 5 : 0;
-      const hasLights = document.getElementById('lights').checked ? 5 : 0;
-      const hasExpress = document.getElementById('express').checked ? 10 : 0;
+      const baseCredits = parseFloat(document.getElementById('size').value);
+      const standCredits = parseFloat(document.getElementById('stands').value);
       const currency = document.getElementById('currency').value;
 
-      let usdTotal = sizeVal + hasLogo + hasLights + hasExpress;
-
+      const totalCredits = baseCredits + standCredits;
       const priceDisplay = document.getElementById('total-price');
 
-      if (currency === 'usd') {
-        priceDisplay.innerText = `$${usdTotal} USD`;
-      } else {
-        // Convert USD rate to VRFS Credits rate (e.g. 100 Credits per $1)
-        const creditsTotal = usdTotal * 100;
-        priceDisplay.innerText = `${creditsTotal} Credits`;
+      if (currency === 'credits') {
+        priceDisplay.innerText = `${totalCredits} VRFS Credits`;
+      } else if (currency === 'gbp') {
+        // 1 Credit = 0.07p (£0.0007 GBP)
+        const totalGBP = totalCredits * 0.0007;
+        priceDisplay.innerText = `£${totalGBP.toFixed(2)} GBP`;
+      } else if (currency === 'usd') {
+        // 1 Credit = $0.09 USD
+        const totalUSD = totalCredits * 0.09;
+        priceDisplay.innerText = `$${totalUSD.toFixed(2)} USD`;
       }
     }
+
+    calculatePrice();
   </script>
 </body>
 </html>
