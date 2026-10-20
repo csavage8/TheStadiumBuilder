@@ -1,136 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TSB — The Stadium Builder</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSB Stadiums - Custom VRFS Stadium Building</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --purple-main: #a855f7;
+      --purple-glow: #9333ea;
+      --purple-light: #c084fc;
+      --green-pitch: #22c55e;
+      --green-glow: #16a34a;
+      --bg-dark: #08080a;
+      --bg-card: #121118;
+      --bg-card-hover: #1b1926;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glow: rgba(168, 85, 247, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Ambient Background Glow */
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
+    }
+
+    /* Header & Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(8, 8, 10, 0.85);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    /* EASY TO CHANGE LOGO STYLING */
+    .brand-logo-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--purple-main);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title span {
+      color: var(--purple-main);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--purple-light);
+      text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-discord {
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      color: white;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-discord:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid var(--purple-main);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      color: var(--purple-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span.highlight-purple {
+      color: var(--purple-main);
+      text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .hero h1 span.highlight-green {
+      color: var(--green-pitch);
+      text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--purple-light);
+    }
+
+    /* Section Global */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    /* Portfolio Section */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .stadium-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .stadium-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--purple-main);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    }
+
+    .stadium-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      background: #1a1a24;
+      overflow: hidden;
+    }
+
+    /* EASY TO ADD/CHANGE STADIUM IMAGES */
+    .stadium-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .stadium-card:hover .stadium-img {
+      transform: scale(1.05);
+    }
+
+    .stadium-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(8, 8, 10, 0.8);
+      border: 1px solid var(--green-pitch);
+      color: var(--green-pitch);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .stadium-content {
+      padding: 1.5rem;
+    }
+
+    .stadium-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stadium-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Calculator Section */
+    .calculator-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 850px) {
+      .calculator-box { grid-template-columns: 1fr; }
+    }
+
+    .calc-option {
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-option label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .calc-option select, .calc-option input {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-family: inherit;
+    }
+
+    .calc-summary {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .calc-price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--green-pitch);
+      margin: 1rem 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <div class="logo-circle">
-        <span>TSB</span>
+  <div class="bg-glow"></div>
+
+  <!-- Header Section -->
+  <header>
+    <a href="#" class="brand-logo-container">
+      <!-- REPLACE LOGO IMAGE HERE -->
+      <img src="path/to/your-logo.png" alt="TSB Logo" class="brand-logo-img" onerror="this.src='https://via.placeholder.com/100/a855f7/ffffff?text=TSB'">
+      <div class="brand-title">TSB <span>STADIUMS</span></div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#portfolio">Showcase</a></li>
+        <li><a href="#calculator">Price Estimator</a></li>
+        <li><a href="#how-to-order">How to Order</a></li>
+      </ul>
+    </nav>
+    <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord">
+      <i class="fa-brands fa-discord"></i> Join Discord
+    </a>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-bolt"></i> Premier VRFS Stadium Builders
+    </div>
+    <h1>Custom <span class="highlight-purple">VRFS Stadiums</span> Built For Your League</h1>
+    <p>Bring your VR Football Simulator matches to life with custom pitch lighting, branded stands, custom logos, and VIP seating. Paid with USD or VRFS Credits.</p>
+    <div class="hero-btns">
+      <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord" style="padding: 0.9rem 2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-discord"></i> Order on Discord
+      </a>
+      <a href="#calculator" class="btn-secondary">Calculate Cost</a>
+    </div>
+  </div>
+
+  <!-- Stadium Showcase Section -->
+  <section id="portfolio">
+    <div class="section-title">
+      <h2>Stadium Showcase</h2>
+      <p>Explore recent custom builds for VRFS teams and tournaments</p>
+    </div>
+
+    <div class="portfolio-grid">
+      
+      <!-- STADIUM CARD 1 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
+          <img src="path/to/stadium-1.jpg" alt="The Apex Arena" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Stadium+Image+1'">
+          <span class="stadium-tag">Pro Tier</span>
+        </div>
+        <div class="stadium-content">
+          <h3>The Apex Arena</h3>
+          <p>Full 360-degree tiered seating, intense corner floodlights, custom pitch logos, and league team banners.</p>
+        </div>
+      </div>
+
+      <!-- STADIUM CARD 2 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
+          <img src="path/to/stadium-2.jpg" alt="Neon Floodlight Dome" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/22c55e?text=Stadium+Image+2'">
+          <span class="stadium-tag">Custom Lighting</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Neon Floodlight Dome</h3>
+          <p>Cyberpunk aesthetic with glowing purple and green roof accents, ideal for night league matches.</p>
+        </div>
+      </div>
+
+      <!-- STADIUM CARD 3 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <!-- REPLACE WITH YOUR STADIUM IMAGE HERE -->
+          <img src="path/to/stadium-3.jpg" alt="Community Park Stadium" class="stadium-img" onerror="this.src='https://via.placeholder.com/600x400/121118/a855f7?text=Stadium+Image+3'">
+          <span class="stadium-tag">Starter Tier</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Community Park Stadium</h3>
+          <p>Clean, performant design with essential bleachers, sponsor boards, and sharp pitch lining.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Price Calculator -->
+  <section id="calculator">
+    <div class="section-title">
+      <h2>Price Estimator</h2>
+      <p>Customize your build options to get an instant quote</p>
+    </div>
+
+    <div class="calculator-box">
+      <div class="calc-inputs">
+        <div class="calc-option">
+          <label for="size">Stadium Tier / Size</label>
+          <select id="size" onchange="calculatePrice()">
+            <option value="10">Basic Grounds (Small Stand & Lights)</option>
+            <option value="20" selected>Pro Stadium (Full Stands & Custom Colors)</option>
+            <option value="35">Elite Arena (360 Seating, Custom Roof & VIP)</option>
+          </select>
+        </div>
+
+        <div class="calc-option">
+          <label for="addons">Extras & Customization</label>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <label style="font-weight: normal;"><input type="checkbox" id="logo" onchange="calculatePrice()" checked> Custom Team Logos & Banners (+$5)</label>
+            <label style="font-weight: normal;"><input type="checkbox" id="lights" onchange="calculatePrice()" checked> Custom Lighting Rigs (+$5)</label>
+            <label style="font-weight: normal;"><input type="checkbox" id="express" onchange="calculatePrice()"> Express Delivery (24 Hours) (+$10)</label>
+          </div>
+        </div>
+
+        <div class="calc-option">
+          <label for="currency">Payment Method</label>
+          <select id="currency" onchange="calculatePrice()">
+            <option value="usd">Real Money ($ USD)</option>
+            <option value="credits">VRFS Credits</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-summary">
+        <div>
+          <h3>Estimated Cost</h3>
+          <div class="calc-price" id="total-price">$30 USD</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">*Final pricing confirmed when opening a Discord commission ticket.</p>
+        </div>
+        <a href="https://discord.gg/your-discord-link" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
+          Order This Build
+        </a>
       </div>
     </div>
-    <div class="nav-links">
-      <a href="#" class="nav-item active">Hub</a>
-      <a href="#" class="nav-item">Order</a>
-      <a href="#" class="nav-item">Portfolio</a>
-      <a href="#" class="nav-item">Contact</a>
-    </div>
-  </nav>
+  </section>
 
-  <!-- Main Portal Container -->
-  <main class="container">
-    
-    <!-- Hero Section -->
-    <header class="hero-section">
-      <div class="portal-badge">
-        <span class="badge-dot"></span>
-        <span class="badge-text">VRFS STADIUM BUILD SERVICE</span>
-      </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 TSB Stadiums. Built for the VRFS Community.</p>
+  </footer>
 
-      <h1 class="hero-title">Need a <span class="highlight-blue">stadium?</span></h1>
+  <script>
+    function calculatePrice() {
+      const sizeVal = parseInt(document.getElementById('size').value);
+      const hasLogo = document.getElementById('logo').checked ? 5 : 0;
+      const hasLights = document.getElementById('lights').checked ? 5 : 0;
+      const hasExpress = document.getElementById('express').checked ? 10 : 0;
+      const currency = document.getElementById('currency').value;
 
-      <p class="hero-description">
-        Get a custom, high-quality VRFS stadium built specifically for your team, club, or league. We bring your unique ideas to life with fast, reliable, and pro-level designs.
-      </p>
+      let usdTotal = sizeVal + hasLogo + hasLights + hasExpress;
 
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn btn-primary">
-          <i class="fa-brands fa-discord"></i> Join Discord & Order
-        </a>
-        <button class="btn btn-secondary">
-          <i class="fa-solid fa-images"></i> View Portfolio
-        </button>
-        <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn btn-secondary">
-          Get Support
-        </a>
-      </div>
-    </header>
+      const priceDisplay = document.getElementById('total-price');
 
-    <!-- Hub Overview Section -->
-    <section class="overview-section">
-      <h2 class="section-label">HUB OVERVIEW</h2>
-
-      <div class="cards-grid">
-
-        <!-- Card 1 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-futbol"></i>
-          </div>
-          <h3 class="card-title">Custom VRFS Stadiums</h3>
-          <p class="card-text">
-            Tailor-made venues built specifically around your team colors, layout, and club branding.
-          </p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-paint-brush"></i>
-          </div>
-          <h3 class="card-title">Pro & Unique Designs</h3>
-          <p class="card-text">
-            Clean, modern architecture engineered to give your league or tournament a professional feel.
-          </p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-bolt"></i>
-          </div>
-          <h3 class="card-title">Fast & Reliable Delivery</h3>
-          <p class="card-text">
-            Quick turnaround times on all stadium builds so your team is ready for match day.
-          </p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-trophy"></i>
-          </div>
-          <h3 class="card-title">Leagues & Tournaments</h3>
-          <p class="card-text">
-            Specialized venue setups built for competitive leagues, cup finals, and showcase events.
-          </p>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-lightbulb"></i>
-          </div>
-          <h3 class="card-title">Idea to Reality</h3>
-          <p class="card-text">
-            Share your reference images, pitch layouts, or concepts, and we will build it out in VRFS.
-          </p>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="card">
-          <div class="icon-box">
-            <i class="fa-solid fa-handshake"></i>
-          </div>
-          <h3 class="card-title">Build Your Legacy</h3>
-          <p class="card-text">
-            Join TSB today and establish a legendary home ground for your VRFS club.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
+      if (currency === 'usd') {
+        priceDisplay.innerText = `$${usdTotal} USD`;
+      } else {
+        // Convert USD rate to VRFS Credits rate (e.g. 100 Credits per $1)
+        const creditsTotal = usdTotal * 100;
+        priceDisplay.innerText = `${creditsTotal} Credits`;
+      }
+    }
+  </script>
 </body>
 </html>
