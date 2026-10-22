@@ -287,6 +287,7 @@
       margin-bottom: 1rem;
     }
 
+    /* CUSTOM OPTION SELECTOR STYLES */
     .calculator-box {
       background: var(--bg-card);
       border: 1px solid var(--border-glow);
@@ -302,30 +303,67 @@
     }
 
     .calc-option {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
     }
 
     .calc-option label {
       display: block;
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+      font-size: 1rem;
     }
 
-    .calc-option select, .calc-option input {
-      width: 100%;
-      padding: 0.8rem;
-      background: rgba(0, 0, 0, 0.4);
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: #000000;
       border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 8px;
-      color: white;
+      padding: 0.5rem;
+      border-radius: 14px;
+    }
+
+    .option-btn {
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
       font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .option-btn:hover {
+      background: rgba(168, 85, 247, 0.15);
+      color: #ffffff;
+    }
+
+    .option-btn.active {
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      font-weight: 700;
+    }
+
+    .option-btn.active::after {
+      content: "✓";
+      font-weight: bold;
+      font-size: 0.9rem;
     }
 
     .calc-summary {
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 14px;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -435,37 +473,40 @@
 
     <div class="calculator-box">
       <div class="calc-inputs">
+        <!-- Stadium Size Options -->
         <div class="calc-option">
-          <label for="size">Stadium Size</label>
-          <select id="size" onchange="calculatePrice()">
-            <option value="12">Small Stadium (12 Credits)</option>
-            <option value="14" selected>Medium Stadium (14 Credits)</option>
-            <option value="16">Large Stadium (16 Credits)</option>
-          </select>
+          <label>Stadium Size</label>
+          <div class="option-group" id="size-group">
+            <button class="option-btn" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
+            <button class="option-btn active" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
+            <button class="option-btn" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
+          </div>
         </div>
 
+        <!-- Stands & Extras Options -->
         <div class="calc-option">
-          <label for="stands">Stands & Extras</label>
-          <select id="stands" onchange="calculatePrice()">
-            <option value="0">Standard Stands (Included)</option>
-            <option value="2">Upgraded / Extra Stands (+2 Credits)</option>
-            <option value="4">Custom Grandstands (+4 Credits)</option>
-          </select>
+          <label>Stands & Extras</label>
+          <div class="option-group" id="stands-group">
+            <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Standard Stands (Included)</button>
+            <button class="option-btn" data-value="2" onclick="selectOption('stands-group', this)">Upgraded / Extra Stands (+2 Credits)</button>
+            <button class="option-btn" data-value="4" onclick="selectOption('stands-group', this)">Custom Grandstands (+4 Credits)</button>
+          </div>
         </div>
 
+        <!-- Payment Currency Options -->
         <div class="calc-option">
-          <label for="currency">Payment Method</label>
-          <select id="currency" onchange="calculatePrice()">
-            <option value="credits">VRFS Credits</option>
-            <option value="gbp">GBP (£)</option>
-            <option value="usd">USD ($)</option>
-          </select>
+          <label>Payment Method</label>
+          <div class="option-group" id="currency-group">
+            <button class="option-btn active" data-value="credits" onclick="selectOption('currency-group', this)">VRFS Credits</button>
+            <button class="option-btn" data-value="gbp" onclick="selectOption('currency-group', this)">GBP (£)</button>
+            <button class="option-btn" data-value="usd" onclick="selectOption('currency-group', this)">USD ($)</button>
+          </div>
         </div>
       </div>
 
       <div class="calc-summary">
         <div>
-          <h3>Estimated Total</h3>
+          <h3 style="color: #ffffff;">Estimated Total</h3>
           <div class="calc-price" id="total-price">14 VRFS Credits</div>
           <p style="font-size: 0.85rem; color: var(--text-muted);">
             *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord ticket.
@@ -483,10 +524,26 @@
   </footer>
 
   <script>
+    function selectOption(groupId, button) {
+      // Remove active class from all buttons in the group
+      const buttons = document.querySelectorAll(`#${groupId} .option-btn`);
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Add active class to clicked button
+      button.classList.add('active');
+
+      // Recalculate price
+      calculatePrice();
+    }
+
     function calculatePrice() {
-      const baseCredits = parseFloat(document.getElementById('size').value);
-      const standCredits = parseFloat(document.getElementById('stands').value);
-      const currency = document.getElementById('currency').value;
+      const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
+      const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
+      const activeCurrencyBtn = document.querySelector('#currency-group .option-btn.active');
+
+      const baseCredits = parseFloat(activeSizeBtn.getAttribute('data-value'));
+      const standCredits = parseFloat(activeStandsBtn.getAttribute('data-value'));
+      const currency = activeCurrencyBtn.getAttribute('data-value');
 
       const totalCredits = baseCredits + standCredits;
       const priceDisplay = document.getElementById('total-price');
