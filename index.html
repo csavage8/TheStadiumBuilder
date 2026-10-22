@@ -292,6 +292,34 @@
       margin-bottom: 1rem;
     }
 
+    /* SUBSECTION STYLING FOR ALL THE WORK */
+    .builder-subsection {
+      margin-bottom: 4rem;
+      background: rgba(18, 17, 24, 0.5);
+      border: 1px solid rgba(168, 85, 247, 0.15);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .builder-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .builder-header i {
+      font-size: 1.8rem;
+      color: var(--purple-main);
+    }
+
+    .builder-header h3 {
+      font-size: 1.8rem;
+      color: #ffffff;
+    }
+
     /* FOR SALE SECTION STYLES */
     .for-sale-card {
       background: var(--bg-card);
@@ -632,43 +660,89 @@
   <section id="all-work">
     <div class="section-title">
       <h2>All The Work</h2>
-      <p>A full archive of past custom stadium projects completed by TSB</p>
+      <p>Comprehensive portfolio divided by TSB lead builders</p>
     </div>
 
-    <div class="portfolio-grid">
-      <!-- Archive 1 -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Small Map.jpg" alt="Custom Pitch #1" class="stadium-img">
-          <span class="stadium-tag">Small Build</span>
+    <!-- SAVAGE'S WORK -->
+    <div class="builder-subsection">
+      <div class="builder-header">
+        <i class="fa-solid fa-hammer"></i>
+        <h3>Savage's Work</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Small Map.jpg" alt="Savage Build 1" class="stadium-img">
+            <span class="stadium-tag">Small Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Savage Custom Grounds</h3>
+            <p>Compact high-intensity 5v5 arena with custom LED borders.</p>
+          </div>
         </div>
-        <div class="stadium-content">
-          <h3>Custom Community Pitch</h3>
-          <p>Minimalist pitch design created for quick 5v5 and 7v7 league matches.</p>
+
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Med Map.jpg" alt="Savage Build 2" class="stadium-img">
+            <span class="stadium-tag">Medium Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Savage Metro Stadium</h3>
+            <p>Sleek urban-styled stadium with multi-tiered spectator seating.</p>
+          </div>
+        </div>
+
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Large Map.jpg" alt="Savage Build 3" class="stadium-img">
+            <span class="stadium-tag">Large Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Savage Titan Superdome</h3>
+            <p>Massive 360-degree stadium with full roof lighting setup.</p>
+          </div>
         </div>
       </div>
+    </div>
 
-      <!-- Archive 2 -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Med Map.jpg" alt="Custom Stadium #2" class="stadium-img">
-          <span class="stadium-tag">Medium Build</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Neon Night Arena</h3>
-          <p>Features custom floodlighting with vibrant neon stadium stand highlights.</p>
-        </div>
+    <!-- DELLE'S WORK -->
+    <div class="builder-subsection">
+      <div class="builder-header">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <h3>Delle's Work</h3>
       </div>
-
-      <!-- Archive 3 -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Large Map.jpg" alt="Custom Stadium #3" class="stadium-img">
-          <span class="stadium-tag">Large Build</span>
+      <div class="portfolio-grid">
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Small Map.jpg" alt="Delle Build 1" class="stadium-img">
+            <span class="stadium-tag">Small Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Delle Training Complex</h3>
+            <p>Clean training ground layout with precision floodlights.</p>
+          </div>
         </div>
-        <div class="stadium-content">
-          <h3>International Dome Stadium</h3>
-          <p>Full 360-degree stadium with glass roofing and custom team banners throughout.</p>
+
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Med Map.jpg" alt="Delle Build 2" class="stadium-img">
+            <span class="stadium-tag">Medium Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Delle Apex Arena</h3>
+            <p>Balanced league setup featuring custom dugout and team tunnels.</p>
+          </div>
+        </div>
+
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Large Map.jpg" alt="Delle Build 3" class="stadium-img">
+            <span class="stadium-tag">Large Build</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Delle Colosseum Grand</h3>
+            <p>Elite 360° stadium build equipped with custom banners and VIP boxes.</p>
+          </div>
         </div>
       </div>
     </div>
