@@ -468,7 +468,7 @@
           <h3>Estimated Total</h3>
           <div class="calc-price" id="total-price">14 VRFS Credits</div>
           <p style="font-size: 0.85rem; color: var(--text-muted);">
-            *Rate: 1 Credit = 0.07p (£0.0007) or $0.09 USD. Final total confirmed in Discord ticket.
+            *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord ticket.
           </p>
         </div>
         <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
@@ -494,7 +494,7 @@
       if (currency === 'credits') {
         priceDisplay.innerText = `${totalCredits} VRFS Credits`;
       } else if (currency === 'gbp') {
-        const totalGBP = totalCredits * 0.0007;
+        const totalGBP = totalCredits * 0.07;
         priceDisplay.innerText = `£${totalGBP.toFixed(2)} GBP`;
       } else if (currency === 'usd') {
         const totalUSD = totalCredits * 0.09;
@@ -506,5 +506,3 @@
   </script>
 </body>
 </html>
-
-```
