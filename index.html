@@ -231,6 +231,8 @@
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     .stadium-card:hover {
@@ -262,7 +264,7 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(8, 8, 10, 0.8);
+      background: rgba(8, 8, 10, 0.85);
       border: 1px solid var(--green-pitch);
       color: var(--green-pitch);
       font-size: 0.75rem;
@@ -274,6 +276,9 @@
 
     .stadium-content {
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     .stadium-content h3 {
@@ -285,6 +290,79 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       margin-bottom: 1rem;
+    }
+
+    /* FOR SALE SECTION STYLES */
+    .for-sale-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .for-sale-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--green-pitch);
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
+    }
+
+    .sale-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--green-pitch);
+      color: #000000;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sale-features {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+
+    .sale-features li {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sale-features li i {
+      color: var(--green-pitch);
+      font-size: 0.8rem;
+    }
+
+    .sale-price-box {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sale-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--green-pitch);
+    }
+
+    .sale-price span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: block;
     }
 
     /* CUSTOM OPTION SELECTOR STYLES */
@@ -398,6 +476,8 @@
     <nav>
       <ul>
         <li><a href="#portfolio">Showcase</a></li>
+        <li><a href="#for-sale">For Sale</a></li>
+        <li><a href="#all-work">All The Work</a></li>
         <li><a href="#calculator">Price Estimator</a></li>
       </ul>
     </nav>
@@ -420,6 +500,7 @@
     </div>
   </div>
 
+  <!-- SHOWCASE SECTION -->
   <section id="portfolio">
     <div class="section-title">
       <h2>Stadium Showcase</h2>
@@ -465,6 +546,135 @@
     </div>
   </section>
 
+  <!-- FOR SALE SECTION -->
+  <section id="for-sale">
+    <div class="section-title">
+      <h2>Pre-Built Stadiums For Sale</h2>
+      <p>Ready-to-use custom VRFS stadiums available for immediate delivery</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <!-- For Sale Build 1 -->
+      <div class="for-sale-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Small Map.jpg" alt="Pro Arena Pack" class="stadium-img">
+          <span class="sale-badge">Ready Now</span>
+          <span class="stadium-tag">12 Credits</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Pro Arena - Compact Edition</h3>
+          <p>Ideal for grassroots VRFS clubs needing a clean, high-performance ground with custom colors.</p>
+          <ul class="sale-features">
+            <li><i class="fa-solid fa-check"></i> 2 Side Stands with Seating</li>
+            <li><i class="fa-solid fa-check"></i> Floodlight Corners</li>
+            <li><i class="fa-solid fa-check"></i> Custom Pitch Markings</li>
+          </ul>
+          <div class="sale-price-box">
+            <div class="sale-price">12 Credits <span>£0.84 / $1.08</span></div>
+            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              Buy
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- For Sale Build 2 -->
+      <div class="for-sale-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Med Map.jpg" alt="Championship Stadium" class="stadium-img">
+          <span class="sale-badge">Popular</span>
+          <span class="stadium-tag">14 Credits</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Championship Stadium</h3>
+          <p>Medium tier stadium optimized for competitive league matches with dugout & TV gantry setup.</p>
+          <ul class="sale-features">
+            <li><i class="fa-solid fa-check"></i> Multi-tier Stand Seating</li>
+            <li><i class="fa-solid fa-check"></i> Integrated Dugouts</li>
+            <li><i class="fa-solid fa-check"></i> Sponsor Board Area</li>
+          </ul>
+          <div class="sale-price-box">
+            <div class="sale-price">14 Credits <span>£0.98 / $1.26</span></div>
+            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              Buy
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- For Sale Build 3 -->
+      <div class="for-sale-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Large Map.jpg" alt="Ultimate Apex Arena" class="stadium-img">
+          <span class="sale-badge">Ultimate</span>
+          <span class="stadium-tag">16 Credits</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Apex Grand Arena</h3>
+          <p>Top-tier 360° stadium with full roof lighting, VIP boxes, and customized team banners.</p>
+          <ul class="sale-features">
+            <li><i class="fa-solid fa-check"></i> 360-Degree Grandstand</li>
+            <li><i class="fa-solid fa-check"></i> Roof Lighting & Banners</li>
+            <li><i class="fa-solid fa-check"></i> Full Custom Branding</li>
+          </ul>
+          <div class="sale-price-box">
+            <div class="sale-price">16 Credits <span>£1.12 / $1.44</span></div>
+            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              Buy
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALL THE WORK SECTION -->
+  <section id="all-work">
+    <div class="section-title">
+      <h2>All The Work</h2>
+      <p>A full archive of past custom stadium projects completed by TSB</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <!-- Archive 1 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Small Map.jpg" alt="Custom Pitch #1" class="stadium-img">
+          <span class="stadium-tag">Small Build</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Custom Community Pitch</h3>
+          <p>Minimalist pitch design created for quick 5v5 and 7v7 league matches.</p>
+        </div>
+      </div>
+
+      <!-- Archive 2 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Med Map.jpg" alt="Custom Stadium #2" class="stadium-img">
+          <span class="stadium-tag">Medium Build</span>
+        </div>
+        <div class="stadium-content">
+          <h3>Neon Night Arena</h3>
+          <p>Features custom floodlighting with vibrant neon stadium stand highlights.</p>
+        </div>
+      </div>
+
+      <!-- Archive 3 -->
+      <div class="stadium-card">
+        <div class="stadium-img-wrapper">
+          <img src="images/Large Map.jpg" alt="Custom Stadium #3" class="stadium-img">
+          <span class="stadium-tag">Large Build</span>
+        </div>
+        <div class="stadium-content">
+          <h3>International Dome Stadium</h3>
+          <p>Full 360-degree stadium with glass roofing and custom team banners throughout.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR SECTION -->
   <section id="calculator">
     <div class="section-title">
       <h2>Price Estimator</h2>
@@ -525,14 +735,9 @@
 
   <script>
     function selectOption(groupId, button) {
-      // Remove active class from all buttons in the group
       const buttons = document.querySelectorAll(`#${groupId} .option-btn`);
       buttons.forEach(btn => btn.classList.remove('active'));
-
-      // Add active class to clicked button
       button.classList.add('active');
-
-      // Recalculate price
       calculatePrice();
     }
 
