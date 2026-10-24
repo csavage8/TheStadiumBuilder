@@ -55,6 +55,99 @@
         radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
     }
 
+    /* MODAL OVERLAY STYLES */
+    .welcome-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 4, 6, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .welcome-modal-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-modal-box {
+      background: #121118;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.25);
+      border-radius: 24px;
+      max-width: 650px;
+      width: 100%;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .welcome-modal-box img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--purple-main);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .welcome-modal-box h2 {
+      font-size: 2.2rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-modal-box p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .modal-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .modal-option-card {
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 16px;
+      padding: 1.8rem 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .modal-option-card:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(147, 51, 234, 0.1));
+      border-color: var(--purple-main);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+    }
+
+    .modal-option-card i {
+      font-size: 2.2rem;
+      color: var(--purple-main);
+    }
+
+    .modal-option-card span {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
     header {
       position: sticky;
       top: 0;
@@ -494,6 +587,35 @@
 </head>
 <body>
 
+  <!-- WELCOME POPUP MODAL MENU -->
+  <div class="welcome-modal-overlay" id="welcomeModal">
+    <div class="welcome-modal-box">
+      <img src="images/Tsb Logo.png" alt="TSB Logo">
+      <h2>Welcome to TSB</h2>
+      <p>What are you looking for today?</p>
+      
+      <div class="modal-options-grid">
+        <!-- Option 1: Stadiums -->
+        <div class="modal-option-card" onclick="selectIntent('stadiums')">
+          <i class="fa-solid fa-stadium"></i>
+          <span>Stadiums</span>
+        </div>
+
+        <!-- Option 2: Kits -->
+        <div class="modal-option-card" onclick="selectIntent('kits')">
+          <i class="fa-solid fa-shirt"></i>
+          <span>Kits</span>
+        </div>
+
+        <!-- Option 3: Streaming -->
+        <div class="modal-option-card" onclick="selectIntent('streaming')">
+          <i class="fa-solid fa-headset"></i>
+          <span>Streaming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="bg-glow"></div>
 
   <header>
@@ -808,6 +930,18 @@
   </footer>
 
   <script>
+    function selectIntent(option) {
+      const modal = document.getElementById('welcomeModal');
+      modal.classList.add('hidden');
+
+      if (option === 'stadiums') {
+        const target = document.getElementById('portfolio');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      } else if (option === 'kits' || option === 'streaming') {
+        window.open('https://discord.gg/FvvNjfDeQM', '_blank');
+      }
+    }
+
     function selectOption(groupId, button) {
       const buttons = document.querySelectorAll(`#${groupId} .option-btn`);
       buttons.forEach(btn => btn.classList.remove('active'));
