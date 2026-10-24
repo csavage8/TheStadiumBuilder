@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TSB Stadiums - Custom VRFS Stadium Building</title>
+  <title>TSB - Stadiums, Kits & Streaming Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -55,15 +55,15 @@
         radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
     }
 
-    /* MODAL OVERLAY STYLES */
+    /* WELCOME GATE / LANDING MENU OVERLAY */
     .welcome-modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(4, 4, 6, 0.92);
-      backdrop-filter: blur(20px);
+      background: rgba(4, 4, 6, 0.95);
+      backdrop-filter: blur(25px);
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -81,79 +81,79 @@
     .welcome-modal-box {
       background: #121118;
       border: 1px solid rgba(168, 85, 247, 0.4);
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.25);
+      box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
       border-radius: 24px;
-      max-width: 650px;
+      max-width: 700px;
       width: 100%;
       padding: 3rem 2rem;
       text-align: center;
-      position: relative;
     }
 
     .welcome-modal-box img {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       border: 2px solid var(--purple-main);
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
       margin-bottom: 1rem;
     }
 
     .welcome-modal-box h2 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       color: #ffffff;
       margin-bottom: 0.5rem;
     }
 
     .welcome-modal-box p {
       color: var(--text-muted);
-      margin-bottom: 2rem;
-      font-size: 1.05rem;
+      margin-bottom: 2.2rem;
+      font-size: 1.1rem;
     }
 
     .modal-options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1.2rem;
     }
 
     .modal-option-card {
       background: #000000;
       border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 16px;
-      padding: 1.8rem 1rem;
+      border-radius: 18px;
+      padding: 2rem 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
     .modal-option-card:hover {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(147, 51, 234, 0.1));
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
       border-color: var(--purple-main);
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
     }
 
     .modal-option-card i {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       color: var(--purple-main);
     }
 
     .modal-option-card span {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #ffffff;
     }
 
+    /* HEADER & NAV */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(16px);
-      background: rgba(8, 8, 10, 0.85);
+      background: rgba(8, 8, 10, 0.88);
       border-bottom: 1px solid rgba(168, 85, 247, 0.15);
       padding: 1rem 2rem;
       display: flex;
@@ -166,6 +166,7 @@
       align-items: center;
       gap: 0.75rem;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .brand-logo-img {
@@ -191,7 +192,7 @@
     nav ul {
       display: flex;
       list-style: none;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     nav a {
@@ -199,10 +200,15 @@
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      cursor: pointer;
     }
 
-    nav a:hover {
-      color: var(--purple-light);
+    nav a:hover, nav a.nav-active {
+      color: #ffffff;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
       text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
     }
 
@@ -227,10 +233,22 @@
       box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
     }
 
+    /* MAIN VIEW SWITCHING */
+    .view-section {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .view-section.active-view {
+      display: block;
+    }
+
+    /* HERO STYLING */
     .hero {
       position: relative;
       z-index: 1;
-      padding: 6rem 2rem 4rem;
+      padding: 5rem 2rem 3rem;
       text-align: center;
       max-width: 900px;
       margin: 0 auto;
@@ -291,9 +309,7 @@
     }
 
     section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 2rem;
+      padding: 4rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -486,7 +502,7 @@
       display: block;
     }
 
-    /* CUSTOM OPTION SELECTOR STYLES */
+    /* CUSTOM OPTION SELECTOR / CALCULATOR STYLES */
     .calculator-box {
       background: var(--bg-card);
       border: 1px solid var(--border-glow);
@@ -575,6 +591,97 @@
       margin: 1rem 0;
     }
 
+    /* CUSTOM FORM INPUTS FOR KITS & STREAMING */
+    .tsb-form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .tsb-form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .tsb-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .tsb-input:focus {
+      border-color: var(--purple-main);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+    }
+
+    .color-pickers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+    }
+
+    .color-picker-item label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .tsb-color-input {
+      width: 100%;
+      height: 45px;
+      background: #000;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 0.2rem;
+    }
+
+    /* KITS DESIGN CARDS */
+    .kit-design-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .kit-design-card {
+      background: #000000;
+      border: 2px solid rgba(168, 85, 247, 0.2);
+      border-radius: 14px;
+      padding: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .kit-design-card:hover {
+      border-color: var(--purple-light);
+      background: rgba(168, 85, 247, 0.1);
+    }
+
+    .kit-design-card.active {
+      border-color: var(--purple-main);
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+
+    .kit-design-card i {
+      font-size: 2.2rem;
+      color: var(--purple-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .kit-design-card h4 {
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 3rem 2rem;
@@ -587,28 +694,28 @@
 </head>
 <body>
 
-  <!-- WELCOME POPUP MODAL MENU -->
+  <!-- WELCOME LANDING GATE / POPUP MODAL MENU -->
   <div class="welcome-modal-overlay" id="welcomeModal">
     <div class="welcome-modal-box">
       <img src="images/Tsb Logo.png" alt="TSB Logo">
       <h2>Welcome to TSB</h2>
-      <p>What are you looking for today?</p>
+      <p>What service are you looking for today?</p>
       
       <div class="modal-options-grid">
         <!-- Option 1: Stadiums -->
-        <div class="modal-option-card" onclick="selectIntent('stadiums')">
+        <div class="modal-option-card" onclick="switchMainView('stadiums-view')">
           <i class="fa-solid fa-stadium"></i>
           <span>Stadiums</span>
         </div>
 
         <!-- Option 2: Kits -->
-        <div class="modal-option-card" onclick="selectIntent('kits')">
+        <div class="modal-option-card" onclick="switchMainView('kits-view')">
           <i class="fa-solid fa-shirt"></i>
           <span>Kits</span>
         </div>
 
         <!-- Option 3: Streaming -->
-        <div class="modal-option-card" onclick="selectIntent('streaming')">
+        <div class="modal-option-card" onclick="switchMainView('streaming-view')">
           <i class="fa-solid fa-headset"></i>
           <span>Streaming</span>
         </div>
@@ -618,17 +725,17 @@
 
   <div class="bg-glow"></div>
 
+  <!-- HEADER NAVIGATION -->
   <header>
-    <a href="#" class="brand-logo-container">
+    <div class="brand-logo-container" onclick="openGateModal()">
       <img src="images/Tsb Logo.png" alt="TSB Logo" class="brand-logo-img">
-      <div class="brand-title">TSB <span>STADIUMS</span></div>
-    </a>
+      <div class="brand-title">TSB <span>OFFICIAL</span></div>
+    </div>
     <nav>
       <ul>
-        <li><a href="#portfolio">Showcase</a></li>
-        <li><a href="#for-sale">For Sale</a></li>
-        <li><a href="#all-work">All The Work</a></li>
-        <li><a href="#calculator">Price Estimator</a></li>
+        <li><a id="nav-stadiums" class="nav-active" onclick="switchMainView('stadiums-view')">Stadiums</a></li>
+        <li><a id="nav-kits" onclick="switchMainView('kits-view')">Kits & Customizer</a></li>
+        <li><a id="nav-streaming" onclick="switchMainView('streaming-view')">Book Streaming</a></li>
       </ul>
     </nav>
     <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord">
@@ -636,312 +743,469 @@
     </a>
   </header>
 
-  <div class="hero">
-    <div class="hero-badge">
-      <i class="fa-solid fa-bolt"></i> Premier Custom VRFS Stadium Builders
+
+  <!-- ================================================================= -->
+  <!-- VIEW 1: STADIUMS SECTION (SHOWCASE, FOR SALE, ALL WORK, ESTIMATOR) -->
+  <!-- ================================================================= -->
+  <div id="stadiums-view" class="view-section active-view">
+    
+    <div class="hero">
+      <div class="hero-badge">
+        <i class="fa-solid fa-bolt"></i> Premier Custom VRFS Stadium Builders
+      </div>
+      <h1>Build Your Custom <span class="highlight-purple">VRFS Stadium</span></h1>
+      <p>Get custom pitch layouts, grandstands, floodlights, and team branding. Pay with VRFS Credits, GBP (£), or USD ($).</p>
+      <div class="hero-btns">
+        <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.9rem 2rem; font-size: 1.1rem;">
+          <i class="fa-brands fa-discord"></i> Order Stadium on Discord
+        </a>
+        <a href="#stadium-calculator" class="btn-secondary">Check Pricing</a>
+      </div>
     </div>
-    <h1>Build Your Custom <span class="highlight-purple">VRFS Stadium</span></h1>
-    <p>Get custom pitch layouts, grandstands, floodlights, and team branding. Pay with VRFS Credits, GBP (£), or USD ($).</p>
-    <div class="hero-btns">
-      <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.9rem 2rem; font-size: 1.1rem;">
-        <i class="fa-brands fa-discord"></i> Order on Discord
-      </a>
-      <a href="#calculator" class="btn-secondary">Check Pricing</a>
-    </div>
+
+    <!-- SHOWCASE SECTION -->
+    <section id="portfolio">
+      <div class="section-title">
+        <h2>Stadium Showcase</h2>
+        <p>Explore recent custom builds for VRFS teams and leagues</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- Small Stadium -->
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Small Map.jpg" alt="Small Stadium" class="stadium-img">
+            <span class="stadium-tag">12 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Small Stadium</h3>
+            <p>Compact setup with standard pitch layout, basic side stands, and essential floodlighting.</p>
+          </div>
+        </div>
+
+        <!-- Medium Stadium -->
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Med Map.jpg" alt="Medium Stadium" class="stadium-img">
+            <span class="stadium-tag">14 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Medium Stadium</h3>
+            <p>Expanded spectator capacity with multi-tier stands and custom team branding options.</p>
+          </div>
+        </div>
+
+        <!-- Large Stadium -->
+        <div class="stadium-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Large Map.jpg" alt="Large Stadium" class="stadium-img">
+            <span class="stadium-tag">16 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Large Stadium</h3>
+            <p>Full 360-degree stadium atmosphere, grandstand seating, custom banners, and roof lighting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOR SALE SECTION -->
+    <section id="for-sale">
+      <div class="section-title">
+        <h2>Pre-Built Stadiums For Sale</h2>
+        <p>Ready-to-use custom VRFS stadiums available for immediate delivery</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="for-sale-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Small Map.jpg" alt="Pro Arena Pack" class="stadium-img">
+            <span class="sale-badge">Ready Now</span>
+            <span class="stadium-tag">12 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Pro Arena - Compact Edition</h3>
+            <p>Ideal for grassroots VRFS clubs needing a clean, high-performance ground with custom colors.</p>
+            <ul class="sale-features">
+              <li><i class="fa-solid fa-check"></i> 2 Side Stands with Seating</li>
+              <li><i class="fa-solid fa-check"></i> Floodlight Corners</li>
+              <li><i class="fa-solid fa-check"></i> Custom Pitch Markings</li>
+            </ul>
+            <div class="sale-price-box">
+              <div class="sale-price">12 Credits <span>£0.84 / $1.08</span></div>
+              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="for-sale-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Med Map.jpg" alt="Championship Stadium" class="stadium-img">
+            <span class="sale-badge">Popular</span>
+            <span class="stadium-tag">14 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Championship Stadium</h3>
+            <p>Medium tier stadium optimized for competitive league matches with dugout & TV gantry setup.</p>
+            <ul class="sale-features">
+              <li><i class="fa-solid fa-check"></i> Multi-tier Stand Seating</li>
+              <li><i class="fa-solid fa-check"></i> Integrated Dugouts</li>
+              <li><i class="fa-solid fa-check"></i> Sponsor Board Area</li>
+            </ul>
+            <div class="sale-price-box">
+              <div class="sale-price">14 Credits <span>£0.98 / $1.26</span></div>
+              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="for-sale-card">
+          <div class="stadium-img-wrapper">
+            <img src="images/Large Map.jpg" alt="Ultimate Apex Arena" class="stadium-img">
+            <span class="sale-badge">Ultimate</span>
+            <span class="stadium-tag">16 Credits</span>
+          </div>
+          <div class="stadium-content">
+            <h3>Apex Grand Arena</h3>
+            <p>Top-tier 360° stadium with full roof lighting, VIP boxes, and customized team banners.</p>
+            <ul class="sale-features">
+              <li><i class="fa-solid fa-check"></i> 360-Degree Grandstand</li>
+              <li><i class="fa-solid fa-check"></i> Roof Lighting & Banners</li>
+              <li><i class="fa-solid fa-check"></i> Full Custom Branding</li>
+            </ul>
+            <div class="sale-price-box">
+              <div class="sale-price">16 Credits <span>£1.12 / $1.44</span></div>
+              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALL THE WORK SECTION -->
+    <section id="all-work">
+      <div class="section-title">
+        <h2>All The Work</h2>
+        <p>Comprehensive portfolio divided by TSB lead builders</p>
+      </div>
+
+      <!-- SAVAGE'S WORK -->
+      <div class="builder-subsection">
+        <div class="builder-header">
+          <i class="fa-solid fa-hammer"></i>
+          <h3>Savage's Work</h3>
+        </div>
+        <div class="portfolio-grid">
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Small Map.jpg" alt="Savage Build 1" class="stadium-img">
+              <span class="stadium-tag">Small Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Savage Custom Grounds</h3>
+              <p>Compact high-intensity 5v5 arena with custom LED borders.</p>
+            </div>
+          </div>
+
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Med Map.jpg" alt="Savage Build 2" class="stadium-img">
+              <span class="stadium-tag">Medium Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Savage Metro Stadium</h3>
+              <p>Sleek urban-styled stadium with multi-tiered spectator seating.</p>
+            </div>
+          </div>
+
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Large Map.jpg" alt="Savage Build 3" class="stadium-img">
+              <span class="stadium-tag">Large Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Savage Titan Superdome</h3>
+              <p>Massive 360-degree stadium with full roof lighting setup.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DELLE'S WORK -->
+      <div class="builder-subsection">
+        <div class="builder-header">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <h3>Delle's Work</h3>
+        </div>
+        <div class="portfolio-grid">
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Small Map.jpg" alt="Delle Build 1" class="stadium-img">
+              <span class="stadium-tag">Small Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Delle Training Complex</h3>
+              <p>Clean training ground layout with precision floodlights.</p>
+            </div>
+          </div>
+
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Med Map.jpg" alt="Delle Build 2" class="stadium-img">
+              <span class="stadium-tag">Medium Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Delle Apex Arena</h3>
+              <p>Balanced league setup featuring custom dugout and team tunnels.</p>
+            </div>
+          </div>
+
+          <div class="stadium-card">
+            <div class="stadium-img-wrapper">
+              <img src="images/Large Map.jpg" alt="Delle Build 3" class="stadium-img">
+              <span class="stadium-tag">Large Build</span>
+            </div>
+            <div class="stadium-content">
+              <h3>Delle Colosseum Grand</h3>
+              <p>Elite 360° stadium build equipped with custom banners and VIP boxes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULATOR SECTION -->
+    <section id="stadium-calculator">
+      <div class="section-title">
+        <h2>Stadium Price Estimator</h2>
+        <p>Select stadium size and stand options to estimate cost in Credits or Cash</p>
+      </div>
+
+      <div class="calculator-box">
+        <div class="calc-inputs">
+          <div class="calc-option">
+            <label>Stadium Size</label>
+            <div class="option-group" id="size-group">
+              <button class="option-btn" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
+              <button class="option-btn active" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
+              <button class="option-btn" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
+            </div>
+          </div>
+
+          <div class="calc-option">
+            <label>Stands & Extras</label>
+            <div class="option-group" id="stands-group">
+              <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Standard Stands (Included)</button>
+              <button class="option-btn" data-value="2" onclick="selectOption('stands-group', this)">Upgraded / Extra Stands (+2 Credits)</button>
+              <button class="option-btn" data-value="4" onclick="selectOption('stands-group', this)">Custom Grandstands (+4 Credits)</button>
+            </div>
+          </div>
+
+          <div class="calc-option">
+            <label>Payment Method</label>
+            <div class="option-group" id="currency-group">
+              <button class="option-btn active" data-value="credits" onclick="selectOption('currency-group', this)">VRFS Credits</button>
+              <button class="option-btn" data-value="gbp" onclick="selectOption('currency-group', this)">GBP (£)</button>
+              <button class="option-btn" data-value="usd" onclick="selectOption('currency-group', this)">USD ($)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-summary">
+          <div>
+            <h3 style="color: #ffffff;">Estimated Total</h3>
+            <div class="calc-price" id="total-price">14 VRFS Credits</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord ticket.
+            </p>
+          </div>
+          <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
+            Open Discord Ticket
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- SHOWCASE SECTION -->
-  <section id="portfolio">
-    <div class="section-title">
-      <h2>Stadium Showcase</h2>
-      <p>Explore recent custom builds for VRFS teams and leagues</p>
+
+  <!-- ================================================================= -->
+  <!-- VIEW 2: KITS & CUSTOMIZER SECTION                                 -->
+  <!-- ================================================================= -->
+  <div id="kits-view" class="view-section">
+    <div class="hero">
+      <div class="hero-badge">
+        <i class="fa-solid fa-shirt"></i> Custom VRFS Team Kits & Graphics
+      </div>
+      <h1>Design Your Custom <span class="highlight-purple">VRFS Team Kit</span></h1>
+      <p>Configure team logos, kit patterns, color schemes, and graphic assets for your club.</p>
     </div>
 
-    <div class="portfolio-grid">
-      <!-- Small Stadium -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Small Map.jpg" alt="Small Stadium" class="stadium-img">
-          <span class="stadium-tag">12 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Small Stadium</h3>
-          <p>Compact setup with standard pitch layout, basic side stands, and essential floodlighting.</p>
-        </div>
-      </div>
+    <section>
+      <div class="calculator-box">
+        <div class="calc-inputs">
+          <div class="tsb-form-group">
+            <label>1. Team / Club Name</label>
+            <input type="text" class="tsb-input" id="kit-team-name" placeholder="e.g. Apex United FC">
+          </div>
 
-      <!-- Medium Stadium -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Med Map.jpg" alt="Medium Stadium" class="stadium-img">
-          <span class="stadium-tag">14 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Medium Stadium</h3>
-          <p>Expanded spectator capacity with multi-tier stands and custom team branding options.</p>
-        </div>
-      </div>
+          <div class="calc-option">
+            <label>2. Select Kit Pattern / Design Style</label>
+            <div class="kit-design-grid" id="kit-pattern-group">
+              <div class="kit-design-card active" data-pattern="Classic Stripes" onclick="selectKitPattern(this)">
+                <i class="fa-solid fa-grip-lines-vertical"></i>
+                <h4>Vertical Stripes</h4>
+              </div>
+              <div class="kit-design-card" data-pattern="Modern Gradient" onclick="selectKitPattern(this)">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h4>Modern Gradient</h4>
+              </div>
+              <div class="kit-design-card" data-pattern="Sash / Diagonal" onclick="selectKitPattern(this)">
+                <i class="fa-solid fa-slash"></i>
+                <h4>Diagonal Sash</h4>
+              </div>
+              <div class="kit-design-card" data-pattern="Geometric / Honeycomb" onclick="selectKitPattern(this)">
+                <i class="fa-solid fa-cubes"></i>
+                <h4>Geometric Tech</h4>
+              </div>
+            </div>
+          </div>
 
-      <!-- Large Stadium -->
-      <div class="stadium-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Large Map.jpg" alt="Large Stadium" class="stadium-img">
-          <span class="stadium-tag">16 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Large Stadium</h3>
-          <p>Full 360-degree stadium atmosphere, grandstand seating, custom banners, and roof lighting.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+          <div class="tsb-form-group">
+            <label>3. Team Color Palette</label>
+            <div class="color-pickers-grid">
+              <div class="color-picker-item">
+                <label>Primary Color</label>
+                <input type="color" class="tsb-color-input" id="kit-color-primary" value="#a855f7">
+              </div>
+              <div class="color-picker-item">
+                <label>Secondary Color</label>
+                <input type="color" class="tsb-color-input" id="kit-color-secondary" value="#ffffff">
+              </div>
+              <div class="color-picker-item">
+                <label>Accent Color</label>
+                <input type="color" class="tsb-color-input" id="kit-color-accent" value="#22c55e">
+              </div>
+            </div>
+          </div>
 
-  <!-- FOR SALE SECTION -->
-  <section id="for-sale">
-    <div class="section-title">
-      <h2>Pre-Built Stadiums For Sale</h2>
-      <p>Ready-to-use custom VRFS stadiums available for immediate delivery</p>
-    </div>
-
-    <div class="portfolio-grid">
-      <!-- For Sale Build 1 -->
-      <div class="for-sale-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Small Map.jpg" alt="Pro Arena Pack" class="stadium-img">
-          <span class="sale-badge">Ready Now</span>
-          <span class="stadium-tag">12 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Pro Arena - Compact Edition</h3>
-          <p>Ideal for grassroots VRFS clubs needing a clean, high-performance ground with custom colors.</p>
-          <ul class="sale-features">
-            <li><i class="fa-solid fa-check"></i> 2 Side Stands with Seating</li>
-            <li><i class="fa-solid fa-check"></i> Floodlight Corners</li>
-            <li><i class="fa-solid fa-check"></i> Custom Pitch Markings</li>
-          </ul>
-          <div class="sale-price-box">
-            <div class="sale-price">12 Credits <span>£0.84 / $1.08</span></div>
-            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-              Buy
-            </a>
+          <div class="tsb-form-group">
+            <label>4. Logo & Graphic Details</label>
+            <input type="text" class="tsb-input" id="kit-logo-req" placeholder="Describe logo preferences (e.g. Shield badge with lion emblem)">
           </div>
         </div>
-      </div>
 
-      <!-- For Sale Build 2 -->
-      <div class="for-sale-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Med Map.jpg" alt="Championship Stadium" class="stadium-img">
-          <span class="sale-badge">Popular</span>
-          <span class="stadium-tag">14 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Championship Stadium</h3>
-          <p>Medium tier stadium optimized for competitive league matches with dugout & TV gantry setup.</p>
-          <ul class="sale-features">
-            <li><i class="fa-solid fa-check"></i> Multi-tier Stand Seating</li>
-            <li><i class="fa-solid fa-check"></i> Integrated Dugouts</li>
-            <li><i class="fa-solid fa-check"></i> Sponsor Board Area</li>
-          </ul>
-          <div class="sale-price-box">
-            <div class="sale-price">14 Credits <span>£0.98 / $1.26</span></div>
-            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-              Buy
-            </a>
+        <div class="calc-summary">
+          <div>
+            <h3 style="color: #ffffff;">Kit Order Summary</h3>
+            <div class="calc-price" style="font-size: 1.8rem; margin: 0.8rem 0;">Custom Kit Package</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Includes full HD textured kit textures, custom badge vector, and pitch sponsor graphics.
+            </p>
           </div>
+          <button onclick="submitKitOrder()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
+            <i class="fa-brands fa-discord"></i> Submit Kit Request to Discord
+          </button>
         </div>
       </div>
+    </section>
+  </div>
 
-      <!-- For Sale Build 3 -->
-      <div class="for-sale-card">
-        <div class="stadium-img-wrapper">
-          <img src="images/Large Map.jpg" alt="Ultimate Apex Arena" class="stadium-img">
-          <span class="sale-badge">Ultimate</span>
-          <span class="stadium-tag">16 Credits</span>
-        </div>
-        <div class="stadium-content">
-          <h3>Apex Grand Arena</h3>
-          <p>Top-tier 360° stadium with full roof lighting, VIP boxes, and customized team banners.</p>
-          <ul class="sale-features">
-            <li><i class="fa-solid fa-check"></i> 360-Degree Grandstand</li>
-            <li><i class="fa-solid fa-check"></i> Roof Lighting & Banners</li>
-            <li><i class="fa-solid fa-check"></i> Full Custom Branding</li>
-          </ul>
-          <div class="sale-price-box">
-            <div class="sale-price">16 Credits <span>£1.12 / $1.44</span></div>
-            <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-              Buy
-            </a>
-          </div>
-        </div>
+
+  <!-- ================================================================= -->
+  <!-- VIEW 3: STREAMING BOOKING SECTION                                 -->
+  <!-- ================================================================= -->
+  <div id="streaming-view" class="view-section">
+    <div class="hero">
+      <div class="hero-badge">
+        <i class="fa-solid fa-headset"></i> Live VRFS Match Production
       </div>
-    </div>
-  </section>
-
-  <!-- ALL THE WORK SECTION -->
-  <section id="all-work">
-    <div class="section-title">
-      <h2>All The Work</h2>
-      <p>Comprehensive portfolio divided by TSB lead builders</p>
+      <h1>Book Your <span class="highlight-purple">Live Stream</span></h1>
+      <p>Professional live commentary, scoreboard overlays, graphics, and full match broadcast coverage.</p>
     </div>
 
-    <!-- SAVAGE'S WORK -->
-    <div class="builder-subsection">
-      <div class="builder-header">
-        <i class="fa-solid fa-hammer"></i>
-        <h3>Savage's Work</h3>
-      </div>
-      <div class="portfolio-grid">
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Small Map.jpg" alt="Savage Build 1" class="stadium-img">
-            <span class="stadium-tag">Small Build</span>
+    <section>
+      <div class="calculator-box">
+        <div class="calc-inputs">
+          <div class="tsb-form-group">
+            <label>1. VRFS League / Tournament Name</label>
+            <input type="text" class="tsb-input" id="stream-league" placeholder="e.g. VRFS Champions League">
           </div>
-          <div class="stadium-content">
-            <h3>Savage Custom Grounds</h3>
-            <p>Compact high-intensity 5v5 arena with custom LED borders.</p>
+
+          <div class="tsb-form-group">
+            <label>2. Teams Playing</label>
+            <input type="text" class="tsb-input" id="stream-teams" placeholder="e.g. Savage FC vs Delle City">
+          </div>
+
+          <div class="tsb-form-group">
+            <label>3. Match Date</label>
+            <input type="date" class="tsb-input" id="stream-date">
+          </div>
+
+          <div class="tsb-form-group">
+            <label>4. Kick-off Time (specify timezone)</label>
+            <input type="text" class="tsb-input" id="stream-time" placeholder="e.g. 8:00 PM GMT / 3:00 PM EST">
+          </div>
+
+          <div class="calc-option">
+            <label>5. Match Type / Format</label>
+            <div class="option-group" id="stream-type-group">
+              <button class="option-btn active" data-type="League Match" onclick="selectOption('stream-type-group', this)">Regular League Match</button>
+              <button class="option-btn" data-type="Cup / Knockout" onclick="selectOption('stream-type-group', this)">Cup / Knockout Match</button>
+              <button class="option-btn" data-type="Grand Final / Special Event" onclick="selectOption('stream-type-group', this)">Grand Final / Special Event</button>
+            </div>
           </div>
         </div>
 
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Med Map.jpg" alt="Savage Build 2" class="stadium-img">
-            <span class="stadium-tag">Medium Build</span>
+        <div class="calc-summary">
+          <div>
+            <h3 style="color: #ffffff;">Stream Booking Details</h3>
+            <div class="calc-price" style="font-size: 1.8rem; margin: 0.8rem 0;">Live Broadcast Booking</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Includes multi-cam observer angles, live commentary booth, animated scoreboard, and HD VOD archive.
+            </p>
           </div>
-          <div class="stadium-content">
-            <h3>Savage Metro Stadium</h3>
-            <p>Sleek urban-styled stadium with multi-tiered spectator seating.</p>
-          </div>
-        </div>
-
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Large Map.jpg" alt="Savage Build 3" class="stadium-img">
-            <span class="stadium-tag">Large Build</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Savage Titan Superdome</h3>
-            <p>Massive 360-degree stadium with full roof lighting setup.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DELLE'S WORK -->
-    <div class="builder-subsection">
-      <div class="builder-header">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <h3>Delle's Work</h3>
-      </div>
-      <div class="portfolio-grid">
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Small Map.jpg" alt="Delle Build 1" class="stadium-img">
-            <span class="stadium-tag">Small Build</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Delle Training Complex</h3>
-            <p>Clean training ground layout with precision floodlights.</p>
-          </div>
-        </div>
-
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Med Map.jpg" alt="Delle Build 2" class="stadium-img">
-            <span class="stadium-tag">Medium Build</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Delle Apex Arena</h3>
-            <p>Balanced league setup featuring custom dugout and team tunnels.</p>
-          </div>
-        </div>
-
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Large Map.jpg" alt="Delle Build 3" class="stadium-img">
-            <span class="stadium-tag">Large Build</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Delle Colosseum Grand</h3>
-            <p>Elite 360° stadium build equipped with custom banners and VIP boxes.</p>
-          </div>
+          <button onclick="submitStreamBooking()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
+            <i class="fa-brands fa-discord"></i> Confirm Stream Booking on Discord
+          </button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <!-- CALCULATOR SECTION -->
-  <section id="calculator">
-    <div class="section-title">
-      <h2>Price Estimator</h2>
-      <p>Select stadium size and stand options to estimate cost in Credits or Cash</p>
-    </div>
-
-    <div class="calculator-box">
-      <div class="calc-inputs">
-        <!-- Stadium Size Options -->
-        <div class="calc-option">
-          <label>Stadium Size</label>
-          <div class="option-group" id="size-group">
-            <button class="option-btn" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
-            <button class="option-btn active" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
-            <button class="option-btn" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
-          </div>
-        </div>
-
-        <!-- Stands & Extras Options -->
-        <div class="calc-option">
-          <label>Stands & Extras</label>
-          <div class="option-group" id="stands-group">
-            <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Standard Stands (Included)</button>
-            <button class="option-btn" data-value="2" onclick="selectOption('stands-group', this)">Upgraded / Extra Stands (+2 Credits)</button>
-            <button class="option-btn" data-value="4" onclick="selectOption('stands-group', this)">Custom Grandstands (+4 Credits)</button>
-          </div>
-        </div>
-
-        <!-- Payment Currency Options -->
-        <div class="calc-option">
-          <label>Payment Method</label>
-          <div class="option-group" id="currency-group">
-            <button class="option-btn active" data-value="credits" onclick="selectOption('currency-group', this)">VRFS Credits</button>
-            <button class="option-btn" data-value="gbp" onclick="selectOption('currency-group', this)">GBP (£)</button>
-            <button class="option-btn" data-value="usd" onclick="selectOption('currency-group', this)">USD ($)</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="calc-summary">
-        <div>
-          <h3 style="color: #ffffff;">Estimated Total</h3>
-          <div class="calc-price" id="total-price">14 VRFS Credits</div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord ticket.
-          </p>
-        </div>
-        <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
-          Open Discord Ticket
-        </a>
-      </div>
-    </div>
-  </section>
 
   <footer>
-    <p>&copy; 2026 TSB Stadiums. Custom VRFS Builds.</p>
+    <p>&copy; 2026 TSB Stadiums, Kits & Streaming. All Rights Reserved.</p>
   </footer>
 
   <script>
-    function selectIntent(option) {
-      const modal = document.getElementById('welcomeModal');
-      modal.classList.add('hidden');
+    // VIEW SWITCHING LOGIC
+    function switchMainView(viewId) {
+      // Hide modal if open
+      document.getElementById('welcomeModal').classList.add('hidden');
 
-      if (option === 'stadiums') {
-        const target = document.getElementById('portfolio');
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      } else if (option === 'kits' || option === 'streaming') {
-        window.open('https://discord.gg/FvvNjfDeQM', '_blank');
-      }
+      // Hide all view sections
+      const views = document.querySelectorAll('.view-section');
+      views.forEach(v => v.classList.remove('active-view'));
+
+      // Show selected view
+      const targetView = document.getElementById(viewId);
+      if (targetView) targetView.classList.add('active-view');
+
+      // Update nav link styles
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('nav-active'));
+      if (viewId === 'stadiums-view') document.getElementById('nav-stadiums').classList.add('nav-active');
+      if (viewId === 'kits-view') document.getElementById('nav-kits').classList.add('nav-active');
+      if (viewId === 'streaming-view') document.getElementById('nav-streaming').classList.add('nav-active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function openGateModal() {
+      document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+
+    // STADIUM CALCULATOR LOGIC
     function selectOption(groupId, button) {
       const buttons = document.querySelectorAll(`#${groupId} .option-btn`);
       buttons.forEach(btn => btn.classList.remove('active'));
@@ -953,6 +1217,8 @@
       const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
       const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
       const activeCurrencyBtn = document.querySelector('#currency-group .option-btn.active');
+
+      if (!activeSizeBtn || !activeStandsBtn || !activeCurrencyBtn) return;
 
       const baseCredits = parseFloat(activeSizeBtn.getAttribute('data-value'));
       const standCredits = parseFloat(activeStandsBtn.getAttribute('data-value'));
@@ -972,6 +1238,41 @@
       }
     }
 
+    // KIT CUSTOMIZER LOGIC
+    function selectKitPattern(card) {
+      document.querySelectorAll('#kit-pattern-group .kit-design-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    }
+
+    function submitKitOrder() {
+      const teamName = document.getElementById('kit-team-name').value || 'Unspecified Team';
+      const activePatternCard = document.querySelector('#kit-pattern-group .kit-design-card.active');
+      const pattern = activePatternCard ? activePatternCard.getAttribute('data-pattern') : 'Classic';
+      const primary = document.getElementById('kit-color-primary').value;
+      const secondary = document.getElementById('kit-color-secondary').value;
+      const accent = document.getElementById('kit-color-accent').value;
+      const logoReq = document.getElementById('kit-logo-req').value || 'Standard badge';
+
+      const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Pattern: ${pattern}\n- Colors: ${primary}, ${secondary}, ${accent}\n- Logo Details: ${logoReq}`;
+      
+      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+    }
+
+    // STREAMING BOOKING LOGIC
+    function submitStreamBooking() {
+      const league = document.getElementById('stream-league').value || 'VRFS League';
+      const teams = document.getElementById('stream-teams').value || 'TBD vs TBD';
+      const date = document.getElementById('stream-date').value || 'Unspecified Date';
+      const time = document.getElementById('stream-time').value || 'Unspecified Time';
+      const activeTypeBtn = document.querySelector('#stream-type-group .option-btn.active');
+      const matchType = activeTypeBtn ? activeTypeBtn.getAttribute('data-type') : 'Standard Match';
+
+      const details = `TSB Stream Booking:\n- League: ${league}\n- Match: ${teams}\n- Date: ${date}\n- Time: ${time}\n- Match Type: ${matchType}`;
+
+      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+    }
+
+    // INITIALIZE
     calculatePrice();
   </script>
 </body>
