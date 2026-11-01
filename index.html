@@ -502,6 +502,79 @@
       display: block;
     }
 
+    /* REVIEWS SECTION STYLES */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--purple-main);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    }
+
+    .review-stars {
+      color: #eab308;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .review-text {
+      color: var(--text-main);
+      font-size: 0.98rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 1.1rem;
+      border: 1px solid var(--purple-light);
+    }
+
+    .author-info h4 {
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .author-info p {
+      font-size: 0.82rem;
+      color: var(--purple-light);
+      font-weight: 600;
+    }
+
     /* CUSTOM OPTION SELECTOR / CALCULATOR STYLES */
     .calculator-box {
       background: var(--bg-card);
@@ -968,6 +1041,76 @@
             <div class="stadium-content">
               <h3>Delle Colosseum Grand</h3>
               <p>Elite 360° stadium build equipped with custom banners and VIP boxes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT REVIEWS SECTION -->
+    <section id="reviews">
+      <div class="section-title">
+        <h2>Client Reviews</h2>
+        <p>What VRFS teams and league managers say about TSB builds</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div>
+            <div class="review-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="review-text">"Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!"</p>
+          </div>
+          <div class="review-author">
+            <div class="author-avatar">M</div>
+            <div class="author-info">
+              <h4>Matrix FC Manager</h4>
+              <p>Custom Stadium Order</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div>
+            <div class="review-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="review-text">"Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work."</p>
+          </div>
+          <div class="review-author">
+            <div class="author-avatar">K</div>
+            <div class="author-info">
+              <h4>KevVR</h4>
+              <p>Team Kit & Graphic Design</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div>
+            <div class="review-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="review-text">"Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional."</p>
+          </div>
+          <div class="review-author">
+            <div class="author-avatar">A</div>
+            <div class="author-info">
+              <h4>Apex League Admin</h4>
+              <p>Live Stream Booking</p>
             </div>
           </div>
         </div>
