@@ -136,12 +136,12 @@
       box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
     }
 
-    .modal-option-card i {
-      font-size: 2.5rem;
-      color: var(--purple-main);
+    .modal-option-card span.emoji-icon {
+      font-size: 3rem;
+      line-height: 1;
     }
 
-    .modal-option-card span {
+    .modal-option-card span.option-title {
       font-size: 1.15rem;
       font-weight: 700;
       color: #ffffff;
@@ -502,11 +502,12 @@
       display: block;
     }
 
-    /* REVIEWS SECTION STYLES */
+    /* REVIEWS SECTION & FORM STYLES */
     .reviews-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
+      margin-bottom: 3rem;
     }
 
     .review-card {
@@ -573,6 +574,28 @@
       font-size: 0.82rem;
       color: var(--purple-light);
       font-weight: 600;
+    }
+
+    .leave-review-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .star-select {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: 1.2rem;
+    }
+
+    .star-select i.active {
+      color: #eab308;
     }
 
     /* CUSTOM OPTION SELECTOR / CALCULATOR STYLES */
@@ -676,7 +699,7 @@
       color: #ffffff;
     }
 
-    .tsb-input {
+    .tsb-input, .tsb-textarea {
       width: 100%;
       padding: 0.85rem 1rem;
       background: #000000;
@@ -689,7 +712,12 @@
       transition: border-color 0.3s ease;
     }
 
-    .tsb-input:focus {
+    .tsb-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .tsb-input:focus, .tsb-textarea:focus {
       border-color: var(--purple-main);
       box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
     }
@@ -777,20 +805,20 @@
       <div class="modal-options-grid">
         <!-- Option 1: Stadiums -->
         <div class="modal-option-card" onclick="switchMainView('stadiums-view')">
-          <i class="fa-solid fa-stadium"></i>
-          <span>Stadiums</span>
+          <span class="emoji-icon">🏟️</span>
+          <span class="option-title">Stadiums</span>
         </div>
 
         <!-- Option 2: Kits -->
         <div class="modal-option-card" onclick="switchMainView('kits-view')">
-          <i class="fa-solid fa-shirt"></i>
-          <span>Kits</span>
+          <span class="emoji-icon">🎽</span>
+          <span class="option-title">Kits</span>
         </div>
 
         <!-- Option 3: Streaming -->
         <div class="modal-option-card" onclick="switchMainView('streaming-view')">
-          <i class="fa-solid fa-headset"></i>
-          <span>Streaming</span>
+          <span class="emoji-icon">🎧</span>
+          <span class="option-title">Streaming</span>
         </div>
       </div>
     </div>
@@ -1054,66 +1082,46 @@
         <p>What VRFS teams and league managers say about TSB builds</p>
       </div>
 
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div>
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-            <p class="review-text">"Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!"</p>
-          </div>
-          <div class="review-author">
-            <div class="author-avatar">M</div>
-            <div class="author-info">
-              <h4>Matrix FC Manager</h4>
-              <p>Custom Stadium Order</p>
-            </div>
+      <div class="reviews-grid" id="reviewsContainer">
+        <!-- Default reviews will load here -->
+      </div>
+
+      <!-- WRITE A REVIEW FORM -->
+      <div class="leave-review-box">
+        <h3 style="color: #ffffff; margin-bottom: 0.5rem; text-align: center;">Leave a Review</h3>
+        <p style="color: var(--text-muted); text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;">
+          Share your experience with TSB Stadiums, Kits, or Streaming services
+        </p>
+
+        <div class="tsb-form-group">
+          <label>Your Rating</label>
+          <div class="star-select" id="starRatingSelect">
+            <i class="fa-solid fa-star active" data-rating="1" onclick="setFormRating(1)"></i>
+            <i class="fa-solid fa-star active" data-rating="2" onclick="setFormRating(2)"></i>
+            <i class="fa-solid fa-star active" data-rating="3" onclick="setFormRating(3)"></i>
+            <i class="fa-solid fa-star active" data-rating="4" onclick="setFormRating(4)"></i>
+            <i class="fa-solid fa-star active" data-rating="5" onclick="setFormRating(5)"></i>
           </div>
         </div>
 
-        <div class="review-card">
-          <div>
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-            <p class="review-text">"Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work."</p>
-          </div>
-          <div class="review-author">
-            <div class="author-avatar">K</div>
-            <div class="author-info">
-              <h4>KevVR</h4>
-              <p>Team Kit & Graphic Design</p>
-            </div>
-          </div>
+        <div class="tsb-form-group">
+          <label>Your Name / VRFS Username</label>
+          <input type="text" class="tsb-input" id="review-author-name" placeholder="e.g. Matrix FC Manager">
         </div>
 
-        <div class="review-card">
-          <div>
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-            <p class="review-text">"Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional."</p>
-          </div>
-          <div class="review-author">
-            <div class="author-avatar">A</div>
-            <div class="author-info">
-              <h4>Apex League Admin</h4>
-              <p>Live Stream Booking</p>
-            </div>
-          </div>
+        <div class="tsb-form-group">
+          <label>Service Received</label>
+          <input type="text" class="tsb-input" id="review-service-type" placeholder="e.g. Custom Stadium Order, Kits, or Streaming">
         </div>
+
+        <div class="tsb-form-group">
+          <label>Your Review</label>
+          <textarea class="tsb-textarea" id="review-text-content" placeholder="Write your feedback here..."></textarea>
+        </div>
+
+        <button onclick="postReview()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
+          Submit Review
+        </button>
       </div>
     </section>
 
@@ -1324,18 +1332,14 @@
   <script>
     // VIEW SWITCHING LOGIC
     function switchMainView(viewId) {
-      // Hide modal if open
       document.getElementById('welcomeModal').classList.add('hidden');
 
-      // Hide all view sections
       const views = document.querySelectorAll('.view-section');
       views.forEach(v => v.classList.remove('active-view'));
 
-      // Show selected view
       const targetView = document.getElementById(viewId);
       if (targetView) targetView.classList.add('active-view');
 
-      // Update nav link styles
       document.querySelectorAll('nav a').forEach(a => a.classList.remove('nav-active'));
       if (viewId === 'stadiums-view') document.getElementById('nav-stadiums').classList.add('nav-active');
       if (viewId === 'kits-view') document.getElementById('nav-kits').classList.add('nav-active');
@@ -1346,6 +1350,100 @@
 
     function openGateModal() {
       document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+
+    // REVIEWS MANAGEMENT (LOCAL STORAGE + DYNAMIC RENDER)
+    let currentSelectedRating = 5;
+
+    const initialReviews = [
+      { name: "Matrix FC Manager", service: "Custom Stadium Order", rating: 5, text: "Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!" },
+      { name: "KevVR", service: "Team Kit & Graphic Design", rating: 5, text: "Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work." },
+      { name: "Apex League Admin", service: "Live Stream Booking", rating: 5, text: "Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional." }
+    ];
+
+    function loadReviews() {
+      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews'));
+      if (!savedReviews || savedReviews.length === 0) {
+        savedReviews = initialReviews;
+        localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
+      }
+
+      const container = document.getElementById('reviewsContainer');
+      container.innerHTML = '';
+
+      savedReviews.forEach(rev => {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= rev.rating) {
+            starsHtml += '<i class="fa-solid fa-star"></i>';
+          } else {
+            starsHtml += '<i class="fa-regular fa-star" style="color: var(--text-muted);"></i>';
+          }
+        }
+
+        const initial = rev.name ? rev.name.charAt(0).toUpperCase() : 'U';
+
+        const reviewCard = document.createElement('div');
+        reviewCard.className = 'review-card';
+        reviewCard.innerHTML = `
+          <div>
+            <div class="review-stars">${starsHtml}</div>
+            <p class="review-text">"${rev.text}"</p>
+          </div>
+          <div class="review-author">
+            <div class="author-avatar">${initial}</div>
+            <div class="author-info">
+              <h4>${rev.name}</h4>
+              <p>${rev.service}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(reviewCard);
+      });
+    }
+
+    function setFormRating(rating) {
+      currentSelectedRating = rating;
+      const stars = document.querySelectorAll('#starRatingSelect i');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.remove('fa-regular');
+          star.classList.add('fa-solid', 'active');
+        } else {
+          star.classList.remove('fa-solid', 'active');
+          star.classList.add('fa-regular');
+        }
+      });
+    }
+
+    function postReview() {
+      const nameInput = document.getElementById('review-author-name').value.trim();
+      const serviceInput = document.getElementById('review-service-type').value.trim();
+      const textInput = document.getElementById('review-text-content').value.trim();
+
+      if (!nameInput || !textInput) {
+        alert('Please fill in your name and review text.');
+        return;
+      }
+
+      const newReview = {
+        name: nameInput,
+        service: serviceInput || 'TSB Service',
+        rating: currentSelectedRating,
+        text: textInput
+      };
+
+      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews')) || initialReviews;
+      savedReviews.unshift(newReview);
+      localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
+
+      document.getElementById('review-author-name').value = '';
+      document.getElementById('review-service-type').value = '';
+      document.getElementById('review-text-content').value = '';
+      setFormRating(5);
+
+      loadReviews();
+      alert('Thank you! Your review has been submitted.');
     }
 
     // STADIUM CALCULATOR LOGIC
@@ -1417,6 +1515,7 @@
 
     // INITIALIZE
     calculatePrice();
+    loadReviews();
   </script>
 </body>
 </html>
