@@ -971,7 +971,7 @@
       padding: 0.2rem;
     }
 
-    /* KITS DESIGN CARDS */
+    /* KITS DESIGN CARDS WITH IMAGE PREVIEWS */
     .kit-design-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -983,10 +983,13 @@
       background: #000000;
       border: 2px solid rgba(168, 85, 247, 0.2);
       border-radius: 14px;
-      padding: 1.2rem;
+      padding: 1rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .kit-design-card:hover {
@@ -1000,10 +1003,37 @@
       box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
     }
 
-    .kit-design-card i {
-      font-size: 2.2rem;
+    .kit-design-img-wrapper {
+      width: 100%;
+      height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #181622;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .kit-design-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .kit-design-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .kit-design-placeholder i {
+      font-size: 2rem;
       color: var(--purple-main);
-      margin-bottom: 0.5rem;
     }
 
     .kit-design-card h4 {
@@ -1453,25 +1483,63 @@
             <input type="text" class="tsb-input" id="kit-team-name" placeholder="e.g. Apex United FC">
           </div>
 
+          <!-- DESIGN SELECTOR WITH IMAGE PREVIEW CARDS -->
           <div class="calc-option">
             <label>2. Select Kit Pattern / Design Style</label>
             <div class="kit-design-grid" id="kit-pattern-group">
+              
+              <!-- Pattern Option 1 -->
               <div class="kit-design-card active" data-pattern="Classic Stripes" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-grip-lines-vertical"></i>
+                <div class="kit-design-img-wrapper">
+                  <!-- Replace src below with your custom image when ready: images/kit-design-1.jpg -->
+                  <img src="images/kit-design-1.jpg" alt="Vertical Stripes" class="kit-design-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="kit-design-placeholder" style="display: none;">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Design Image 1</span>
+                  </div>
+                </div>
                 <h4>Vertical Stripes</h4>
               </div>
+
+              <!-- Pattern Option 2 -->
               <div class="kit-design-card" data-pattern="Modern Gradient" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div class="kit-design-img-wrapper">
+                  <!-- Replace src below with your custom image when ready: images/kit-design-2.jpg -->
+                  <img src="images/kit-design-2.jpg" alt="Modern Gradient" class="kit-design-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="kit-design-placeholder" style="display: none;">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Design Image 2</span>
+                  </div>
+                </div>
                 <h4>Modern Gradient</h4>
               </div>
+
+              <!-- Pattern Option 3 -->
               <div class="kit-design-card" data-pattern="Sash / Diagonal" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-slash"></i>
+                <div class="kit-design-img-wrapper">
+                  <!-- Replace src below with your custom image when ready: images/kit-design-3.jpg -->
+                  <img src="images/kit-design-3.jpg" alt="Diagonal Sash" class="kit-design-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="kit-design-placeholder" style="display: none;">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Design Image 3</span>
+                  </div>
+                </div>
                 <h4>Diagonal Sash</h4>
               </div>
-              <div class="kit-design-card" data-pattern="Geometric / Honeycomb" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-cubes"></i>
+
+              <!-- Pattern Option 4 -->
+              <div class="kit-design-card" data-pattern="Geometric / Tech" onclick="selectKitPattern(this)">
+                <div class="kit-design-img-wrapper">
+                  <!-- Replace src below with your custom image when ready: images/kit-design-4.jpg -->
+                  <img src="images/kit-design-4.jpg" alt="Geometric Tech" class="kit-design-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="kit-design-placeholder" style="display: none;">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Design Image 4</span>
+                  </div>
+                </div>
                 <h4>Geometric Tech</h4>
               </div>
+
             </div>
           </div>
 
@@ -1821,11 +1889,9 @@
             header += arr[i].toString(16);
           }
           
-          // PNG magic header: 89504e47
-          // JPG magic header: ffd8ffe0, ffd8ffe1, ffd8ffe2, ffd8ffe3, ffd8ffe8
           const isPng = header.startsWith("89504e47");
           const isJpg = header.startsWith("ffd8");
-          const isWebp = header.startsWith("5249"); // RIFF header for WebP
+          const isWebp = header.startsWith("5249");
 
           if (isPng || isJpg || isWebp) {
             resolve(true);
