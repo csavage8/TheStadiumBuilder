@@ -649,7 +649,7 @@
       color: #eab308;
     }
 
-    /* ADMIN PANEL MODAL */
+    /* MODAL OVERLAY STYLES */
     .admin-modal-overlay {
       position: fixed;
       top: 0;
@@ -677,7 +677,7 @@
       border: 1px solid var(--purple-main);
       box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
       border-radius: 20px;
-      max-width: 450px;
+      max-width: 480px;
       width: 100%;
       padding: 2.5rem;
       text-align: center;
@@ -707,6 +707,22 @@
 
     .close-modal-btn:hover {
       color: #ffffff;
+    }
+
+    /* ORDER CONFIRMATION MODAL SUMMARY */
+    .order-summary-box {
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      line-height: 1.6;
+      max-height: 250px;
+      overflow-y: auto;
     }
 
     /* ADMIN DASHBOARD BAR */
@@ -1089,6 +1105,24 @@
     </div>
   </div>
 
+  <!-- ORDER CONFIRMATION MODAL -->
+  <div class="admin-modal-overlay hidden" id="orderConfirmModal">
+    <div class="admin-modal-box">
+      <span class="close-modal-btn" onclick="closeOrderConfirmModal()"><i class="fa-solid fa-xmark"></i></span>
+      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--green-pitch); margin-bottom: 1rem;"></i>
+      <h3>Confirm Your Order</h3>
+      <p>Review details below before dispatching to TSB Bot</p>
+
+      <div class="order-summary-box" id="modalOrderDetails">
+        <!-- Details dynamically populated here -->
+      </div>
+
+      <button id="sendOrderBtn" onclick="dispatchFinalOrder()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
+        <i class="fa-brands fa-discord"></i> Confirm & Send Order
+      </button>
+    </div>
+  </div>
+
   <!-- ADMIN LOGIN MODAL -->
   <div class="admin-modal-overlay hidden" id="adminLoginModal">
     <div class="admin-modal-box">
@@ -1218,7 +1252,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">12 Credits <span>£0.84 / $1.08</span></div>
-              <button onclick="directOrder('Pro Arena - Compact Edition')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Pro Arena - Compact Edition\n- Price: 12 Credits (£0.84 / $1.08)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1239,7 +1273,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">14 Credits <span>£0.98 / $1.26</span></div>
-              <button onclick="directOrder('Championship Stadium')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Championship Stadium\n- Price: 14 Credits (£0.98 / $1.26)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1260,7 +1294,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">16 Credits <span>£1.12 / $1.44</span></div>
-              <button onclick="directOrder('Apex Grand Arena')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Apex Grand Arena\n- Price: 16 Credits (£1.12 / $1.44)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1454,7 +1488,7 @@
               *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord order.
             </p>
           </div>
-          <button onclick="submitCustomStadiumOrder()" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
+          <button onclick="prepareCustomStadiumOrder()" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
             Order Custom Stadium
           </button>
         </div>
@@ -1556,7 +1590,7 @@
               Includes full HD textured kit textures, custom badge vector, and pitch sponsor graphics.
             </p>
           </div>
-          <button onclick="submitKitOrder()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
+          <button onclick="prepareKitOrder()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
             <i class="fa-brands fa-discord"></i> Order Custom Kit
           </button>
         </div>
@@ -1618,7 +1652,7 @@
               Includes multi-cam observer angles, live commentary booth, animated scoreboard, and HD VOD archive.
             </p>
           </div>
-          <button onclick="submitStreamBooking()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
+          <button onclick="prepareStreamBooking()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
             <i class="fa-brands fa-discord"></i> Order Live Stream
           </button>
         </div>
@@ -1652,6 +1686,24 @@
 
     function openGateModal() {
       document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+
+    // ORDER CONFIRMATION MODAL LOGIC
+    let currentPendingOrderDetails = "";
+
+    function openOrderModal(detailsText) {
+      currentPendingOrderDetails = detailsText;
+      document.getElementById('modalOrderDetails').innerText = detailsText;
+      document.getElementById('orderConfirmModal').classList.remove('hidden');
+    }
+
+    function closeOrderConfirmModal() {
+      document.getElementById('orderConfirmModal').classList.add('hidden');
+    }
+
+    function dispatchFinalOrder() {
+      closeOrderConfirmModal();
+      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(currentPendingOrderDetails)}`, '_blank');
     }
 
     // ADMIN MODAL & AUTHENTICATION
@@ -1798,7 +1850,6 @@
       statusBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Scanning uploaded file(s) for viruses, malware, and executable payload signatures...';
 
       for (const file of files) {
-        // Step 1: MIME Type & Extension Check
         const validTypes = ['image/png', 'image/jpeg', 'image/webp'];
         if (!validTypes.includes(file.type)) {
           statusBox.className = 'scan-status-box unsafe';
@@ -1806,14 +1857,12 @@
           return;
         }
 
-        // Step 2: File Size Cap Check (Max 10MB)
         if (file.size > 10 * 1024 * 1024) {
           statusBox.className = 'scan-status-box unsafe';
           statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> File Too Large: ${file.name} exceeds the 10MB limit.`;
           return;
         }
 
-        // Step 3: Binary Byte Header / Magic Number Security Verification
         const isHeaderSafe = await verifyImageHeader(file);
         if (!isHeaderSafe) {
           statusBox.className = 'scan-status-box unsafe';
@@ -1821,7 +1870,6 @@
           return;
         }
 
-        // Step 4: Render thumbnail preview
         const reader = new FileReader();
         reader.onload = function(e) {
           const fileObj = {
@@ -1837,7 +1885,7 @@
 
       statusBox.className = 'scan-status-box safe';
       statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Scan Complete: All uploaded image(s) verified safe & clean.`;
-      event.target.value = ''; // Reset input so same file can be re-added if desired
+      event.target.value = '';
     }
 
     function renderImagePreviews() {
@@ -1868,7 +1916,6 @@
       }
     }
 
-    // Helper: Reads magic number bytes to detect spoofed executable extension tricks
     function verifyImageHeader(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -1926,12 +1973,8 @@
       }
     }
 
-    // DIRECT DISCORD ORDER ACTIONS (NO POPUPS, OPENS NEW TAB)
-    function directOrder(itemName) {
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent('Stadium Purchase: ' + itemName)}`, '_blank');
-    }
-
-    function submitCustomStadiumOrder() {
+    // ORDER PREPARATION & MODAL ROUTING
+    function prepareCustomStadiumOrder() {
       const priceText = document.getElementById('total-price').innerText;
       const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
       const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
@@ -1940,10 +1983,10 @@
       const standsText = activeStandsBtn ? activeStandsBtn.innerText : 'Standard Stands';
 
       const details = `Custom Stadium Request:\n- ${sizeText}\n- Stand Option: ${standsText}\n- Total Price: ${priceText}`;
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      openOrderModal(details);
     }
 
-    function submitKitOrder() {
+    function prepareKitOrder() {
       const teamName = document.getElementById('kit-team-name').value || 'Unspecified Team';
       const activePatternCard = document.querySelector('#kit-pattern-group .kit-design-card.active');
       const pattern = activePatternCard ? activePatternCard.getAttribute('data-pattern') : 'Classic';
@@ -1955,11 +1998,11 @@
       const fileListNames = verifiedUploadedFiles.map(f => f.name);
       const fileListStr = fileListNames.length > 0 ? fileListNames.join(', ') : 'None attached';
 
-      const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Pattern: ${pattern}\n- Colors: ${primary}, ${secondary}, ${accent}\n- Scanned & Verified Attachments: ${fileListStr}\n- Notes: ${logoReq}`;
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Pattern Style: ${pattern}\n- Color Scheme: ${primary}, ${secondary}, ${accent}\n- Attachments: ${fileListStr}\n- Notes: ${logoReq}`;
+      openOrderModal(details);
     }
 
-    function submitStreamBooking() {
+    function prepareStreamBooking() {
       const league = document.getElementById('stream-league').value || 'VRFS League';
       const teams = document.getElementById('stream-teams').value || 'TBD vs TBD';
       const date = document.getElementById('stream-date').value || 'Unspecified Date';
@@ -1967,8 +2010,8 @@
       const activeTypeBtn = document.querySelector('#stream-type-group .option-btn.active');
       const matchType = activeTypeBtn ? activeTypeBtn.getAttribute('data-type') : 'Standard Match';
 
-      const details = `TSB Stream Booking:\n- League: ${league}\n- Match: ${teams}\n- Date: ${date}\n- Time: ${time}\n- Match Type: ${matchType}`;
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      const details = `TSB Stream Booking:\n- League: ${league}\n- Match: ${teams}\n- Scheduled Date: ${date}\n- Kick-off Time: ${time}\n- Format: ${matchType}`;
+      openOrderModal(details);
     }
 
     // INITIALIZE
