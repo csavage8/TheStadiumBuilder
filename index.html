@@ -1218,7 +1218,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">12 Credits <span>£0.84 / $1.08</span></div>
-              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+              <button onclick="confirmPurchase('Pro Arena - Compact Edition', '12 Credits (£0.84 / $1.08)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</button>
             </div>
           </div>
         </div>
@@ -1239,7 +1239,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">14 Credits <span>£0.98 / $1.26</span></div>
-              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+              <button onclick="confirmPurchase('Championship Stadium', '14 Credits (£0.98 / $1.26)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</button>
             </div>
           </div>
         </div>
@@ -1260,7 +1260,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price">16 Credits <span>£1.12 / $1.44</span></div>
-              <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</a>
+              <button onclick="confirmPurchase('Apex Grand Arena', '16 Credits (£1.12 / $1.44)')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buy</button>
             </div>
           </div>
         </div>
@@ -1428,11 +1428,11 @@
           </div>
 
           <div class="calc-option">
-            <label>Stands</label>
+            <label>Stands (FREE Upgrade)</label>
             <div class="option-group" id="stands-group">
-              <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Tribune Small (Included)</button>
-              <button class="option-btn" data-value="2" onclick="selectOption('stands-group', this)">Tribune Big (+2 Credits)</button>
-              <button class="option-btn" data-value="4" onclick="selectOption('stands-group', this)">Blocks (+4 Credits)</button>
+              <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Tribune Small (Free)</button>
+              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Tribune Big (Free)</button>
+              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Blocks (Free)</button>
             </div>
           </div>
 
@@ -1454,9 +1454,9 @@
               *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord ticket.
             </p>
           </div>
-          <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
+          <button onclick="submitCustomStadiumOrder()" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
             Open Discord Ticket
-          </a>
+          </button>
         </div>
       </div>
     </section>
@@ -1926,6 +1926,30 @@
       }
     }
 
+    // CONFIRMATION POPUP HANDLERS
+    function confirmPurchase(itemName, price) {
+      const confirmed = confirm(`Are you sure you want to purchase:\n\nItem: ${itemName}\nPrice: ${price}\n\nClick OK to proceed to Discord.`);
+      if (confirmed) {
+        window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent('Stadium Purchase: ' + itemName)}`, '_blank');
+      }
+    }
+
+    function submitCustomStadiumOrder() {
+      const priceText = document.getElementById('total-price').innerText;
+      const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
+      const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
+
+      const sizeText = activeSizeBtn ? activeSizeBtn.innerText : 'Stadium';
+      const standsText = activeStandsBtn ? activeStandsBtn.innerText : 'Standard Stands';
+
+      const details = `Custom Stadium Request:\n- ${sizeText}\n- Stand Option: ${standsText}\n- Total Price: ${priceText}`;
+
+      const confirmed = confirm(`Are you sure you want to submit this custom stadium order?\n\n- ${sizeText}\n- ${standsText}\n- Total Price: ${priceText}\n\nClick OK to open your Discord ticket.`);
+      if (confirmed) {
+        window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      }
+    }
+
     // KIT CUSTOMIZER LOGIC
     function selectKitPattern(card) {
       document.querySelectorAll('#kit-pattern-group .kit-design-card').forEach(c => c.classList.remove('active'));
@@ -1946,7 +1970,10 @@
 
       const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Pattern: ${pattern}\n- Colors: ${primary}, ${secondary}, ${accent}\n- Scanned & Verified Attachments: ${fileListStr}\n- Notes: ${logoReq}`;
       
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      const confirmed = confirm(`Are you sure you want to submit this kit order?\n\n- Team Name: ${teamName}\n- Pattern: ${pattern}\n- Attachments: ${fileListNames.length} image(s)\n\nClick OK to confirm and proceed to Discord.`);
+      if (confirmed) {
+        window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      }
     }
 
     // STREAMING BOOKING LOGIC
@@ -1960,7 +1987,10 @@
 
       const details = `TSB Stream Booking:\n- League: ${league}\n- Match: ${teams}\n- Date: ${date}\n- Time: ${time}\n- Match Type: ${matchType}`;
 
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      const confirmed = confirm(`Are you sure you want to confirm this stream booking?\n\n- League: ${league}\n- Match: ${teams}\n- Date & Time: ${date} at ${time}\n\nClick OK to open Discord and book.`);
+      if (confirmed) {
+        window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(details)}`, '_blank');
+      }
     }
 
     // INITIALIZE
