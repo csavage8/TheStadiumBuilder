@@ -193,6 +193,7 @@
       display: flex;
       list-style: none;
       gap: 1.5rem;
+      align-items: center;
     }
 
     nav a {
@@ -210,6 +211,30 @@
       background: rgba(168, 85, 247, 0.15);
       border: 1px solid rgba(168, 85, 247, 0.3);
       text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-admin {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid var(--purple-main);
+      color: var(--purple-light);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-admin:hover {
+      background: var(--purple-main);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
     }
 
     .btn-discord {
@@ -519,12 +544,38 @@
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.3s ease;
+      position: relative;
     }
 
     .review-card:hover {
       transform: translateY(-5px);
       border-color: var(--purple-main);
       box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    }
+
+    .delete-review-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: none;
+    }
+
+    .delete-review-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    body.admin-mode .delete-review-btn {
+      display: inline-block;
     }
 
     .review-stars {
@@ -596,6 +647,98 @@
 
     .star-select i.active {
       color: #eab308;
+    }
+
+    /* ADMIN PANEL MODAL */
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 4, 6, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .admin-modal-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .admin-modal-box {
+      background: #121118;
+      border: 1px solid var(--purple-main);
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
+      border-radius: 20px;
+      max-width: 450px;
+      width: 100%;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .admin-modal-box h3 {
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin-modal-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .close-modal-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .close-modal-btn:hover {
+      color: #ffffff;
+    }
+
+    /* ADMIN DASHBOARD BAR */
+    .admin-bar {
+      background: linear-gradient(90deg, #9333ea, #a855f7);
+      color: #ffffff;
+      padding: 0.5rem 2rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 101;
+    }
+
+    body.admin-mode .admin-bar {
+      display: flex;
+    }
+
+    .btn-logout {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      padding: 0.2rem 0.8rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-logout:hover {
+      background: #000000;
     }
 
     /* CUSTOM OPTION SELECTOR / CALCULATOR STYLES */
@@ -795,6 +938,12 @@
 </head>
 <body>
 
+  <!-- ADMIN BAR -->
+  <div class="admin-bar" id="adminBar">
+    <span><i class="fa-solid fa-user-shield"></i> TSB Admin Mode Active — You can now delete reviews directly on the page</span>
+    <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+  </div>
+
   <!-- WELCOME LANDING GATE / POPUP MODAL MENU -->
   <div class="welcome-modal-overlay" id="welcomeModal">
     <div class="welcome-modal-box">
@@ -824,6 +973,22 @@
     </div>
   </div>
 
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="admin-modal-overlay hidden" id="adminLoginModal">
+    <div class="admin-modal-box">
+      <span class="close-modal-btn" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></span>
+      <i class="fa-solid fa-lock" style="font-size: 2rem; color: var(--purple-main); margin-bottom: 1rem;"></i>
+      <h3>Admin Login</h3>
+      <p>Enter key to manage & delete reviews</p>
+      <div class="tsb-form-group">
+        <input type="password" class="tsb-input" id="admin-pass-input" placeholder="Enter Admin Password">
+      </div>
+      <button onclick="loginAdmin()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.8rem;">
+        Login
+      </button>
+    </div>
+  </div>
+
   <div class="bg-glow"></div>
 
   <!-- HEADER NAVIGATION -->
@@ -839,9 +1004,12 @@
         <li><a id="nav-streaming" onclick="switchMainView('streaming-view')">Book Streaming</a></li>
       </ul>
     </nav>
-    <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord">
-      <i class="fa-brands fa-discord"></i> Join Discord
-    </a>
+    <div class="nav-actions">
+      <button class="btn-admin" onclick="openAdminModal()"><i class="fa-solid fa-shield"></i> Admin</button>
+      <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord">
+        <i class="fa-brands fa-discord"></i> Join Discord
+      </a>
+    </div>
   </header>
 
 
@@ -1083,7 +1251,7 @@
       </div>
 
       <div class="reviews-grid" id="reviewsContainer">
-        <!-- Default reviews will load here -->
+        <!-- Dynamic reviews load here -->
       </div>
 
       <!-- WRITE A REVIEW FORM -->
@@ -1352,13 +1520,41 @@
       document.getElementById('welcomeModal').classList.remove('hidden');
     }
 
-    // REVIEWS MANAGEMENT (LOCAL STORAGE + DYNAMIC RENDER)
+    // ADMIN MODAL & AUTHENTICATION
+    const ADMIN_PASS = "tsb123";
+
+    function openAdminModal() {
+      document.getElementById('adminLoginModal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminLoginModal').classList.add('hidden');
+      document.getElementById('admin-pass-input').value = '';
+    }
+
+    function loginAdmin() {
+      const inputPass = document.getElementById('admin-pass-input').value;
+      if (inputPass === ADMIN_PASS) {
+        document.body.classList.add('admin-mode');
+        closeAdminModal();
+        alert('Welcome Admin! You can now delete any review.');
+      } else {
+        alert('Incorrect Password!');
+      }
+    }
+
+    function logoutAdmin() {
+      document.body.classList.remove('admin-mode');
+      alert('Logged out of Admin Mode.');
+    }
+
+    // REVIEWS MANAGEMENT
     let currentSelectedRating = 5;
 
     const initialReviews = [
-      { name: "Matrix FC Manager", service: "Custom Stadium Order", rating: 5, text: "Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!" },
-      { name: "KevVR", service: "Team Kit & Graphic Design", rating: 5, text: "Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work." },
-      { name: "Apex League Admin", service: "Live Stream Booking", rating: 5, text: "Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional." }
+      { id: 1, name: "Matrix FC Manager", service: "Custom Stadium Order", rating: 5, text: "Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!" },
+      { id: 2, name: "KevVR", service: "Team Kit & Graphic Design", rating: 5, text: "Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work." },
+      { id: 3, name: "Apex League Admin", service: "Live Stream Booking", rating: 5, text: "Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional." }
     ];
 
     function loadReviews() {
@@ -1386,6 +1582,7 @@
         const reviewCard = document.createElement('div');
         reviewCard.className = 'review-card';
         reviewCard.innerHTML = `
+          <button class="delete-review-btn" onclick="deleteReview(${rev.id})"><i class="fa-solid fa-trash"></i> Delete</button>
           <div>
             <div class="review-stars">${starsHtml}</div>
             <p class="review-text">"${rev.text}"</p>
@@ -1400,6 +1597,13 @@
         `;
         container.appendChild(reviewCard);
       });
+    }
+
+    function deleteReview(id) {
+      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews')) || [];
+      savedReviews = savedReviews.filter(r => r.id !== id);
+      localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
+      loadReviews();
     }
 
     function setFormRating(rating) {
@@ -1427,6 +1631,7 @@
       }
 
       const newReview = {
+        id: Date.now(),
         name: nameInput,
         service: serviceInput || 'TSB Service',
         rating: currentSelectedRating,
