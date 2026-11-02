@@ -963,12 +963,43 @@
       margin-top: 1rem;
     }
 
+    .preview-thumb-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
     .preview-thumb {
-      width: 70px;
-      height: 70px;
+      width: 75px;
+      height: 75px;
       border-radius: 10px;
       object-fit: cover;
       border: 2px solid var(--purple-main);
+      display: block;
+    }
+
+    .delete-thumb-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+      transition: transform 0.2s ease;
+    }
+
+    .delete-thumb-btn:hover {
+      transform: scale(1.15);
+      background: #dc2626;
     }
 
     /* KITS DESIGN CARDS */
@@ -1493,7 +1524,7 @@
             </div>
           </div>
 
-          <!-- UPLOAD LOGO & REFERENCE GRAPHICS WITH AUTOMATED VIRUS SCAN -->
+          <!-- UPLOAD LOGO & REFERENCE GRAPHICS WITH AUTOMATED VIRUS SCAN & REMOVE FEATURE -->
           <div class="tsb-form-group">
             <label>4. Upload Logo / Sponsor Reference Images (Automated Security Scan Enabled)</label>
             <div class="upload-zone" id="uploadDropZone">
@@ -1754,13 +1785,12 @@
       alert('Thank you! Your review has been submitted.');
     }
 
-    // IMAGE UPLOAD & VIRUS/SECURITY SCAN LOGIC
+    // IMAGE UPLOAD, SECURITY SCAN & REMOVE LOGIC
     let verifiedUploadedFiles = [];
 
     async function handleImageUpload(event) {
       const files = Array.from(event.target.files);
       const statusBox = document.getElementById('scanStatusBox');
-      const previewContainer = document.getElementById('imagePreviewContainer');
 
       if (files.length === 0) return;
 
@@ -1772,7 +1802,7 @@
         const validTypes = ['image/png', 'image/jpeg', 'image/webp'];
         if (!validTypes.includes(file.type)) {
           statusBox.className = 'scan-status-box unsafe';
-          statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Threat Detected/Blocked: Invalid file format (${file.name}). Only verified image formats (PNG/JPG/WEBP) are permitted.`;
+          statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Threat Detected/Blocked: Invalid file format (${file.name}). Only PNG/JPG/WEBP allowed.`;
           return;
         }
 
@@ -1787,24 +1817,55 @@
         const isHeaderSafe = await verifyImageHeader(file);
         if (!isHeaderSafe) {
           statusBox.className = 'scan-status-box unsafe';
-          statusBox.innerHTML = `<i class="fa-solid fa-bug"></i> Security Shield Blocked File: ${file.name} contains abnormal binary signatures or hidden executable code.`;
+          statusBox.innerHTML = `<i class="fa-solid fa-bug"></i> Security Shield Blocked File: ${file.name} contains abnormal binary signatures.`;
           return;
         }
 
-        // Step 4: Render verified preview thumbnail
-        verifiedUploadedFiles.push(file.name);
+        // Step 4: Render thumbnail preview
         const reader = new FileReader();
         reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.className = 'preview-thumb';
-          previewContainer.appendChild(img);
+          const fileObj = {
+            id: Date.now() + Math.random(),
+            name: file.name,
+            src: e.target.result
+          };
+          verifiedUploadedFiles.push(fileObj);
+          renderImagePreviews();
         };
         reader.readAsDataURL(file);
       }
 
       statusBox.className = 'scan-status-box safe';
-      statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Scan Complete: All ${files.length} uploaded image(s) verified safe & clean.`;
+      statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Scan Complete: All uploaded image(s) verified safe & clean.`;
+      event.target.value = ''; // Reset input so same file can be re-added if desired
+    }
+
+    function renderImagePreviews() {
+      const previewContainer = document.getElementById('imagePreviewContainer');
+      previewContainer.innerHTML = '';
+
+      verifiedUploadedFiles.forEach(fileObj => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'preview-thumb-wrapper';
+        wrapper.innerHTML = `
+          <img src="${fileObj.src}" class="preview-thumb" alt="${fileObj.name}">
+          <button type="button" class="delete-thumb-btn" onclick="removeUploadedImage(${fileObj.id})">✕</button>
+        `;
+        previewContainer.appendChild(wrapper);
+      });
+    }
+
+    function removeUploadedImage(fileId) {
+      verifiedUploadedFiles = verifiedUploadedFiles.filter(f => f.id !== fileId);
+      renderImagePreviews();
+
+      const statusBox = document.getElementById('scanStatusBox');
+      if (verifiedUploadedFiles.length === 0) {
+        statusBox.style.display = 'none';
+      } else {
+        statusBox.className = 'scan-status-box safe';
+        statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> File removed. ${verifiedUploadedFiles.length} file(s) remaining.`;
+      }
     }
 
     // Helper: Reads magic number bytes to detect spoofed executable extension tricks
@@ -1880,7 +1941,8 @@
       const accent = document.getElementById('kit-color-accent').value;
       const logoReq = document.getElementById('kit-logo-req').value || 'Standard badge';
 
-      const fileListStr = verifiedUploadedFiles.length > 0 ? verifiedUploadedFiles.join(', ') : 'None attached';
+      const fileListNames = verifiedUploadedFiles.map(f => f.name);
+      const fileListStr = fileListNames.length > 0 ? fileListNames.join(', ') : 'None attached';
 
       const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Pattern: ${pattern}\n- Colors: ${primary}, ${secondary}, ${accent}\n- Scanned & Verified Attachments: ${fileListStr}\n- Notes: ${logoReq}`;
       
