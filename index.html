@@ -3,2160 +3,374 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TSB - Stadiums, Kits & Streaming Services</title>
+  <title>TSB - Stadiums, Kits & Streaming</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --purple-main: #a855f7;
-      --purple-glow: #9333ea;
-      --purple-light: #c084fc;
-      --green-pitch: #22c55e;
-      --green-glow: #16a34a;
-      --bg-dark: #08080a;
-      --bg-card: #121118;
-      --bg-card-hover: #1b1926;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-glow: rgba(168, 85, 247, 0.25);
-    }
-
-    body.high-contrast {
-      --text-main: #ffffff;
-      --text-muted: #cbd5e1;
-      --border-glow: rgba(168, 85, 247, 0.6);
-    }
-
-    body.disable-glow .bg-glow {
-      display: none !important;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    h1, h2, h3, .brand-font {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .bg-glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
-    }
-
-    /* WELCOME GATE OVERLAY */
-    .welcome-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(4, 4, 6, 0.95);
-      backdrop-filter: blur(25px);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .welcome-modal-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .welcome-modal-box {
-      background: #121118;
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
-      border-radius: 24px;
-      max-width: 700px;
-      width: 100%;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .welcome-modal-box img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid var(--purple-main);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-      margin-bottom: 1rem;
-    }
-
-    .welcome-modal-box h2 {
-      font-size: 2.4rem;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    .welcome-modal-box p {
-      color: var(--text-muted);
-      margin-bottom: 2.2rem;
-      font-size: 1.1rem;
-    }
-
-    .modal-options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .modal-option-card {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 18px;
-      padding: 2rem 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .modal-option-card:hover {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
-      border-color: var(--purple-main);
-      transform: translateY(-6px);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
-    }
-
-    .modal-option-card span.emoji-icon {
-      font-size: 3rem;
-      line-height: 1;
-    }
-
-    .modal-option-card span.option-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    /* HEADER & NAV */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(16px);
-      background: rgba(8, 8, 10, 0.88);
-      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .brand-logo-img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--purple-main);
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
-    }
-
-    .brand-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-
-    .brand-title span {
-      color: var(--purple-main);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.2rem;
-      align-items: center;
-    }
-
-    nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      padding: 0.4rem 0.8rem;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-
-    nav a:hover, nav a.nav-active {
-      color: #ffffff;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .currency-select-nav {
-      background: #000000;
-      border: 1px solid var(--purple-main);
-      color: var(--text-main);
-      padding: 0.4rem 0.6rem;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .btn-settings {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      padding: 0.5rem 0.9rem;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-settings:hover {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: #ffffff;
-    }
-
-    .btn-admin {
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid var(--purple-main);
-      color: var(--purple-light);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-admin:hover {
-      background: var(--purple-main);
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-    }
-
-    .btn-discord {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      color: white;
-      padding: 0.6rem 1.4rem;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-discord:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
-    }
-
-    /* MAIN VIEW SWITCHING */
-    .view-section {
-      display: none;
-      position: relative;
-      z-index: 1;
-    }
-
-    .view-section.active-view {
-      display: block !important;
-    }
-
-    /* HERO STYLING */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 2rem 3rem;
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid var(--purple-main);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      color: var(--purple-light);
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 span.highlight-purple {
-      color: var(--purple-main);
-      text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-btns {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: white;
-      padding: 0.8rem 1.8rem;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--purple-light);
-    }
-
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .section-title h2 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title p {
-      color: var(--text-muted);
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    body.compact-mode .portfolio-grid {
-      gap: 1rem;
-    }
-
-    body.compact-mode .stadium-card, body.compact-mode .for-sale-card {
-      border-radius: 10px;
-    }
-
-    .stadium-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stadium-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--purple-main);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
-    }
-
-    .stadium-img-wrapper {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      background: #1a1a24;
-      overflow: hidden;
-    }
-
-    .stadium-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .stadium-card:hover .stadium-img {
-      transform: scale(1.05);
-    }
-
-    .stadium-tag {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(8, 8, 10, 0.85);
-      border: 1px solid var(--green-pitch);
-      color: var(--green-pitch);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      backdrop-filter: blur(4px);
-    }
-
-    .stadium-content {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .stadium-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .stadium-content p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
-    /* FOR SALE SECTION STYLES */
-    .for-sale-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .for-sale-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--green-pitch);
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
-    }
-
-    .sale-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: var(--green-pitch);
-      color: #000000;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .sale-features {
-      list-style: none;
-      margin: 1rem 0;
-      padding: 0;
-    }
-
-    .sale-features li {
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .sale-features li i {
-      color: var(--green-pitch);
-      font-size: 0.8rem;
-    }
-
-    .sale-price-box {
-      margin-top: auto;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .sale-price {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--green-pitch);
-    }
-
-    /* REVIEWS SECTION & FORM STYLES */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .review-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 18px;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .review-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--purple-main);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
-    }
-
-    .delete-review-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid #ef4444;
-      color: #ef4444;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: none;
-    }
-
-    .delete-review-btn:hover {
-      background: #ef4444;
-      color: #ffffff;
-    }
-
-    body.admin-mode .delete-review-btn {
-      display: inline-block;
-    }
-
-    .review-stars {
-      color: #eab308;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      display: flex;
-      gap: 0.25rem;
-    }
-
-    .review-text {
-      color: var(--text-main);
-      font-size: 0.98rem;
-      font-style: italic;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-
-    .review-author {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 1rem;
-    }
-
-    .author-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: #ffffff;
-      font-size: 1.1rem;
-      border: 1px solid var(--purple-light);
-    }
-
-    .author-info h4 {
-      font-size: 1rem;
-      color: #ffffff;
-    }
-
-    .author-info p {
-      font-size: 0.82rem;
-      color: var(--purple-light);
-      font-weight: 600;
-    }
-
-    .leave-review-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 2.5rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .star-select {
-      display: flex;
-      gap: 0.5rem;
-      font-size: 1.5rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      margin-bottom: 1.2rem;
-    }
-
-    .star-select i.active {
-      color: #eab308;
-    }
-
-    /* MODAL OVERLAY STYLES */
-    .admin-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(4, 4, 6, 0.92);
-      backdrop-filter: blur(20px);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .admin-modal-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .admin-modal-box {
-      background: #121118;
-      border: 1px solid var(--purple-main);
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
-      border-radius: 20px;
-      max-width: 500px;
-      width: 100%;
-      padding: 2.5rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .admin-modal-box h3 {
-      font-size: 1.8rem;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    .admin-modal-box p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .close-modal-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1.2rem;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .close-modal-btn:hover {
-      color: #ffffff;
-    }
-
-    .order-summary-box {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 12px;
-      padding: 1.2rem;
-      text-align: left;
-      margin-bottom: 1.2rem;
-      font-size: 0.92rem;
-      color: var(--text-main);
-      white-space: pre-wrap;
-      line-height: 1.6;
-      max-height: 230px;
-      overflow-y: auto;
-    }
-
-    .coupon-container {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .settings-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: left;
-      margin-bottom: 1.8rem;
-    }
-
-    .setting-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      padding: 0.8rem 1rem;
-      border-radius: 12px;
-    }
-
-    .setting-info h4 {
-      font-size: 0.95rem;
-      color: #ffffff;
-    }
-
-    .setting-info p {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #333344;
-      transition: .3s;
-      border-radius: 24px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .3s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: var(--purple-main);
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
-
-    .admin-bar {
-      background: linear-gradient(90deg, #9333ea, #a855f7);
-      color: #ffffff;
-      padding: 0.5rem 2rem;
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.88rem;
-      font-weight: 700;
-      position: relative;
-      z-index: 101;
-    }
-
-    body.admin-mode .admin-bar {
-      display: flex;
-    }
-
-    .btn-logout {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: #ffffff;
-      padding: 0.2rem 0.8rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-
-    .calculator-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-    }
-
-    @media (max-width: 850px) {
-      .calculator-box { grid-template-columns: 1fr; }
-    }
-
-    .calc-option {
-      margin-bottom: 1.8rem;
-    }
-
-    .calc-option label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
-      font-size: 1rem;
-    }
-
-    .option-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      padding: 0.5rem;
-      border-radius: 14px;
-    }
-
-    .option-btn {
-      background: transparent;
-      color: #ffffff;
-      border: none;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .option-btn:hover {
-      background: rgba(168, 85, 247, 0.15);
-    }
-
-    .option-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
-      font-weight: 700;
-    }
-
-    .option-btn.active::after {
-      content: "✓";
-      font-weight: bold;
-    }
-
-    .calc-summary {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      border-radius: 14px;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .calc-price {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--green-pitch);
-      margin: 1rem 0;
-    }
-
-    .tsb-form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .tsb-form-group label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #ffffff;
-    }
-
-    .tsb-input, .tsb-textarea {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 12px;
-      color: #ffffff;
-      font-family: inherit;
-      font-size: 1rem;
-      outline: none;
-    }
-
-    .tsb-textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .color-pickers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 1rem;
-    }
-
-    .color-picker-item label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .tsb-color-input {
-      width: 100%;
-      height: 45px;
-      background: #000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 10px;
-      cursor: pointer;
-      padding: 0.2rem;
-    }
-
-    .upload-zone {
-      border: 2px dashed rgba(168, 85, 247, 0.4);
-      background: #000000;
-      border-radius: 14px;
-      padding: 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .upload-zone input[type="file"] {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    .scan-status-box {
-      margin-top: 1rem;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: none;
-    }
-
-    .scan-status-box.safe {
-      display: flex;
-      background: rgba(34, 197, 94, 0.15);
-      border: 1px solid var(--green-pitch);
-      color: var(--green-pitch);
-    }
-
-    .image-preview-container {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .preview-thumb-wrapper {
-      position: relative;
-    }
-
-    .preview-thumb {
-      width: 75px;
-      height: 75px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 2px solid var(--purple-main);
-    }
-
-    .delete-thumb-btn {
-      position: absolute;
-      top: -6px; right: -6px;
-      background: #ef4444;
-      color: #ffffff;
-      border: none;
-      border-radius: 50%;
-      width: 22px; height: 22px;
-      font-size: 0.75rem;
-      cursor: pointer;
-    }
-
-    .kit-design-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .kit-design-card {
-      background: #000000;
-      border: 2px solid rgba(168, 85, 247, 0.2);
-      border-radius: 14px;
-      padding: 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .kit-design-card.active {
-      border-color: var(--purple-main);
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-    }
-
-    .kit-canvas-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem;
-    }
-
-    canvas#kitPreviewCanvas {
-      width: 220px;
-      height: 220px;
-      background: transparent;
-    }
-
-    .irl-toggle-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .irl-btn {
-      flex: 1;
-      padding: 0.75rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #ffffff;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .irl-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      border-color: var(--purple-main);
-    }
-
-    .time-slot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.5rem;
-    }
-
-    .slot-btn {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #ffffff;
-      padding: 0.6rem;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    .slot-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      border-color: var(--purple-main);
-    }
-
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      position: relative;
-      z-index: 1;
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    :root { --purple-main: #a855f7; --purple-glow: #9333ea; --purple-light: #c084fc; --green-pitch: #22c55e; --bg-dark: #08080a; --bg-card: #121118; --text-main: #f8fafc; --text-muted: #94a3b8; --border-glow: rgba(168,85,247,0.25); }
+    body.high-contrast { --text-main: #fff; --text-muted: #cbd5e1; --border-glow: rgba(168,85,247,0.6); }
+    body.disable-glow .bg-glow { display: none !important; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg-dark); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+    h1,h2,h3 { font-family: 'Space Grotesk', sans-serif; }
+    .bg-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; background: radial-gradient(circle at 10% 20%, rgba(168,85,247,0.12) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(34,197,94,0.08) 0%, transparent 40%); }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .overlay-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4,4,6,0.92); backdrop-filter: blur(20px); z-index: 9999; padding: 1.5rem; transition: opacity .3s, visibility .3s; }
+    .overlay-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .modal-box { background: #121118; border: 1px solid var(--purple-main); box-shadow: 0 0 50px rgba(168,85,247,0.3); border-radius: 20px; max-width: 500px; width: 100%; padding: 2.5rem; text-align: center; position: relative; }
+    .close-btn { position: absolute; top: 1rem; right: 1.2rem; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; }
+    header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(16px); background: rgba(8,8,10,0.88); border-bottom: 1px solid rgba(168,85,247,0.15); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .brand-logo { display: flex; align-items: center; gap: .75rem; cursor: pointer; }
+    .brand-logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--purple-main); }
+    nav ul { display: flex; list-style: none; gap: 1rem; }
+    nav a { color: var(--text-muted); text-decoration: none; font-weight: 600; padding: .4rem .8rem; border-radius: 12px; cursor: pointer; }
+    nav a:hover, nav a.nav-active { color: #fff; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); }
+    .btn-discord { background: linear-gradient(135deg, var(--purple-main), var(--purple-glow)); color: #fff; padding: .6rem 1.4rem; border-radius: 30px; text-decoration: none; font-weight: 700; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: .5rem; }
+    .btn-sec { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: .6rem 1.2rem; border-radius: 20px; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .view-section { display: none; position: relative; z-index: 1; }
+    .view-section.active-view { display: block !important; }
+    .hero { padding: 5rem 2rem 3rem; text-align: center; max-width: 900px; margin: 0 auto; }
+    section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 3rem; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    body.compact-mode .portfolio-grid { gap: 1rem; }
+    .card-base { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+    .stadium-img-wrapper { position: relative; width: 100%; height: 200px; background: #1a1a24; }
+    .stadium-img { width: 100%; height: 100%; object-fit: cover; }
+    .tag-badge { position: absolute; top: 12px; right: 12px; background: rgba(8,8,10,0.85); border: 1px solid var(--green-pitch); color: var(--green-pitch); font-size: .75rem; font-weight: 700; padding: .3rem .8rem; border-radius: 20px; }
+    .calc-box { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 850px) { .calc-box { grid-template-columns: 1fr; } }
+    .option-group { display: flex; flex-direction: column; gap: .5rem; background: #000; border: 1px solid rgba(168,85,247,0.3); padding: .5rem; border-radius: 14px; }
+    .option-btn { background: transparent; color: #fff; border: none; padding: .75rem 1rem; border-radius: 10px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; }
+    .option-btn.active { background: linear-gradient(135deg, var(--purple-main), var(--purple-glow)); font-weight: 700; }
+    .option-btn.active::after { content: "✓"; }
+    .tsb-input, .tsb-textarea { width: 100%; padding: .85rem 1rem; background: #000; border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; color: #fff; outline: none; margin-top: .4rem; }
+    .kit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .8rem; }
+    .kit-card { background: #000; border: 2px solid rgba(168,85,247,0.2); border-radius: 14px; padding: 1rem; text-align: center; cursor: pointer; }
+    .kit-card.active { border-color: var(--purple-main); background: rgba(168,85,247,0.2); }
+    .admin-bar { background: linear-gradient(90deg, #9333ea, #a855f7); color: #fff; padding: .5rem 2rem; display: none; justify-content: space-between; align-items: center; font-weight: 700; }
+    body.admin-mode .admin-bar { display: flex; }
+    .delete-btn { display: none; position: absolute; top: 1rem; right: 1rem; background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #ef4444; padding: .3rem .6rem; border-radius: 8px; cursor: pointer; }
+    body.admin-mode .delete-btn { display: block; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
   <div class="admin-bar" id="adminBar">
-    <span><i class="fa-solid fa-user-shield"></i> TSB Admin Mode Active — Delete reviews directly on the page</span>
-    <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+    <span><i class="fa-solid fa-shield"></i> Admin Mode Active</span>
+    <button onclick="toggleAdmin(false)" class="btn-sec" style="padding:.2rem .6rem;">Logout</button>
   </div>
 
-  <div class="welcome-modal-overlay" id="welcomeModal">
-    <div class="welcome-modal-box">
-      <img src="images/Tsb Logo.png" alt="TSB Logo">
+  <div class="overlay-modal flex-center" id="welcomeModal">
+    <div class="modal-box" style="max-width: 650px;">
+      <img src="images/Tsb Logo.png" alt="TSB" style="width:70px; border-radius:50%; border:2px solid var(--purple-main); margin-bottom:1rem;">
       <h2>Welcome to TSB</h2>
-      <p>What service are you looking for today?</p>
-      
-      <div class="modal-options-grid">
-        <div class="modal-option-card" onclick="switchMainView('stadiums-view')">
-          <span class="emoji-icon">🏟️</span>
-          <span class="option-title">Stadiums</span>
-        </div>
-        <div class="modal-option-card" onclick="switchMainView('kits-view')">
-          <span class="emoji-icon">🎽</span>
-          <span class="option-title">Kits</span>
-        </div>
-        <div class="modal-option-card" onclick="switchMainView('streaming-view')">
-          <span class="emoji-icon">🎧</span>
-          <span class="option-title">Streaming</span>
-        </div>
+      <p style="color:var(--text-muted); margin-bottom:2rem;">Select a service to continue:</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1rem;">
+        <div class="kit-card" onclick="switchView('stadiums-view')"><span style="font-size:2.5rem;">🏟️</span><h4>Stadiums</h4></div>
+        <div class="kit-card" onclick="switchView('kits-view')"><span style="font-size:2.5rem;">🎽</span><h4>Kits</h4></div>
+        <div class="kit-card" onclick="switchView('streaming-view')"><span style="font-size:2.5rem;">🎧</span><h4>Streaming</h4></div>
       </div>
     </div>
   </div>
 
-  <div class="admin-modal-overlay hidden" id="orderConfirmModal">
-    <div class="admin-modal-box">
-      <span class="close-modal-btn" onclick="closeOrderConfirmModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--green-pitch); margin-bottom: 1rem;"></i>
+  <div class="overlay-modal flex-center hidden" id="orderConfirmModal">
+    <div class="modal-box">
+      <span class="close-btn" onclick="toggleModal('orderConfirmModal', false)"><i class="fa-solid fa-xmark"></i></span>
+      <i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color: var(--green-pitch); margin-bottom: 1rem;"></i>
       <h3>Confirm Your Order</h3>
-      <p>Review details below before dispatching to TSB Bot</p>
-
-      <div class="order-summary-box" id="modalOrderDetails"></div>
-
-      <div class="coupon-container">
-        <input type="text" class="tsb-input" id="couponInput" placeholder="Promo Code (e.g. TSB10)" style="padding: 0.6rem;">
-        <button onclick="applyCoupon()" class="btn-secondary" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem;">Apply</button>
+      <div id="modalOrderDetails" style="background:#000; border:1px solid rgba(168,85,247,0.3); border-radius:12px; padding:1rem; text-align:left; margin:1rem 0; font-size:.9rem; white-space:pre-wrap;"></div>
+      <div style="display:flex; gap:.5rem; margin-bottom:1rem;">
+        <input type="text" class="tsb-input" id="couponInput" placeholder="Promo Code (e.g. TSB10)" style="margin:0;">
+        <button onclick="applyCoupon()" class="btn-sec">Apply</button>
       </div>
-      <div id="couponMessage" style="font-size: 0.8rem; margin-bottom: 1rem; text-align: left; display: none;"></div>
-
-      <button id="sendOrderBtn" onclick="dispatchFinalOrder()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
-        <i class="fa-brands fa-discord"></i> Confirm & Send Order
-      </button>
+      <div id="couponMsg" style="font-size:.8rem; margin-bottom:1rem; display:none;"></div>
+      <button onclick="dispatchOrder()" class="btn-discord" style="width:100%; justify-content:center; padding:.8rem;"><i class="fa-brands fa-discord"></i> Send Order</button>
     </div>
   </div>
 
-  <div class="admin-modal-overlay hidden" id="settingsModal">
-    <div class="admin-modal-box">
-      <span class="close-modal-btn" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-gear" style="font-size: 2.2rem; color: var(--purple-main); margin-bottom: 1rem;"></i>
-      <h3>Website Preferences</h3>
-      <p>Adjust graphics, controls, and display settings</p>
-
-      <div class="settings-list">
-        <div class="setting-row">
-          <div class="setting-info">
-            <h4>Dynamic Neon Glow</h4>
-            <p>Toggle background lighting effects</p>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="setting-glow-toggle" checked onchange="toggleSettingGlow(this)">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <div class="setting-row">
-          <div class="setting-info">
-            <h4>High-Contrast Text</h4>
-            <p>Enhance font readability & colors</p>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="setting-contrast-toggle" onchange="toggleSettingContrast(this)">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <div class="setting-row">
-          <div class="setting-info">
-            <h4>Compact Cards Layout</h4>
-            <p>Reduce padding on stadium cards</p>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="setting-compact-toggle" onchange="toggleSettingCompact(this)">
-            <span class="slider"></span>
-          </label>
-        </div>
+  <div class="overlay-modal flex-center hidden" id="settingsModal">
+    <div class="modal-box">
+      <span class="close-btn" onclick="toggleModal('settingsModal', false)"><i class="fa-solid fa-xmark"></i></span>
+      <h3>Site Settings</h3>
+      <div style="display:flex; flex-direction:column; gap:1rem; margin:1.5rem 0; text-align:left;">
+        <label><input type="checkbox" id="glowToggle" checked onchange="document.body.classList.toggle('disable-glow', !this.checked)"> Dynamic Glow</label>
+        <label><input type="checkbox" onchange="document.body.classList.toggle('high-contrast', this.checked)"> High-Contrast Text</label>
+        <label><input type="checkbox" onchange="document.body.classList.toggle('compact-mode', this.checked)"> Compact Layout</label>
       </div>
-
-      <button onclick="resetReviewCache()" class="btn-secondary" style="width: 100%; border-color: #ef4444; color: #ef4444; font-size: 0.85rem; padding: 0.6rem;">
-        Reset Stored Review Data
-      </button>
+      <button onclick="localStorage.removeItem('tsb_reviews'); loadReviews(); alert('Reviews Reset');" class="btn-sec" style="width:100%; color:#ef4444; border-color:#ef4444;">Reset Reviews</button>
     </div>
   </div>
 
-  <div class="admin-modal-overlay hidden" id="adminLoginModal">
-    <div class="admin-modal-box">
-      <span class="close-modal-btn" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-lock" style="font-size: 2rem; color: var(--purple-main); margin-bottom: 1rem;"></i>
+  <div class="overlay-modal flex-center hidden" id="adminLoginModal">
+    <div class="modal-box">
+      <span class="close-btn" onclick="toggleModal('adminLoginModal', false)"><i class="fa-solid fa-xmark"></i></span>
       <h3>Admin Login</h3>
-      <p>Enter key to manage & delete reviews</p>
-      <div class="tsb-form-group">
-        <input type="password" class="tsb-input" id="admin-pass-input" placeholder="Enter Admin Password">
-      </div>
-      <button onclick="loginAdmin()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.8rem;">
-        Login
-      </button>
+      <input type="password" class="tsb-input" id="adminPass" placeholder="Password" style="margin:1rem 0;">
+      <button onclick="loginAdmin()" class="btn-discord" style="width:100%; justify-content:center;">Login</button>
     </div>
   </div>
 
   <div class="bg-glow"></div>
 
   <header>
-    <div class="brand-logo-container" onclick="openGateModal()">
-      <img src="images/Tsb Logo.png" alt="TSB Logo" class="brand-logo-img">
-      <div class="brand-title">TSB <span>OFFICIAL</span></div>
+    <div class="brand-logo" onclick="toggleModal('welcomeModal', true)">
+      <img src="images/Tsb Logo.png" alt="TSB">
+      <div style="font-weight:700; font-size:1.4rem;">TSB <span style="color:var(--purple-main)">OFFICIAL</span></div>
     </div>
     <nav>
       <ul>
-        <li><a id="nav-stadiums" class="nav-active" onclick="switchMainView('stadiums-view')">Stadiums</a></li>
-        <li><a id="nav-kits" onclick="switchMainView('kits-view')">Kits & Customizer</a></li>
-        <li><a id="nav-streaming" onclick="switchMainView('streaming-view')">Book Streaming</a></li>
+        <li><a id="nav-stadiums" class="nav-active" onclick="switchView('stadiums-view')">Stadiums</a></li>
+        <li><a id="nav-kits" onclick="switchView('kits-view')">Kits</a></li>
+        <li><a id="nav-streaming" onclick="switchView('streaming-view')">Streaming</a></li>
       </ul>
     </nav>
-    <div class="nav-actions">
-      <select class="currency-select-nav" id="globalCurrencyNav" onchange="changeGlobalCurrency(this.value)">
-        <option value="credits">Credits</option>
-        <option value="gbp">£ GBP</option>
-        <option value="usd">$ USD</option>
+    <div style="display:flex; gap:.6rem; align-items:center;">
+      <select id="currNav" onchange="setCurrency(this.value)" style="background:#000; color:#fff; border:1px solid var(--purple-main); padding:.4rem; border-radius:10px; font-weight:700;">
+        <option value="credits">Credits</option><option value="gbp">£ GBP</option><option value="usd">$ USD</option>
       </select>
-
-      <button class="btn-settings" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i></button>
-      <button class="btn-admin" onclick="openAdminModal()"><i class="fa-solid fa-shield"></i> Admin</button>
-      <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord">
-        <i class="fa-brands fa-discord"></i> Join Discord
-      </a>
+      <button class="btn-sec" onclick="toggleModal('settingsModal', true)"><i class="fa-solid fa-gear"></i></button>
+      <button class="btn-sec" onclick="toggleModal('adminLoginModal', true)"><i class="fa-solid fa-shield"></i></button>
+      <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord"><i class="fa-brands fa-discord"></i> Discord</a>
     </div>
   </header>
 
-  <!-- VIEW 1: STADIUMS SECTION -->
+  <!-- STADIUMS VIEW -->
   <div id="stadiums-view" class="view-section active-view">
     <div class="hero">
-      <div class="hero-badge">
-        <i class="fa-solid fa-bolt"></i> Premier Custom VRFS Stadium Builders
-      </div>
-      <h1>Build Your Custom <span class="highlight-purple">VRFS Stadium</span></h1>
-      <p>Get custom pitch layouts, grandstands, floodlights, and team branding. Pay with VRFS Credits, GBP (£), or USD ($).</p>
-      <div class="hero-btns">
-        <a href="https://discord.gg/FvvNjfDeQM" target="_blank" class="btn-discord" style="padding: 0.9rem 2rem; font-size: 1.1rem;">
-          <i class="fa-brands fa-discord"></i> Order Stadium on Discord
-        </a>
-        <a href="#stadium-calculator" class="btn-secondary">Check Pricing</a>
-      </div>
+      <h1>Build Your Custom <span style="color:var(--purple-main);">VRFS Stadium</span></h1>
+      <p style="color:var(--text-muted); margin-top:1rem;">Custom pitches, stands, lighting, and team branding.</p>
     </div>
 
-    <section id="portfolio">
-      <div class="section-title">
-        <h2>Stadium Showcase</h2>
-        <p>Explore recent custom builds for VRFS teams and leagues</p>
-      </div>
-
+    <section>
+      <div class="section-title"><h2>Pre-Built Stadiums</h2></div>
       <div class="portfolio-grid">
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Small Map.jpg" alt="Small Stadium" class="stadium-img">
-            <span class="stadium-tag price-display-tag" data-credits="12">12 Credits</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Small Stadium</h3>
-            <p>Compact setup with standard pitch layout, basic side stands, and essential floodlighting.</p>
-          </div>
-        </div>
-
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Med Map.jpg" alt="Medium Stadium" class="stadium-img">
-            <span class="stadium-tag price-display-tag" data-credits="14">14 Credits</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Medium Stadium</h3>
-            <p>Expanded spectator capacity with multi-tier stands and custom team branding options.</p>
-          </div>
-        </div>
-
-        <div class="stadium-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Large Map.jpg" alt="Large Stadium" class="stadium-img">
-            <span class="stadium-tag price-display-tag" data-credits="16">16 Credits</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Large Stadium</h3>
-            <p>Full 360-degree stadium atmosphere, grandstand seating, custom banners, and roof lighting.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="for-sale">
-      <div class="section-title">
-        <h2>Pre-Built Stadiums For Sale</h2>
-        <p>Ready-to-use custom VRFS stadiums available for immediate delivery</p>
-      </div>
-
-      <div class="portfolio-grid">
-        <div class="for-sale-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Small Map.jpg" alt="Pro Arena Pack" class="stadium-img">
-            <span class="sale-badge">Ready Now</span>
-            <span class="stadium-tag price-display-tag" data-credits="12">12 Credits</span>
-          </div>
-          <div class="stadium-content">
-            <h3>Pro Arena - Compact Edition</h3>
-            <p>Ideal for grassroots VRFS clubs needing a clean ground with custom colors.</p>
-            <ul class="sale-features">
-              <li><i class="fa-solid fa-check"></i> 2 Side Stands with Seating</li>
-              <li><i class="fa-solid fa-check"></i> Floodlight Corners</li>
-              <li><i class="fa-solid fa-check"></i> Custom Pitch Markings</li>
-            </ul>
-            <div class="sale-price-box">
-              <div class="sale-price price-display-main" data-credits="12">12 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Pro Arena - Compact Edition\n- Price: 12 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+        <div class="card-base">
+          <div class="stadium-img-wrapper"><img src="images/Small Map.jpg" class="stadium-img"><span class="tag-badge price-tag" data-c="12">12 Credits</span></div>
+          <div style="padding:1.5rem;">
+            <h3>Pro Arena - Compact</h3>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+              <span class="price-main" data-c="12" style="font-weight:800; color:var(--green-pitch);">12 Credits</span>
+              <button onclick="orderPreset('Pro Arena Compact', 12)" class="btn-discord" style="padding:.4rem .8rem; font-size:.85rem;">Order</button>
             </div>
           </div>
         </div>
-
-        <div class="for-sale-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Med Map.jpg" alt="Championship Stadium" class="stadium-img">
-            <span class="sale-badge">Popular</span>
-            <span class="stadium-tag price-display-tag" data-credits="14">14 Credits</span>
-          </div>
-          <div class="stadium-content">
+        <div class="card-base">
+          <div class="stadium-img-wrapper"><img src="images/Med Map.jpg" class="stadium-img"><span class="tag-badge price-tag" data-c="14">14 Credits</span></div>
+          <div style="padding:1.5rem;">
             <h3>Championship Stadium</h3>
-            <p>Medium tier stadium optimized for competitive league matches with dugout setup.</p>
-            <ul class="sale-features">
-              <li><i class="fa-solid fa-check"></i> Multi-tier Stand Seating</li>
-              <li><i class="fa-solid fa-check"></i> Integrated Dugouts</li>
-              <li><i class="fa-solid fa-check"></i> Sponsor Board Area</li>
-            </ul>
-            <div class="sale-price-box">
-              <div class="sale-price price-display-main" data-credits="14">14 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Championship Stadium\n- Price: 14 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+              <span class="price-main" data-c="14" style="font-weight:800; color:var(--green-pitch);">14 Credits</span>
+              <button onclick="orderPreset('Championship Stadium', 14)" class="btn-discord" style="padding:.4rem .8rem; font-size:.85rem;">Order</button>
             </div>
           </div>
         </div>
-
-        <div class="for-sale-card">
-          <div class="stadium-img-wrapper">
-            <img src="images/Large Map.jpg" alt="Ultimate Apex Arena" class="stadium-img">
-            <span class="sale-badge">Ultimate</span>
-            <span class="stadium-tag price-display-tag" data-credits="16">16 Credits</span>
-          </div>
-          <div class="stadium-content">
+        <div class="card-base">
+          <div class="stadium-img-wrapper"><img src="images/Large Map.jpg" class="stadium-img"><span class="tag-badge price-tag" data-c="16">16 Credits</span></div>
+          <div style="padding:1.5rem;">
             <h3>Apex Grand Arena</h3>
-            <p>Top-tier 360° stadium with full roof lighting, VIP boxes, and customized team banners.</p>
-            <ul class="sale-features">
-              <li><i class="fa-solid fa-check"></i> 360-Degree Grandstand</li>
-              <li><i class="fa-solid fa-check"></i> Roof Lighting & Banners</li>
-              <li><i class="fa-solid fa-check"></i> Full Custom Branding</li>
-            </ul>
-            <div class="sale-price-box">
-              <div class="sale-price price-display-main" data-credits="16">16 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Apex Grand Arena\n- Price: 16 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+              <span class="price-main" data-c="16" style="font-weight:800; color:var(--green-pitch);">16 Credits</span>
+              <button onclick="orderPreset('Apex Grand Arena', 16)" class="btn-discord" style="padding:.4rem .8rem; font-size:.85rem;">Order</button>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="reviews">
-      <div class="section-title">
-        <h2>Client Reviews</h2>
-        <p>What VRFS teams and league managers say about TSB builds</p>
-      </div>
-
-      <div class="reviews-grid" id="reviewsContainer"></div>
-
-      <div class="leave-review-box">
-        <h3 style="color: #ffffff; margin-bottom: 0.5rem; text-align: center;">Leave a Review</h3>
-        <p style="color: var(--text-muted); text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;">
-          Share your experience with TSB Stadiums, Kits, or Streaming services
-        </p>
-
-        <div class="tsb-form-group">
-          <label>Your Rating</label>
-          <div class="star-select" id="starRatingSelect">
-            <i class="fa-solid fa-star active" data-rating="1" onclick="setFormRating(1)"></i>
-            <i class="fa-solid fa-star active" data-rating="2" onclick="setFormRating(2)"></i>
-            <i class="fa-solid fa-star active" data-rating="3" onclick="setFormRating(3)"></i>
-            <i class="fa-solid fa-star active" data-rating="4" onclick="setFormRating(4)"></i>
-            <i class="fa-solid fa-star active" data-rating="5" onclick="setFormRating(5)"></i>
-          </div>
-        </div>
-
-        <div class="tsb-form-group">
-          <label>Your Name / VRFS Username</label>
-          <input type="text" class="tsb-input" id="review-author-name" placeholder="e.g. Matrix FC Manager">
-        </div>
-
-        <div class="tsb-form-group">
-          <label>Service Received</label>
-          <input type="text" class="tsb-input" id="review-service-type" placeholder="e.g. Custom Stadium Order, Kits, or Streaming">
-        </div>
-
-        <div class="tsb-form-group">
-          <label>Your Review</label>
-          <textarea class="tsb-textarea" id="review-text-content" placeholder="Write your feedback here..."></textarea>
-        </div>
-
-        <button onclick="postReview()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
-          Submit Review
-        </button>
       </div>
     </section>
 
     <section id="stadium-calculator">
-      <div class="section-title">
-        <h2>Stadium Price Estimator</h2>
-        <p>Select stadium size and options to estimate cost</p>
-      </div>
-
-      <div class="calculator-box">
-        <div class="calc-inputs">
-          <div class="calc-option">
-            <label>Stadium Size</label>
-            <div class="option-group" id="size-group">
-              <button class="option-btn" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
-              <button class="option-btn active" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
-              <button class="option-btn" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
-            </div>
-          </div>
-
-          <div class="calc-option">
-            <label>Stands (FREE Upgrade)</label>
-            <div class="option-group" id="stands-group">
-              <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Tribune Small (Free)</button>
-              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Tribune Big (Free)</button>
-              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Blocks (Free)</button>
-            </div>
+      <div class="calc-box">
+        <div>
+          <label style="font-weight:700;">Stadium Size</label>
+          <div class="option-group" id="size-group" style="margin-top:.5rem;">
+            <button class="option-btn" data-v="12" onclick="selectOpt('size-group', this)">Small (12 Credits)</button>
+            <button class="option-btn active" data-v="14" onclick="selectOpt('size-group', this)">Medium (14 Credits)</button>
+            <button class="option-btn" data-v="16" onclick="selectOpt('size-group', this)">Large (16 Credits)</button>
           </div>
         </div>
-
-        <div class="calc-summary">
+        <div style="display:flex; flex-direction:column; justify-content:space-between;">
           <div>
-            <h3 style="color: #ffffff;">Estimated Total</h3>
-            <div class="calc-price" id="total-price">14 VRFS Credits</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
-              *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Final total confirmed in Discord order.
-            </p>
+            <h3>Estimated Price</h3>
+            <div id="total-price" style="font-size:2rem; font-weight:800; color:var(--green-pitch); margin:1rem 0;">14 VRFS Credits</div>
           </div>
-          <button onclick="prepareCustomStadiumOrder()" class="btn-discord" style="text-align: center; justify-content: center; width: 100%; margin-top: 1.5rem;">
-            Order Custom Stadium
-          </button>
+          <button onclick="orderCustomStadium()" class="btn-discord" style="width:100%; justify-content:center; padding:1rem;">Order Custom Stadium</button>
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="section-title"><h2>Client Reviews</h2></div>
+      <div class="portfolio-grid" id="reviewsContainer"></div>
+    </section>
   </div>
 
-  <!-- VIEW 2: KITS SECTION -->
+  <!-- KITS VIEW -->
   <div id="kits-view" class="view-section">
-    <div class="hero">
-      <div class="hero-badge">
-        <i class="fa-solid fa-shirt"></i> Custom VRFS Team Kits & Graphics
-      </div>
-      <h1>Design Your Custom <span class="highlight-purple">VRFS Team Kit</span></h1>
-      <p>Configure team logos, kit patterns, color schemes, and preview real-time 2D graphics.</p>
-    </div>
-
+    <div class="hero"><h1>Custom <span style="color:var(--purple-main);">Team Kits</span></h1></div>
     <section>
-      <div class="calculator-box">
-        <div class="calc-inputs">
-          <div class="tsb-form-group">
-            <label>1. Team / Club Name</label>
-            <input type="text" class="tsb-input" id="kit-team-name" placeholder="e.g. Apex United FC">
-          </div>
-
-          <div class="tsb-form-group">
-            <label>2. Look like a real-life (IRL) kit design?</label>
-            <div class="irl-toggle-group">
-              <button type="button" class="irl-btn active" id="irl-no-btn" onclick="setIrlKitMode(false)">No (Custom Kit Design)</button>
-              <button type="button" class="irl-btn" id="irl-yes-btn" onclick="setIrlKitMode(true)">Yes (Replicate Real Kit)</button>
+      <div class="calc-box">
+        <div>
+          <label>Team Name</label>
+          <input type="text" class="tsb-input" id="kitTeam" placeholder="Apex United FC">
+          <div style="margin-top:1rem;">
+            <label>Replicate Real (IRL) Kit?</label>
+            <div style="display:flex; gap:1rem; margin-top:.4rem;">
+              <button class="btn-sec" id="irlNo" onclick="setIrl(false)" style="flex:1;">No</button>
+              <button class="btn-sec" id="irlYes" onclick="setIrl(true)" style="flex:1;">Yes</button>
             </div>
+            <input type="text" class="tsb-input hidden" id="irlSpec" placeholder="e.g. Real Madrid 23/24 Home">
           </div>
-
-          <div class="tsb-form-group hidden" id="irl-details-box">
-            <label>Specify IRL Kit (Team & Season)</label>
-            <input type="text" class="tsb-input" id="kit-irl-spec" placeholder="e.g. Real Madrid 2023/24 Home Kit or Arsenal Away">
-          </div>
-
-          <div class="calc-option">
-            <label>3. Select Kit Pattern Style</label>
-            <div class="kit-design-grid" id="kit-pattern-group">
-              <div class="kit-design-card active" data-pattern="Stripes" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-grip-lines-vertical"></i>
-                <h4>Vertical Stripes</h4>
-              </div>
-              <div class="kit-design-card" data-pattern="Gradient" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <h4>Modern Gradient</h4>
-              </div>
-              <div class="kit-design-card" data-pattern="Sash" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-slash"></i>
-                <h4>Diagonal Sash</h4>
-              </div>
-              <div class="kit-design-card" data-pattern="Solid" onclick="selectKitPattern(this)">
-                <i class="fa-solid fa-square"></i>
-                <h4>Clean Solid</h4>
-              </div>
+          <div style="margin-top:1rem;">
+            <label>Color Palette</label>
+            <div style="display:flex; gap:1rem; margin-top:.4rem;">
+              <input type="color" id="c1" value="#a855f7" onchange="renderKit()" style="flex:1; height:40px; background:#000; border:1px solid #333; border-radius:8px;">
+              <input type="color" id="c2" value="#ffffff" onchange="renderKit()" style="flex:1; height:40px; background:#000; border:1px solid #333; border-radius:8px;">
+              <input type="color" id="c3" value="#22c55e" onchange="renderKit()" style="flex:1; height:40px; background:#000; border:1px solid #333; border-radius:8px;">
             </div>
-          </div>
-
-          <div class="tsb-form-group">
-            <label>4. Team Color Palette</label>
-            <div class="color-pickers-grid">
-              <div class="color-picker-item">
-                <label>Primary Color</label>
-                <input type="color" class="tsb-color-input" id="kit-color-primary" value="#a855f7" onchange="updateKitCanvas()">
-              </div>
-              <div class="color-picker-item">
-                <label>Secondary Color</label>
-                <input type="color" class="tsb-color-input" id="kit-color-secondary" value="#ffffff" onchange="updateKitCanvas()">
-              </div>
-              <div class="color-picker-item">
-                <label>Trim Accent</label>
-                <input type="color" class="tsb-color-input" id="kit-color-accent" value="#22c55e" onchange="updateKitCanvas()">
-              </div>
-            </div>
-          </div>
-
-          <div class="tsb-form-group">
-            <label>5. Upload Logo / Sponsor Reference Images</label>
-            <div class="upload-zone" id="uploadDropZone">
-              <i class="fa-solid fa-cloud-arrow-up"></i>
-              <p>Click or drag & drop PNG/JPG image files here</p>
-              <input type="file" id="kit-image-upload" accept="image/png, image/jpeg, image/webp" multiple onchange="handleImageUpload(event)">
-            </div>
-            
-            <div class="scan-status-box" id="scanStatusBox"></div>
-            <div class="image-preview-container" id="imagePreviewContainer"></div>
           </div>
         </div>
-
-        <div class="calc-summary">
-          <div>
-            <div class="kit-canvas-box">
-              <h4 style="color:#ffffff; margin-bottom: 0.5rem; font-size: 0.9rem;">Live 2D Kit Preview</h4>
-              <canvas id="kitPreviewCanvas" width="220" height="220"></canvas>
-            </div>
-            
-            <div class="calc-price" style="font-size: 1.6rem; margin: 0.8rem 0 0.4rem;">Custom Kit Package</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
-              Includes HD textured VRFS shirt files, vector badge graphics, and pitch board placement.
-            </p>
-          </div>
-          <button onclick="prepareKitOrder()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
-            <i class="fa-brands fa-discord"></i> Order Custom Kit
-          </button>
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+          <svg id="svgKit" width="180" height="180" viewBox="0 0 200 200">
+            <path id="shirtBody" d="M50 40 L80 20 L120 20 L150 40 L180 80 L150 95 L145 75 L145 190 L55 190 L55 75 L50 95 L20 80 Z" fill="#a855f7" />
+            <circle cx="100" cy="20" r="20" fill="none" id="shirtTrim" stroke="#22c55e" stroke-width="6" />
+          </svg>
+          <button onclick="orderKit()" class="btn-discord" style="width:100%; justify-content:center; padding:1rem;">Order Custom Kit</button>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- VIEW 3: STREAMING SECTION -->
+  <!-- STREAMING VIEW -->
   <div id="streaming-view" class="view-section">
-    <div class="hero">
-      <div class="hero-badge">
-        <i class="fa-solid fa-headset"></i> Live VRFS Match Production
-      </div>
-      <h1>Book Your <span class="highlight-purple">Live Stream</span></h1>
-      <p>Professional live commentary, scoreboard overlays, graphics, and full match broadcast coverage.</p>
-    </div>
-
+    <div class="hero"><h1>Book <span style="color:var(--purple-main);">Live Stream</span></h1></div>
     <section>
-      <div class="calculator-box">
-        <div class="calc-inputs">
-          <div class="tsb-form-group">
-            <label>1. VRFS League / Tournament Name</label>
-            <input type="text" class="tsb-input" id="stream-league" placeholder="e.g. VRFS Champions League">
-          </div>
-
-          <div class="tsb-form-group">
-            <label>2. Teams Playing</label>
-            <input type="text" class="tsb-input" id="stream-teams" placeholder="e.g. Savage FC vs Delle City">
-          </div>
-
-          <div class="tsb-form-group">
-            <label>3. Match Date</label>
-            <input type="date" class="tsb-input" id="stream-date">
-          </div>
-
-          <div class="tsb-form-group">
-            <label>4. Select Kick-off Time Slot (GMT)</label>
-            <div class="time-slot-grid" id="streamSlotGroup">
-              <button type="button" class="slot-btn active" data-slot="6:00 PM GMT" onclick="selectTimeSlot(this)">6:00 PM</button>
-              <button type="button" class="slot-btn" data-slot="7:00 PM GMT" onclick="selectTimeSlot(this)">7:00 PM</button>
-              <button type="button" class="slot-btn" data-slot="8:00 PM GMT" onclick="selectTimeSlot(this)">8:00 PM</button>
-              <button type="button" class="slot-btn" data-slot="9:00 PM GMT" onclick="selectTimeSlot(this)">9:00 PM</button>
-              <button type="button" class="slot-btn" data-slot="10:00 PM GMT" onclick="selectTimeSlot(this)">10:00 PM</button>
-            </div>
-          </div>
-
-          <div class="calc-option">
-            <label>5. Match Type / Format</label>
-            <div class="option-group" id="stream-type-group">
-              <button class="option-btn active" data-type="League Match" onclick="selectOption('stream-type-group', this)">Regular League Match</button>
-              <button class="option-btn" data-type="Cup / Knockout" onclick="selectOption('stream-type-group', this)">Cup / Knockout Match</button>
-              <button class="option-btn" data-type="Grand Final / Special Event" onclick="selectOption('stream-type-group', this)">Grand Final / Special Event</button>
-            </div>
+      <div class="calc-box">
+        <div>
+          <label>League Name</label>
+          <input type="text" class="tsb-input" id="strLeague" placeholder="VRFS Champions League">
+          <label style="margin-top:1rem; display:block;">Match Date</label>
+          <input type="date" class="tsb-input" id="strDate">
+          <label style="margin-top:1rem; display:block;">Time Slot (GMT)</label>
+          <div style="display:flex; gap:.5rem; margin-top:.4rem;" id="slotGroup">
+            <button class="btn-sec active" onclick="setSlot(this)">6:00 PM</button>
+            <button class="btn-sec" onclick="setSlot(this)">8:00 PM</button>
+            <button class="btn-sec" onclick="setSlot(this)">10:00 PM</button>
           </div>
         </div>
-
-        <div class="calc-summary">
-          <div>
-            <h3 style="color: #ffffff;">Stream Booking Details</h3>
-            <div class="calc-price" style="font-size: 1.8rem; margin: 0.8rem 0;">Live Broadcast Booking</div>
-            <p style="font-size: 0.9rem; color: var(--text-muted);">
-              Includes multi-cam observer angles, live commentary booth, animated scoreboard, and HD VOD archive.
-            </p>
-          </div>
-          <button onclick="prepareStreamBooking()" class="btn-discord" style="justify-content: center; width: 100%; margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
-            <i class="fa-brands fa-discord"></i> Order Live Stream
-          </button>
+        <div style="display:flex; flex-direction:column; justify-content:space-between;">
+          <h3>Match Coverage</h3>
+          <p style="color:var(--text-muted);">Includes commentary booth & live animated scoreboards.</p>
+          <button onclick="orderStream()" class="btn-discord" style="width:100%; justify-content:center; padding:1rem;">Book Live Stream</button>
         </div>
       </div>
     </section>
   </div>
 
-  <footer>
-    <p>&copy; 2026 TSB Stadiums, Kits & Streaming. All Rights Reserved.</p>
-  </footer>
+  <footer><p>&copy; 2026 TSB Stadiums, Kits & Streaming. All Rights Reserved.</p></footer>
 
   <script>
-    let currentCurrency = 'credits';
-    let isIrlKitMode = false;
-    let appliedDiscountPercentage = 0;
+    const $ = id => document.getElementById(id);
+    let curr = 'credits', isIrl = false, disc = 0, pendingDetails = '';
 
-    function changeGlobalCurrency(curr) {
-      currentCurrency = curr;
-
-      document.querySelectorAll('.price-display-tag').forEach(el => {
-        const c = parseFloat(el.getAttribute('data-credits'));
-        if (curr === 'credits') el.innerText = `${c} Credits`;
-        if (curr === 'gbp') el.innerText = `£${(c * 0.07).toFixed(2)}`;
-        if (curr === 'usd') el.innerText = `$${(c * 0.09).toFixed(2)}`;
-      });
-
-      document.querySelectorAll('.price-display-main').forEach(el => {
-        const c = parseFloat(el.getAttribute('data-credits'));
-        if (curr === 'credits') el.innerText = `${c} Credits`;
-        if (curr === 'gbp') el.innerText = `£${(c * 0.07).toFixed(2)}`;
-        if (curr === 'usd') el.innerText = `$${(c * 0.09).toFixed(2)}`;
-      });
-
-      calculatePrice();
-    }
-
-    // FIXED SWITCH VIEW FUNCTION TO DISPLAY ACTIVE VIEWS IMMEDIATELY
-    function switchMainView(viewId) {
-      const welcomeModal = document.getElementById('welcomeModal');
-      if (welcomeModal) welcomeModal.classList.add('hidden');
-
-      const views = document.querySelectorAll('.view-section');
-      views.forEach(v => {
-        v.classList.remove('active-view');
-        v.style.display = 'none';
-      });
-
-      const targetView = document.getElementById(viewId);
-      if (targetView) {
-        targetView.classList.add('active-view');
-        targetView.style.display = 'block';
-      }
-
+    function switchView(id) {
+      toggleModal('welcomeModal', false);
+      document.querySelectorAll('.view-section').forEach(v => { v.classList.remove('active-view'); v.style.display = 'none'; });
+      const target = $(id);
+      if (target) { target.classList.add('active-view'); target.style.display = 'block'; }
       document.querySelectorAll('nav a').forEach(a => a.classList.remove('nav-active'));
-      if (viewId === 'stadiums-view') document.getElementById('nav-stadiums')?.classList.add('nav-active');
-      if (viewId === 'kits-view') {
-        document.getElementById('nav-kits')?.classList.add('nav-active');
-        if (typeof updateKitCanvas === 'function') updateKitCanvas();
-      }
-      if (viewId === 'streaming-view') document.getElementById('nav-streaming')?.classList.add('nav-active');
-
+      if (id === 'stadiums-view') $('nav-stadiums').classList.add('nav-active');
+      if (id === 'kits-view') { $('nav-kits').classList.add('nav-active'); renderKit(); }
+      if (id === 'streaming-view') $('nav-streaming').classList.add('nav-active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function openGateModal() {
-      document.getElementById('welcomeModal').classList.remove('hidden');
-    }
+    function toggleModal(id, open) { $(id).classList.toggle('hidden', !open); }
 
-    function openSettingsModal() {
-      document.getElementById('settingsModal').classList.remove('hidden');
-    }
-
-    function closeSettingsModal() {
-      document.getElementById('settingsModal').classList.add('hidden');
-    }
-
-    function toggleSettingGlow(checkbox) {
-      if (!checkbox.checked) {
-        document.body.classList.add('disable-glow');
-      } else {
-        document.body.classList.remove('disable-glow');
-      }
-    }
-
-    function toggleSettingContrast(checkbox) {
-      if (checkbox.checked) {
-        document.body.classList.add('high-contrast');
-      } else {
-        document.body.classList.remove('high-contrast');
-      }
-    }
-
-    function toggleSettingCompact(checkbox) {
-      if (checkbox.checked) {
-        document.body.classList.add('compact-mode');
-      } else {
-        document.body.classList.remove('compact-mode');
-      }
-    }
-
-    function resetReviewCache() {
-      localStorage.removeItem('tsb_reviews');
-      loadReviews();
-      alert('Review storage reset to defaults.');
-    }
-
-    let currentPendingOrderDetails = "";
-
-    function openOrderModal(detailsText) {
-      appliedDiscountPercentage = 0;
-      document.getElementById('couponInput').value = '';
-      document.getElementById('couponMessage').style.display = 'none';
-
-      currentPendingOrderDetails = detailsText;
-      document.getElementById('modalOrderDetails').innerText = detailsText;
-      document.getElementById('orderConfirmModal').classList.remove('hidden');
-    }
-
-    function closeOrderConfirmModal() {
-      document.getElementById('orderConfirmModal').classList.add('hidden');
-    }
-
-    function applyCoupon() {
-      const code = document.getElementById('couponInput').value.trim().toUpperCase();
-      const msgBox = document.getElementById('couponMessage');
-      
-      if (code === "TSB10") {
-        appliedDiscountPercentage = 10;
-        msgBox.style.display = 'block';
-        msgBox.style.color = 'var(--green-pitch)';
-        msgBox.innerText = '✓ Promo Code Applied: 10% Discount Applied!';
-      } else {
-        msgBox.style.display = 'block';
-        msgBox.style.color = '#ef4444';
-        msgBox.innerText = '✕ Invalid Promo Code';
-      }
-    }
-
-    function dispatchFinalOrder() {
-      closeOrderConfirmModal();
-      let finalDetails = currentPendingOrderDetails;
-      if (appliedDiscountPercentage > 0) {
-        finalDetails += `\n- Discount Applied: ${appliedDiscountPercentage}% Off`;
-      }
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(finalDetails)}`, '_blank');
-    }
-
-    const ADMIN_PASS = "tsb123";
-
-    function openAdminModal() {
-      document.getElementById('adminLoginModal').classList.remove('hidden');
-    }
-
-    function closeAdminModal() {
-      document.getElementById('adminLoginModal').classList.add('hidden');
-      document.getElementById('admin-pass-input').value = '';
-    }
-
-    function loginAdmin() {
-      const inputPass = document.getElementById('admin-pass-input').value;
-      if (inputPass === ADMIN_PASS) {
-        document.body.classList.add('admin-mode');
-        closeAdminModal();
-        alert('Welcome Admin! You can now delete any review.');
-      } else {
-        alert('Incorrect Password!');
-      }
-    }
-
-    function logoutAdmin() {
-      document.body.classList.remove('admin-mode');
-      alert('Logged out of Admin Mode.');
-    }
-
-    let currentSelectedRating = 5;
-
-    const initialReviews = [
-      { id: 1, name: "Matrix FC Manager", service: "Custom Stadium Order", rating: 5, text: "Savage delivered our custom league stadium in less than 24 hours. Pitch lighting and dugout setup are top tier!" },
-      { id: 2, name: "KevVR", service: "Team Kit & Graphic Design", rating: 5, text: "Delle's kit design work is unreal. Our whole squad looked insane for our cup final stream. Super clean work." },
-      { id: 3, name: "Apex League Admin", service: "Live Stream Booking", rating: 5, text: "Booked match streaming for our tournament finals. Commentary was hilarious and the live scoreboard overlay was super professional." }
-    ];
-
-    function loadReviews() {
-      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews'));
-      if (!savedReviews || savedReviews.length === 0) {
-        savedReviews = initialReviews;
-        localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
-      }
-
-      const container = document.getElementById('reviewsContainer');
-      container.innerHTML = '';
-
-      savedReviews.forEach(rev => {
-        let starsHtml = '';
-        for (let i = 1; i <= 5; i++) {
-          if (i <= rev.rating) {
-            starsHtml += '<i class="fa-solid fa-star"></i>';
-          } else {
-            starsHtml += '<i class="fa-regular fa-star" style="color: var(--text-muted);"></i>';
-          }
-        }
-
-        const initial = rev.name ? rev.name.charAt(0).toUpperCase() : 'U';
-
-        const reviewCard = document.createElement('div');
-        reviewCard.className = 'review-card';
-        reviewCard.innerHTML = `
-          <button class="delete-review-btn" onclick="deleteReview(${rev.id})"><i class="fa-solid fa-trash"></i> Delete</button>
-          <div>
-            <div class="review-stars">${starsHtml}</div>
-            <p class="review-text">"${rev.text}"</p>
-          </div>
-          <div class="review-author">
-            <div class="author-avatar">${initial}</div>
-            <div class="author-info">
-              <h4>${rev.name}</h4>
-              <p>${rev.service}</p>
-            </div>
-          </div>
-        `;
-        container.appendChild(reviewCard);
+    function setCurrency(val) {
+      curr = val;
+      document.querySelectorAll('.price-tag, .price-main').forEach(el => {
+        const c = parseFloat(el.getAttribute('data-c'));
+        el.innerText = curr === 'credits' ? `${c} Credits` : curr === 'gbp' ? `£${(c * 0.07).toFixed(2)}` : `$${(c * 0.09).toFixed(2)}`;
       });
+      calcPrice();
     }
 
-    function deleteReview(id) {
-      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews')) || [];
-      savedReviews = savedReviews.filter(r => r.id !== id);
-      localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
-      loadReviews();
+    function selectOpt(grp, btn) {
+      document.querySelectorAll(`#${grp} .option-btn`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      calcPrice();
     }
 
-    function setFormRating(rating) {
-      currentSelectedRating = rating;
-      const stars = document.querySelectorAll('#starRatingSelect i');
-      stars.forEach((star, index) => {
-        if (index < rating) {
-          star.classList.remove('fa-regular');
-          star.classList.add('fa-solid', 'active');
-        } else {
-          star.classList.remove('fa-solid', 'active');
-          star.classList.add('fa-regular');
-        }
-      });
+    function calcPrice() {
+      const active = document.querySelector('#size-group .option-btn.active');
+      if (!active) return;
+      const base = parseFloat(active.getAttribute('data-v'));
+      $('total-price').innerText = curr === 'credits' ? `${base} VRFS Credits` : curr === 'gbp' ? `£${(base * 0.07).toFixed(2)} GBP` : `$${(base * 0.09).toFixed(2)} USD`;
     }
 
-    function postReview() {
-      const nameInput = document.getElementById('review-author-name').value.trim();
-      const serviceInput = document.getElementById('review-service-type').value.trim();
-      const textInput = document.getElementById('review-text-content').value.trim();
-
-      if (!nameInput || !textInput) {
-        alert('Please fill in your name and review text.');
-        return;
-      }
-
-      const newReview = {
-        id: Date.now(),
-        name: nameInput,
-        service: serviceInput || 'TSB Service',
-        rating: currentSelectedRating,
-        text: textInput
-      };
-
-      let savedReviews = JSON.parse(localStorage.getItem('tsb_reviews')) || initialReviews;
-      savedReviews.unshift(newReview);
-      localStorage.setItem('tsb_reviews', JSON.stringify(savedReviews));
-
-      document.getElementById('review-author-name').value = '';
-      document.getElementById('review-service-type').value = '';
-      document.getElementById('review-text-content').value = '';
-      setFormRating(5);
-
-      loadReviews();
-      alert('Thank you! Your review has been submitted.');
+    function renderKit() {
+      $('shirtBody').setAttribute('fill', $('c1').value);
+      $('shirtTrim').setAttribute('stroke', $('c3').value);
     }
 
-    function updateKitCanvas() {
-      const canvas = document.getElementById('kitPreviewCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const primary = document.getElementById('kit-color-primary').value;
-      const secondary = document.getElementById('kit-color-secondary').value;
-      const accent = document.getElementById('kit-color-accent').value;
-      
-      const activeCard = document.querySelector('#kit-pattern-group .kit-design-card.active');
-      const pattern = activeCard ? activeCard.getAttribute('data-pattern') : 'Stripes';
-
-      ctx.fillStyle = primary;
-      ctx.beginPath();
-      ctx.moveTo(50, 40);
-      ctx.lineTo(80, 20);
-      ctx.lineTo(140, 20);
-      ctx.lineTo(170, 40);
-      ctx.lineTo(190, 80);
-      ctx.lineTo(160, 95);
-      ctx.lineTo(155, 75);
-      ctx.lineTo(155, 200);
-      ctx.lineTo(65, 200);
-      ctx.lineTo(65, 75);
-      ctx.lineTo(60, 95);
-      ctx.lineTo(30, 80);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.save();
-      ctx.clip();
-
-      if (pattern === 'Stripes') {
-        ctx.fillStyle = secondary;
-        for (let x = 70; x < 150; x += 25) {
-          ctx.fillRect(x, 20, 12, 180);
-        }
-      } else if (pattern === 'Gradient') {
-        const grad = ctx.createLinearGradient(0, 20, 0, 200);
-        grad.addColorStop(0, primary);
-        grad.addColorStop(1, secondary);
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 220, 220);
-      } else if (pattern === 'Sash') {
-        ctx.fillStyle = secondary;
-        ctx.beginPath();
-        ctx.moveTo(40, 20);
-        ctx.lineTo(75, 20);
-        ctx.lineTo(180, 190);
-        ctx.lineTo(145, 190);
-        ctx.closePath();
-        ctx.fill();
-      }
-      ctx.restore();
-
-      ctx.strokeStyle = accent;
-      ctx.lineWidth = 6;
-      ctx.beginPath();
-      ctx.arc(110, 20, 22, 0, Math.PI);
-      ctx.stroke();
-
-      ctx.fillStyle = accent;
-      ctx.fillRect(32, 75, 26, 6);
-      ctx.fillRect(162, 75, 26, 6);
+    function setIrl(val) {
+      isIrl = val;
+      $('irlYes').classList.toggle('active', val);
+      $('irlNo').classList.toggle('active', !val);
+      $('irlSpec').classList.toggle('hidden', !val);
     }
 
-    function setIrlKitMode(isIrl) {
-      isIrlKitMode = isIrl;
-      const noBtn = document.getElementById('irl-no-btn');
-      const yesBtn = document.getElementById('irl-yes-btn');
-      const detailsBox = document.getElementById('irl-details-box');
-
-      if (isIrl) {
-        yesBtn.classList.add('active');
-        noBtn.classList.remove('active');
-        detailsBox.classList.remove('hidden');
-      } else {
-        noBtn.classList.add('active');
-        yesBtn.classList.remove('active');
-        detailsBox.classList.add('hidden');
-      }
-    }
-
-    let verifiedUploadedFiles = [];
-
-    async function handleImageUpload(event) {
-      const files = Array.from(event.target.files);
-      const statusBox = document.getElementById('scanStatusBox');
-
-      if (files.length === 0) return;
-
-      statusBox.className = 'scan-status-box safe';
-      statusBox.style.display = 'flex';
-      statusBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing uploaded file(s)...';
-
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const fileObj = { id: Date.now() + Math.random(), name: file.name, src: e.target.result };
-          verifiedUploadedFiles.push(fileObj);
-          renderImagePreviews();
-        };
-        reader.readAsDataURL(file);
-      }
-
-      statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Upload Complete.`;
-      event.target.value = '';
-    }
-
-    function renderImagePreviews() {
-      const previewContainer = document.getElementById('imagePreviewContainer');
-      previewContainer.innerHTML = '';
-
-      verifiedUploadedFiles.forEach(fileObj => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'preview-thumb-wrapper';
-        wrapper.innerHTML = `
-          <img src="${fileObj.src}" class="preview-thumb" alt="${fileObj.name}">
-          <button type="button" class="delete-thumb-btn" onclick="removeUploadedImage(${fileObj.id})">✕</button>
-        `;
-        previewContainer.appendChild(wrapper);
-      });
-    }
-
-    function removeUploadedImage(fileId) {
-      verifiedUploadedFiles = verifiedUploadedFiles.filter(f => f.id !== fileId);
-      renderImagePreviews();
-      const statusBox = document.getElementById('scanStatusBox');
-      if (verifiedUploadedFiles.length === 0) statusBox.style.display = 'none';
-    }
-
-    // FIXED OPTION BUTTON SELECTION HANDLER
-    function selectOption(groupId, button) {
-      const container = document.getElementById(groupId);
-      if (!container) return;
-
-      const buttons = container.querySelectorAll('.option-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-
-      button.classList.add('active');
-      calculatePrice();
-    }
-
-    function calculatePrice() {
-      const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
-      if (!activeSizeBtn) return;
-
-      const baseCredits = parseFloat(activeSizeBtn.getAttribute('data-value'));
-      const priceDisplay = document.getElementById('total-price');
-
-      if (currentCurrency === 'credits') {
-        priceDisplay.innerText = `${baseCredits} VRFS Credits`;
-      } else if (currentCurrency === 'gbp') {
-        priceDisplay.innerText = `£${(baseCredits * 0.07).toFixed(2)} GBP`;
-      } else if (currentCurrency === 'usd') {
-        priceDisplay.innerText = `$${(baseCredits * 0.09).toFixed(2)} USD`;
-      }
-    }
-
-    function selectTimeSlot(btn) {
-      document.querySelectorAll('#streamSlotGroup .slot-btn').forEach(b => b.classList.remove('active'));
+    function setSlot(btn) {
+      document.querySelectorAll('#slotGroup .btn-sec').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
 
-    function selectKitPattern(card) {
-      document.querySelectorAll('#kit-pattern-group .kit-design-card').forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      updateKitCanvas();
+    function openOrder(text) {
+      disc = 0;
+      $('couponInput').value = '';
+      $('couponMsg').style.display = 'none';
+      pendingDetails = text;
+      $('modalOrderDetails').innerText = text;
+      toggleModal('orderConfirmModal', true);
     }
 
-    function prepareCustomStadiumOrder() {
-      const priceText = document.getElementById('total-price').innerText;
-      const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
-      const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
-
-      const sizeText = activeSizeBtn ? activeSizeBtn.innerText : 'Stadium';
-      const standsText = activeStandsBtn ? activeStandsBtn.innerText : 'Standard Stands';
-
-      const details = `Custom Stadium Request:\n- ${sizeText}\n- Stand Option: ${standsText}\n- Total Price: ${priceText}`;
-      openOrderModal(details);
+    function applyCoupon() {
+      if ($('couponInput').value.trim().toUpperCase() === 'TSB10') {
+        disc = 10;
+        $('couponMsg').style.display = 'block';
+        $('couponMsg').style.color = 'var(--green-pitch)';
+        $('couponMsg').innerText = '✓ 10% Discount Applied!';
+      }
     }
 
-    function prepareKitOrder() {
-      const teamName = document.getElementById('kit-team-name').value || 'Unspecified Team';
-      const activePatternCard = document.querySelector('#kit-pattern-group .kit-design-card.active');
-      const pattern = activePatternCard ? activePatternCard.getAttribute('data-pattern') : 'Stripes';
-      const primary = document.getElementById('kit-color-primary').value;
-      const secondary = document.getElementById('kit-color-secondary').value;
-      const accent = document.getElementById('kit-color-accent').value;
-
-      const irlText = isIrlKitMode ? `Yes (${document.getElementById('kit-irl-spec').value || 'Unspecified IRL Replica'})` : 'No (Custom Original)';
-
-      const fileListNames = verifiedUploadedFiles.map(f => f.name);
-      const fileListStr = fileListNames.length > 0 ? fileListNames.join(', ') : 'None attached';
-
-      const details = `TSB Kit Request:\n- Team Name: ${teamName}\n- Replicate IRL Kit: ${irlText}\n- Pattern Style: ${pattern}\n- Colors: Primary ${primary}, Secondary ${secondary}, Trim ${accent}\n- Attachments: ${fileListStr}`;
-      openOrderModal(details);
+    function dispatchOrder() {
+      toggleModal('orderConfirmModal', false);
+      let out = pendingDetails + (disc > 0 ? `\n- Discount: ${disc}% Off` : '');
+      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(out)}`, '_blank');
     }
 
-    function prepareStreamBooking() {
-      const league = document.getElementById('stream-league').value || 'VRFS League';
-      const teams = document.getElementById('stream-teams').value || 'TBD vs TBD';
-      const date = document.getElementById('stream-date').value || 'Unspecified Date';
-      
-      const activeSlotBtn = document.querySelector('#streamSlotGroup .slot-btn.active');
-      const timeSlot = activeSlotBtn ? activeSlotBtn.getAttribute('data-slot') : '6:00 PM GMT';
+    function orderPreset(name, price) { openOrder(`Stadium: ${name}\n- Price: ${price} Credits`); }
+    function orderCustomStadium() { openOrder(`Custom Stadium Order\n- Price: ${$('total-price').innerText}`); }
+    function orderKit() { openOrder(`Custom Kit Request\n- Team: ${$('kitTeam').value || 'Unspecified'}\n- IRL Replica: ${isIrl ? $('irlSpec').value : 'No'}`); }
+    function orderStream() { openOrder(`Live Stream Booking\n- League: ${$('strLeague').value || 'VRFS League'}\n- Date: ${$('strDate').value}`); }
 
-      const activeTypeBtn = document.querySelector('#stream-type-group .option-btn.active');
-      const matchType = activeTypeBtn ? activeTypeBtn.getAttribute('data-type') : 'Standard Match';
+    function toggleAdmin(val) { document.body.classList.toggle('admin-mode', val); }
+    function loginAdmin() { if ($('adminPass').value === 'tsb123') { toggleAdmin(true); toggleModal('adminLoginModal', false); } }
 
-      const details = `TSB Stream Booking:\n- League: ${league}\n- Match: ${teams}\n- Date: ${date}\n- Kick-off Slot: ${timeSlot}\n- Format: ${matchType}`;
-      openOrderModal(details);
+    function loadReviews() {
+      const container = $('reviewsContainer');
+      container.innerHTML = '';
+      const list = JSON.parse(localStorage.getItem('tsb_reviews')) || [{ id: 1, name: "Matrix FC", text: "Savage delivered our stadium in less than 24h!" }];
+      list.forEach(r => {
+        container.innerHTML += `<div class="card-base" style="padding:1.5rem;"><button class="delete-btn" onclick="this.parentElement.remove()">Delete</button><h4>${r.name}</h4><p style="color:var(--text-muted); margin-top:.5rem;">"${r.text}"</p></div>`;
+      });
     }
 
-    // INITIALIZATION ON PAGE LOAD
-    calculatePrice();
     loadReviews();
-    switchMainView('stadiums-view');
+    switchView('stadiums-view');
   </script>
 </body>
 </html>
