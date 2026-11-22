@@ -279,6 +279,12 @@
       box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
     }
 
+    .btn-discord:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     /* MAIN VIEW SWITCHING */
     .view-section {
       display: none;
@@ -347,6 +353,7 @@
       text-decoration: none;
       font-weight: 700;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .btn-secondary:hover {
@@ -570,11 +577,13 @@
       border: 1px solid var(--purple-main);
       box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
       border-radius: 20px;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
-      padding: 2.5rem;
+      padding: 2.2rem;
       text-align: center;
       position: relative;
+      max-height: 92vh;
+      overflow-y: auto;
     }
 
     .admin-modal-box h3 {
@@ -586,7 +595,7 @@
     .admin-modal-box p {
       color: var(--text-muted);
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .close-modal-btn {
@@ -606,21 +615,142 @@
       background: #000000;
       border: 1px solid rgba(168, 85, 247, 0.3);
       border-radius: 12px;
-      padding: 1.2rem;
+      padding: 1rem;
       text-align: left;
-      margin-bottom: 1.2rem;
-      font-size: 0.92rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
       color: var(--text-main);
       white-space: pre-wrap;
-      line-height: 1.6;
-      max-height: 230px;
+      line-height: 1.5;
+      max-height: 180px;
       overflow-y: auto;
+    }
+
+    .modal-field-group {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .modal-field-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #ffffff;
+    }
+
+    .modal-colors-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tsb-select {
+      width: 100%;
+      padding: 0.65rem 0.7rem;
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
     }
 
     .coupon-container {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .api-status-banner {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid var(--green-pitch);
+      color: var(--green-pitch);
+      padding: 0.85rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-align: left;
+      display: none;
+    }
+
+    .api-status-banner.error {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+
+    /* SETTINGS MODAL TOGGLES */
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+    }
+
+    .setting-info h4 {
+      font-size: 0.95rem;
+      color: #ffffff;
+    }
+
+    .setting-info p {
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #27272a;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--purple-main);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
     }
 
     .calculator-box {
@@ -755,6 +885,89 @@
       padding: 0.2rem;
     }
 
+    /* KIT DESIGN CARDS & UPLOAD */
+    .kit-design-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+
+    .kit-design-card {
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .kit-design-card.active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
+      border-color: var(--purple-main);
+    }
+
+    .upload-zone {
+      background: #000000;
+      border: 1px dashed rgba(168, 85, 247, 0.4);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .scan-status-box {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--green-pitch);
+    }
+
+    .image-preview-container {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+
+    .preview-thumb-wrapper {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .preview-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--purple-main);
+    }
+
+    .delete-thumb-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
     /* KIT PART FILTER TABS */
     .part-filter-tabs {
       display: flex;
@@ -822,7 +1035,6 @@
       transition: background-color 0.2s ease;
     }
 
-    /* PNG MASK URL ASSIGNMENTS FOR EACH KIT PART */
     #mask-shirt-front {
       -webkit-mask-image: url('https://raw.githubusercontent.com/csavage8/TheStadiumBuilder/main/images/22538%20(1).png');
       mask-image: url('https://raw.githubusercontent.com/csavage8/TheStadiumBuilder/main/images/22538%20(1).png');
@@ -934,20 +1146,37 @@
     </div>
   </div>
 
+  <!-- ORDER CONFIRMATION MODAL (CONNECTED TO TSB BOT) -->
   <div class="admin-modal-overlay hidden" id="orderConfirmModal">
     <div class="admin-modal-box">
       <span class="close-modal-btn" onclick="closeOrderConfirmModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--green-pitch); margin-bottom: 1rem;"></i>
+      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--green-pitch); margin-bottom: 0.8rem;"></i>
       <h3>Confirm Your Order</h3>
-      <p>Review details below before dispatching to TSB Bot</p>
+      <p>Enter your Discord username so TSB Bot can DM your order & tracker number</p>
 
       <div class="order-summary-box" id="modalOrderDetails"></div>
+
+      <div class="modal-field-group">
+        <label for="orderDiscordUser">Your Discord Username (must be in the TSB server)</label>
+        <input type="text" class="tsb-input" id="orderDiscordUser" placeholder="e.g. csavage8" style="padding: 0.65rem 0.85rem;">
+      </div>
+
+      <div class="modal-field-group" id="modalColorsSection">
+        <label>Select 3 Stadium Colors</label>
+        <div class="modal-colors-row">
+          <select class="tsb-select" id="modalColor1"></select>
+          <select class="tsb-select" id="modalColor2"></select>
+          <select class="tsb-select" id="modalColor3"></select>
+        </div>
+      </div>
 
       <div class="coupon-container">
         <input type="text" class="tsb-input" id="couponInput" placeholder="Promo Code (e.g. TSB10)" style="padding: 0.6rem;">
         <button onclick="applyCoupon()" class="btn-secondary" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem;">Apply</button>
       </div>
-      <div id="couponMessage" style="font-size: 0.8rem; margin-bottom: 1rem; text-align: left; display: none;"></div>
+      <div id="couponMessage" style="font-size: 0.8rem; margin-bottom: 0.8rem; text-align: left; display: none;"></div>
+
+      <div class="api-status-banner" id="apiStatusBanner"></div>
 
       <button id="sendOrderBtn" onclick="dispatchFinalOrder()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
         <i class="fa-brands fa-discord"></i> Confirm & Send Order
@@ -955,6 +1184,7 @@
     </div>
   </div>
 
+  <!-- SETTINGS MODAL -->
   <div class="admin-modal-overlay hidden" id="settingsModal">
     <div class="admin-modal-box">
       <span class="close-modal-btn" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></span>
@@ -1108,7 +1338,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price price-display-main" data-credits="12">12 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Pro Arena - Compact Edition\n- Price: 12 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openStadiumOrderModal({ type: 'prebuilt', itemName: 'Pro Arena - Compact Edition', mapSize: 'Small', stand: 'Tribune Small', detailsText: 'Pre-Built Stadium Purchase:\n- Model: Pro Arena - Compact Edition\n- Size: Small\n- Price: 12 Credits' })" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1129,7 +1359,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price price-display-main" data-credits="14">14 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Championship Stadium\n- Price: 14 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openStadiumOrderModal({ type: 'prebuilt', itemName: 'Championship Stadium', mapSize: 'Medium', stand: 'Tribune Big', detailsText: 'Pre-Built Stadium Purchase:\n- Model: Championship Stadium\n- Size: Medium\n- Price: 14 Credits' })" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1150,7 +1380,7 @@
             </ul>
             <div class="sale-price-box">
               <div class="sale-price price-display-main" data-credits="16">16 Credits</div>
-              <button onclick="openOrderModal('Pre-Built Stadium Purchase:\n- Model: Apex Grand Arena\n- Price: 16 Credits')" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
+              <button onclick="openStadiumOrderModal({ type: 'prebuilt', itemName: 'Apex Grand Arena', mapSize: 'Large', stand: 'Blocks', detailsText: 'Pre-Built Stadium Purchase:\n- Model: Apex Grand Arena\n- Size: Large\n- Price: 16 Credits' })" class="btn-discord" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Order</button>
             </div>
           </div>
         </div>
@@ -1260,18 +1490,27 @@
           <div class="calc-option">
             <label>Stadium Size</label>
             <div class="option-group" id="size-group">
-              <button class="option-btn" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
-              <button class="option-btn active" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
-              <button class="option-btn" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
+              <button class="option-btn" data-size="Small" data-value="12" onclick="selectOption('size-group', this)">Small Stadium (12 Credits)</button>
+              <button class="option-btn active" data-size="Medium" data-value="14" onclick="selectOption('size-group', this)">Medium Stadium (14 Credits)</button>
+              <button class="option-btn" data-size="Large" data-value="16" onclick="selectOption('size-group', this)">Large Stadium (16 Credits)</button>
             </div>
           </div>
 
           <div class="calc-option">
             <label>Stands (FREE Upgrade)</label>
             <div class="option-group" id="stands-group">
-              <button class="option-btn active" data-value="0" onclick="selectOption('stands-group', this)">Tribune Small (Free)</button>
-              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Tribune Big (Free)</button>
-              <button class="option-btn" data-value="0" onclick="selectOption('stands-group', this)">Blocks (Free)</button>
+              <button class="option-btn active" data-stand="Tribune Small" data-value="0" onclick="selectOption('stands-group', this)">Tribune Small (Free)</button>
+              <button class="option-btn" data-stand="Tribune Big" data-value="0" onclick="selectOption('stands-group', this)">Tribune Big (Free)</button>
+              <button class="option-btn" data-stand="Blocks" data-value="0" onclick="selectOption('stands-group', this)">Blocks (Free)</button>
+            </div>
+          </div>
+
+          <div class="tsb-form-group" style="margin-bottom: 0;">
+            <label>Pick Your 3 Stadium Colors</label>
+            <div class="modal-colors-row" style="margin-bottom: 0;">
+              <select class="tsb-select" id="calcColor1"></select>
+              <select class="tsb-select" id="calcColor2"></select>
+              <select class="tsb-select" id="calcColor3"></select>
             </div>
           </div>
         </div>
@@ -1345,7 +1584,6 @@
             </div>
           </div>
 
-          <!-- INDEPENDENT PART COLOR PICKERS -->
           <div class="tsb-form-group">
             <label>4. Customize Each Part Color</label>
             <div class="color-pickers-grid">
@@ -1385,7 +1623,6 @@
           <div>
             <h4 style="color:#ffffff; margin-bottom: 0.5rem; font-size: 0.95rem; text-align: center;">Live Kit Parts Preview</h4>
             
-            <!-- BUTTONS TO PREVIEW ALL OR DIFFERENT KIT PARTS -->
             <div class="part-filter-tabs">
               <button type="button" class="part-tab-btn active" onclick="filterKitParts('all', this)">All Parts</button>
               <button type="button" class="part-tab-btn" onclick="filterKitParts('part-card-shirt-front', this)">Shirt Front</button>
@@ -1395,7 +1632,6 @@
               <button type="button" class="part-tab-btn" onclick="filterKitParts('part-card-number', this)">Number</button>
             </div>
 
-            <!-- 5-PIECE KIT ELEMENTS DISPLAY USING CSS MASKING ON YOUR NEW GITHUB PNG LINKS -->
             <div class="kit-parts-grid" id="kitPartsContainer">
               <div class="kit-part-card" id="part-card-shirt-front">
                 <div id="mask-shirt-front" class="kit-mask-part"></div>
@@ -1502,9 +1738,29 @@
   </footer>
 
   <script>
+    // PASTE YOUR LIVE CLOUDFLARE TUNNEL URL HERE:
+    const BOT_API_URL = 'https://YOUR-CLOUDFLARE-LINK.trycloudflare.com';
+
+    const STADIUM_COLORS = [
+      'Purple', 'White', 'Green', 'Red', 'Blue', 'Yellow',
+      'Orange', 'Pink', 'Black', 'Grey', 'Gold', 'Cyan'
+    ];
+
+    function populateColorDropdowns() {
+      const ids = ['calcColor1', 'calcColor2', 'calcColor3', 'modalColor1', 'modalColor2', 'modalColor3'];
+      const defaults = ['Purple', 'White', 'Black'];
+      ids.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = STADIUM_COLORS.map(c => `<option value="${c}">${c}</option>`).join('');
+        el.value = defaults[idx % 3];
+      });
+    }
+
     let currentCurrency = 'credits';
     let isIrlKitMode = false;
     let appliedDiscountPercentage = 0;
+    let currentPendingOrder = null;
 
     function changeGlobalCurrency(curr) {
       currentCurrency = curr;
@@ -1589,16 +1845,39 @@
       }
     }
 
-    let currentPendingOrderDetails = "";
-
-    function openOrderModal(detailsText) {
+    function openStadiumOrderModal(orderData) {
       appliedDiscountPercentage = 0;
+      currentPendingOrder = orderData;
+
       document.getElementById('couponInput').value = '';
       document.getElementById('couponMessage').style.display = 'none';
 
-      currentPendingOrderDetails = detailsText;
-      document.getElementById('modalOrderDetails').innerText = detailsText;
+      const banner = document.getElementById('apiStatusBanner');
+      banner.style.display = 'none';
+      banner.classList.remove('error');
+
+      const sendBtn = document.getElementById('sendOrderBtn');
+      sendBtn.disabled = false;
+      sendBtn.innerHTML = '<i class="fa-brands fa-discord"></i> Confirm & Send Order';
+
+      const colorsSection = document.getElementById('modalColorsSection');
+      if (orderData.type === 'custom' || orderData.type === 'prebuilt') {
+        colorsSection.style.display = 'block';
+        if (orderData.colors) {
+          document.getElementById('modalColor1').value = orderData.colors[0];
+          document.getElementById('modalColor2').value = orderData.colors[1];
+          document.getElementById('modalColor3').value = orderData.colors[2];
+        }
+      } else {
+        colorsSection.style.display = 'none';
+      }
+
+      document.getElementById('modalOrderDetails').innerText = orderData.detailsText;
       document.getElementById('orderConfirmModal').classList.remove('hidden');
+    }
+
+    function openOrderModal(detailsText) {
+      openStadiumOrderModal({ type: 'other', detailsText });
     }
 
     function closeOrderConfirmModal() {
@@ -1609,7 +1888,7 @@
       const code = document.getElementById('couponInput').value.trim().toUpperCase();
       const msgBox = document.getElementById('couponMessage');
       
-      if (code === "TSB10") {
+      if (code === 'TSB10') {
         appliedDiscountPercentage = 10;
         msgBox.style.display = 'block';
         msgBox.style.color = 'var(--green-pitch)';
@@ -1621,16 +1900,69 @@
       }
     }
 
-    function dispatchFinalOrder() {
-      closeOrderConfirmModal();
-      let finalDetails = currentPendingOrderDetails;
-      if (appliedDiscountPercentage > 0) {
-        finalDetails += `\n- Discount Applied: ${appliedDiscountPercentage}% Off`;
+    async function dispatchFinalOrder() {
+      const banner = document.getElementById('apiStatusBanner');
+      const sendBtn = document.getElementById('sendOrderBtn');
+      const discordUsername = document.getElementById('orderDiscordUser').value.trim();
+
+      if (!currentPendingOrder) return;
+
+      // Kits & Streaming fallback to Discord invite if bot only handles stadiums right now
+      if (currentPendingOrder.type === 'other') {
+        closeOrderConfirmModal();
+        let finalDetails = currentPendingOrder.detailsText;
+        if (appliedDiscountPercentage > 0) {
+          finalDetails += `\n- Discount Applied: ${appliedDiscountPercentage}% Off`;
+        }
+        window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(finalDetails)}`, '_blank');
+        return;
       }
-      window.open(`https://discord.gg/FvvNjfDeQM?intent=${encodeURIComponent(finalDetails)}`, '_blank');
+
+      if (!discordUsername) {
+        banner.style.display = 'block';
+        banner.classList.add('error');
+        banner.innerText = 'Please enter your Discord username first so the bot can DM you!';
+        return;
+      }
+
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending to TSB Bot...';
+      banner.style.display = 'none';
+      banner.classList.remove('error');
+
+      try {
+        const res = await fetch(`${BOT_API_URL}/api/order`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            discordUsername,
+            mapSize: currentPendingOrder.mapSize,
+            stand: currentPendingOrder.stand,
+            itemName: currentPendingOrder.itemName || null,
+            color1: document.getElementById('modalColor1').value,
+            color2: document.getElementById('modalColor2').value,
+            color3: document.getElementById('modalColor3').value,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Could not submit order to TSB Bot.');
+        }
+
+        banner.style.display = 'block';
+        banner.classList.remove('error');
+        banner.innerHTML = `<strong>Order #${data.orderNumber} Placed!</strong><br>Tracker Number: <code>${data.trackerNumber}</code> (${data.price})<br>${data.dmSent ? 'Check your Discord DMs for your confirmation!' : 'Order sent to staff! (Enable server DMs so the bot can message you updates.)'}`;
+        sendBtn.innerHTML = '<i class="fa-solid fa-check"></i> Order Sent!';
+      } catch (err) {
+        banner.style.display = 'block';
+        banner.classList.add('error');
+        banner.innerText = err.message || 'Could not reach TSB Bot. Make sure the bot and tunnel are running!';
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = '<i class="fa-brands fa-discord"></i> Confirm & Send Order';
+      }
     }
 
-    // DYNAMIC CSS MASK COLOR UPDATE LOGIC
     function updateKitPartColors() {
       const shirtP = document.getElementById('color-shirt-primary').value;
       const shortsC = document.getElementById('color-shorts').value;
@@ -1643,7 +1975,6 @@
       document.getElementById('mask-number').style.setProperty('--part-color', numC);
     }
 
-    // FILTER VISIBLE KIT PARTS WITH BUTTON TABS
     function filterKitParts(targetId, btn) {
       document.querySelectorAll('.part-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1702,7 +2033,7 @@
         reader.readAsDataURL(file);
       }
 
-      statusBox.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Upload Complete.`;
+      statusBox.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Upload Complete.';
       event.target.value = '';
     }
 
@@ -1770,11 +2101,22 @@
       const activeSizeBtn = document.querySelector('#size-group .option-btn.active');
       const activeStandsBtn = document.querySelector('#stands-group .option-btn.active');
 
-      const sizeText = activeSizeBtn ? activeSizeBtn.innerText : 'Stadium';
-      const standsText = activeStandsBtn ? activeStandsBtn.innerText : 'Standard Stands';
+      const mapSize = activeSizeBtn ? activeSizeBtn.getAttribute('data-size') : 'Medium';
+      const stand = activeStandsBtn ? activeStandsBtn.getAttribute('data-stand') : 'Tribune Small';
+      const colors = [
+        document.getElementById('calcColor1').value,
+        document.getElementById('calcColor2').value,
+        document.getElementById('calcColor3').value,
+      ];
 
-      const details = `Custom Stadium Request:\n- ${sizeText}\n- Stand Option: ${standsText}\n- Total Price: ${priceText}`;
-      openOrderModal(details);
+      const detailsText = `Custom Stadium Request:\n- Size: ${mapSize}\n- Stand Option: ${stand}\n- Colors: ${colors.join(', ')}\n- Total Price: ${priceText}`;
+      openStadiumOrderModal({
+        type: 'custom',
+        mapSize,
+        stand,
+        colors,
+        detailsText,
+      });
     }
 
     function prepareKitOrder() {
@@ -1812,6 +2154,7 @@
     }
 
     // INITIALIZATION ON PAGE LOAD
+    populateColorDropdowns();
     calculatePrice();
     openGateModal();
   </script>
