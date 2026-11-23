@@ -1738,8 +1738,7 @@
   </footer>
 
   <script>
-    // PASTE YOUR LIVE CLOUDFLARE TUNNEL URL HERE:
-    const BOT_API_URL = 'https://YOUR-CLOUDFLARE-LINK.trycloudflare.com';
+    const BOT_API_URL = 'https://unity-payments-alternative-lit.trycloudflare.com';
 
     const STADIUM_COLORS = [
       'Purple', 'White', 'Green', 'Red', 'Blue', 'Yellow',
@@ -1907,7 +1906,6 @@
 
       if (!currentPendingOrder) return;
 
-      // Kits & Streaming fallback to Discord invite if bot only handles stadiums right now
       if (currentPendingOrder.type === 'other') {
         closeOrderConfirmModal();
         let finalDetails = currentPendingOrder.detailsText;
