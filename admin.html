@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSB Staff & Admin Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --purple-main: #a855f7;
+      --purple-glow: #9333ea;
+      --green-pitch: #22c55e;
+      --red-danger: #ef4444;
+      --amber-warn: #f59e0b;
+      --blue-info: #3b82f6;
+      --bg-dark: #08080a;
+      --bg-card: #121118;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glow: rgba(168, 85, 247, 0.28);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.09) 0%, transparent 45%);
+    }
+
+    /* LOGIN SCREEN */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 6, 9, 0.96);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .login-box {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-main);
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.28);
+      border-radius: 22px;
+      max-width: 430px;
+      width: 100%;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .login-box img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--purple-main);
+      margin-bottom: 1rem;
+    }
+
+    .login-box h2 { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .login-box p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .field-group { text-align: left; margin-bottom: 1rem; }
+    .field-group label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #fff; }
+
+    .tsb-input, .tsb-select {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      background: #000000;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .tsb-input:focus, .tsb-select:focus { border-color: var(--purple-main); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45);
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(8, 8, 10, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--purple-main);
+    }
+
+    .brand h1 { font-size: 1.35rem; }
+    .brand h1 span { color: var(--purple-main); }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge-open { background: rgba(34, 197, 94, 0.15); border: 1px solid var(--green-pitch); color: var(--green-pitch); }
+    .badge-closed { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--red-danger); color: #fca5a5; }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      padding: 0.5rem 0.95rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover { border-color: var(--purple-main); }
+
+    /* MAIN CONTAINER */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* TOP STATS & TOGGLE GRID */
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 900px) { .top-grid { grid-template-columns: 1fr; } }
+
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 1.5rem;
+    }
+
+    .panel-card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+
+    @media (max-width: 600px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-box {
+      background: #000;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--purple-main); }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+
+    /* TABS */
+    .tabs-bar {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      color: var(--text-muted);
+      padding: 0.65rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      color: #fff;
+      border-color: var(--purple-main);
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ORDERS GRID */
+    .orders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .order-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(168, 85, 247, 0.28);
+      border-radius: 16px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .order-id { font-size: 1.15rem; font-weight: 800; color: #fff; }
+    .tracker-code {
+      font-family: monospace;
+      background: #000;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #c084fc;
+    }
+
+    .status-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      background: rgba(59, 130, 246, 0.18);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .status-tag.completed { background: rgba(34, 197, 94, 0.18); color: #86efac; border-color: var(--green-pitch); }
+    .status-tag.declined, .status-tag.cancelled { background: rgba(239, 68, 68, 0.18); color: #fca5a5; border-color: var(--red-danger); }
+
+    .order-meta {
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.85rem;
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+
+    .order-meta strong { color: #cbd5e1; }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.45rem;
+      margin-top: auto;
+    }
+
+    .act-btn {
+      padding: 0.5rem 0.65rem;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #000;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .act-btn:hover { border-color: var(--purple-main); background: rgba(168, 85, 247, 0.15); }
+    .act-btn.green { border-color: rgba(34, 197, 94, 0.45); color: #86efac; }
+    .act-btn.red { border-color: rgba(239, 68, 68, 0.45); color: #fca5a5; }
+    .act-btn.amber { border-color: rgba(245, 158, 11, 0.45); color: #fcd34d; }
+    .act-btn.purple { border-color: rgba(168, 85, 247, 0.55); color: #d8b4fe; }
+
+    /* MAP ANNOUNCER GRID */
+    .maps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 850px) { .maps-grid { grid-template-columns: 1fr; } }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #121118;
+      border: 1px solid var(--green-pitch);
+      color: #fff;
+      padding: 0.9rem 1.3rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .toast.error { border-color: var(--red-danger); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <!-- ADMIN LOGIN OVERLAY -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <img src="images/Tsb Logo.png" alt="TSB Logo">
+      <h2>TSB Admin Panel</h2>
+      <p>Sign in with your staff admin password to manage stadium orders and map announcements.</p>
+
+      <div class="field-group">
+        <label>Bot API URL (Cloudflare Tunnel)</label>
+        <input type="text" class="tsb-input" id="apiUrlInput" value="https://cheers-prague-humanity-breaking.trycloudflare.com">
+      </div>
+
+      <div class="field-group">
+        <label>Your Staff / Builder Name</label>
+        <input type="text" class="tsb-input" id="staffNameInput" placeholder="e.g. Savage">
+      </div>
+
+      <div class="field-group">
+        <label>Admin Password</label>
+        <input type="password" class="tsb-input" id="adminPassInput" placeholder="Enter ADMIN_PASSWORD">
+      </div>
+
+      <div id="loginError" style="color:#fca5a5; font-size:0.85rem; margin-bottom:1rem; display:none;"></div>
+
+      <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">
+        <i class="fa-solid fa-lock-open"></i> Enter Control Panel
+      </button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <img src="images/Tsb Logo.png" alt="TSB Logo">
+      <div>
+        <h1>TSB <span>ADMIN PANEL</span></h1>
+        <div style="font-size:0.78rem; color:var(--text-muted);" id="botStatusText">Connecting...</div>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <span class="badge-pill badge-open" id="ordersStateBadge"><i class="fa-solid fa-circle"></i> Orders: OPEN</span>
+      <button class="btn-ghost" onclick="loadDashboard()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      <a href="index.html" class="btn-ghost" style="text-decoration:none;"><i class="fa-solid fa-globe"></i> Public Site</a>
+      <button class="btn-ghost" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- TOP STATS & OPEN/CLOSE CONTROL -->
+    <div class="top-grid">
+      <div class="panel-card">
+        <h2><i class="fa-solid fa-chart-simple" style="color:var(--purple-main);"></i> Order Queue Overview</h2>
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num" id="statActive">0</div>
+            <div class="stat-label">Active Queue</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="statUnpaid" style="color:var(--amber-warn);">0</div>
+            <div class="stat-label">Awaiting Pay</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="statBuilding" style="color:var(--blue-info);">0</div>
+            <div class="stat-label">Building</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="statCompleted" style="color:var(--green-pitch);">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <h2><i class="fa-solid fa-power-off" style="color:var(--green-pitch);"></i> Stadium Orders Open / Close</h2>
+        <div class="field-group">
+          <label>Closed Notice Message (shown when closed)</label>
+          <input type="text" class="tsb-input" id="closedReasonInput" placeholder="Stadium orders are currently CLOSED while builders catch up.">
+        </div>
+        <div style="display:flex; gap:0.7rem;">
+          <button class="btn-primary" style="flex:1; background:linear-gradient(135deg,#22c55e,#16a34a);" onclick="toggleOrdersState(true)">
+            <i class="fa-solid fa-door-open"></i> Open Orders
+          </button>
+          <button class="btn-primary" style="flex:1; background:linear-gradient(135deg,#ef4444,#b91c1c);" onclick="toggleOrdersState(false)">
+            <i class="fa-solid fa-door-closed"></i> Close Orders
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="switchTab('ordersTab', this)"><i class="fa-solid fa-list-check"></i> Manage Stadium Orders</button>
+      <button class="tab-btn" onclick="switchTab('mapsTab', this)"><i class="fa-solid fa-map"></i> Announce Public / Private Maps</button>
+    </div>
+
+    <!-- TAB 1: ORDERS MANAGER -->
+    <div id="ordersTab">
+      <div class="filter-bar">
+        <input type="text" class="tsb-input" id="searchOrderInput" style="max-width:300px;" placeholder="Search #Order, TSB-XXXXXX, or user..." oninput="renderOrders()">
+        <select class="tsb-select" id="statusFilterSelect" style="max-width:220px;" onchange="renderOrders()">
+          <option value="active">Active Orders Only</option>
+          <option value="all">All Orders</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Declined / Cancelled</option>
+        </select>
+      </div>
+
+      <div class="orders-grid" id="ordersGrid"></div>
+    </div>
+
+    <!-- TAB 2: ANNOUNCE MAPS -->
+    <div id="mapsTab" class="hidden">
+      <div class="maps-grid">
+        <div class="panel-card">
+          <h2><i class="fa-solid fa-earth-americas" style="color:var(--green-pitch);"></i> Announce Public Map</h2>
+          <div class="field-group">
+            <label>Map Name</label>
+            <input type="text" class="tsb-input" id="pubMapName" placeholder="e.g. TSB Arena v2">
+          </div>
+          <div class="field-group">
+            <label>Map Size</label>
+            <select class="tsb-select" id="pubMapSize">
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="XL">XL</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Map Code</label>
+            <input type="text" class="tsb-input" id="pubMapCode" placeholder="e.g. TSB-PUB-01">
+          </div>
+          <div class="field-group">
+            <label>Made By</label>
+            <input type="text" class="tsb-input" id="pubMapMaker" placeholder="e.g. Savage">
+          </div>
+          <div class="field-group">
+            <label>Image URL (Optional)</label>
+            <input type="text" class="tsb-input" id="pubMapImage" placeholder="https://...">
+          </div>
+          <button class="btn-primary" style="width:100%;" onclick="announceMap('public')">
+            <i class="fa-solid fa-bullhorn"></i> Post Public Map to Discord
+          </button>
+        </div>
+
+        <div class="panel-card">
+          <h2><i class="fa-solid fa-lock" style="color:var(--purple-main);"></i> Announce Private Stadium</h2>
+          <div class="field-group">
+            <label>Stadium Name</label>
+            <input type="text" class="tsb-input" id="privMapName" placeholder="e.g. Apex FC Ground">
+          </div>
+          <div class="field-group">
+            <label>Map Size</label>
+            <select class="tsb-select" id="privMapSize">
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="XL">XL</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Cost</label>
+            <input type="text" class="tsb-input" id="privMapCost" placeholder="e.g. 16 Credits">
+          </div>
+          <div class="field-group">
+            <label>Made By</label>
+            <input type="text" class="tsb-input" id="privMapMaker" placeholder="e.g. Delle">
+          </div>
+          <div class="field-group">
+            <label>Owned By</label>
+            <input type="text" class="tsb-input" id="privMapOwner" placeholder="e.g. Apex United FC">
+          </div>
+          <div class="field-group">
+            <label>Image URL (Optional)</label>
+            <input type="text" class="tsb-input" id="privMapImage" placeholder="https://...">
+          </div>
+          <button class="btn-primary" style="width:100%;" onclick="announceMap('private')">
+            <i class="fa-solid fa-bullhorn"></i> Post Private Stadium to Discord
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastBox"></div>
+
+  <script>
+    let allOrders = [];
+
+    function showToast(msg, isError = false) {
+      const box = document.getElementById('toastBox');
+      box.innerText = msg;
+      box.className = isError ? 'toast error' : 'toast';
+      box.style.display = 'block';
+      setTimeout(() => { box.style.display = 'none'; }, 4000);
+    }
+
+    function getAuth() {
+      return {
+        apiUrl: localStorage.getItem('tsb_api_url') || document.getElementById('apiUrlInput').value.trim().replace(/\/$/, ''),
+        password: localStorage.getItem('tsb_admin_pass') || '',
+        staffName: localStorage.getItem('tsb_staff_name') || 'TSB Staff',
+      };
+    }
+
+    async function loginAdmin() {
+      const apiUrl = document.getElementById('apiUrlInput').value.trim().replace(/\/$/, '');
+      const password = document.getElementById('adminPassInput').value.trim();
+      const staffName = document.getElementById('staffNameInput').value.trim() || 'TSB Staff';
+      const errBox = document.getElementById('loginError');
+
+      errBox.style.display = 'none';
+
+      try {
+        const res = await fetch(`${apiUrl}/api/admin/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': password,
+          },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed.');
+
+        localStorage.setItem('tsb_api_url', apiUrl);
+        localStorage.setItem('tsb_admin_pass', password);
+        localStorage.setItem('tsb_staff_name', staffName);
+
+        document.getElementById('loginScreen').classList.add('hidden');
+        loadDashboard();
+      } catch (err) {
+        errBox.innerText = err.message || 'Could not connect to bot API.';
+        errBox.style.display = 'block';
+      }
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem('tsb_admin_pass');
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    async function loadDashboard() {
+      const { apiUrl, password } = getAuth();
+      if (!password) return;
+
+      try {
+        const res = await fetch(`${apiUrl}/api/admin/dashboard`, {
+          headers: { 'x-admin-password': password },
+        });
+        if (res.status === 401) {
+          logoutAdmin();
+          return;
+        }
+        const data = await res.json();
+        allOrders = data.orders || [];
+
+        document.getElementById('botStatusText').innerText = `Connected: ${data.botTag} • Logged in as ${getAuth().staffName}`;
+        document.getElementById('closedReasonInput').value = data.closedReason || '';
+
+        const badge = document.getElementById('ordersStateBadge');
+        if (data.ordersOpen) {
+          badge.className = 'badge-pill badge-open';
+          badge.innerHTML = '<i class="fa-solid fa-circle"></i> Orders: OPEN';
+        } else {
+          badge.className = 'badge-pill badge-closed';
+          badge.innerHTML = '<i class="fa-solid fa-circle"></i> Orders: CLOSED';
+        }
+
+        updateStats();
+        renderOrders();
+      } catch (err) {
+        showToast('Failed to reach bot API. Check Cloudflare tunnel.', true);
+      }
+    }
+
+    function updateStats() {
+      const active = allOrders.filter(o => !['Completed', 'Declined', 'Cancelled'].includes(o.status));
+      const unpaid = active.filter(o => !o.paid);
+      const building = active.filter(o => o.status === 'Building');
+      const completed = allOrders.filter(o => o.status === 'Completed');
+
+      document.getElementById('statActive').innerText = active.length;
+      document.getElementById('statUnpaid').innerText = unpaid.length;
+      document.getElementById('statBuilding').innerText = building.length;
+      document.getElementById('statCompleted').innerText = completed.length;
+    }
+
+    function renderOrders() {
+      const grid = document.getElementById('ordersGrid');
+      const query = document.getElementById('searchOrderInput').value.trim().toLowerCase();
+      const filter = document.getElementById('statusFilterSelect').value;
+
+      const filtered = allOrders.filter(o => {
+        const isClosedStatus = ['Completed', 'Declined', 'Cancelled'].includes(o.status);
+        if (filter === 'active' && isClosedStatus) return false;
+        if (filter === 'completed' && o.status !== 'Completed') return false;
+        if (filter === 'cancelled' && !['Declined', 'Cancelled'].includes(o.status)) return false;
+
+        if (!query) return true;
+        return (
+          o.orderNumber.toLowerCase().includes(query) ||
+          (o.trackerNumber && o.trackerNumber.toLowerCase().includes(query)) ||
+          (o.discordUsername && o.discordUsername.toLowerCase().includes(query)) ||
+          (o.discordUserId && o.discordUserId.includes(query))
+        );
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="color:var(--text-muted);">No orders match this filter.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(o => {
+        const statusLower = (o.status || '').toLowerCase();
+        const tagClass = statusLower.includes('complete')
+          ? 'completed'
+          : statusLower.includes('declin') || statusLower.includes('cancel')
+          ? 'declined'
+          : '';
+
+        return `
+          <div class="order-card">
+            <div class="order-top">
+              <div>
+                <div class="order-id">#${o.orderNumber} <span class="tracker-code">${o.trackerNumber}</span></div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">
+                  User: <strong>${o.discordUsername || o.discordUserId}</strong> • via ${o.source || 'Discord'}
+                </div>
+              </div>
+              <span class="status-tag ${tagClass}">${o.status || 'Open'}</span>
+            </div>
+
+            <div class="order-meta">
+              <div><strong>Package:</strong> ${o.mapSize} — ${o.stand || 'N/A'} (${o.price || 'N/A'})</div>
+              <div><strong>Colors:</strong> ${o.colors || 'N/A'}</div>
+              <div><strong>Payment:</strong> ${o.paid ? 'Approved ✅' : 'Unpaid ⏳'} • <strong>Builder:</strong> ${o.builderTag || 'Unclaimed'}</div>
+              ${o.progressCode ? `<div><strong>Progress Code:</strong> <code>${o.progressCode}</code></div>` : ''}
+              ${o.finalCode ? `<div><strong>Final Access Code:</strong> <code>${o.finalCode}</code></div>` : ''}
+            </div>
+
+            <div class="action-buttons">
+              <button class="act-btn green" onclick="runOrderAction('${o.orderNumber}', 'accept')"><i class="fa-solid fa-check"></i> Accept</button>
+              <button class="act-btn red" onclick="runOrderAction('${o.orderNumber}', 'decline')"><i class="fa-solid fa-xmark"></i> Decline</button>
+              <button class="act-btn purple" onclick="runOrderAction('${o.orderNumber}', 'claim')"><i class="fa-solid fa-hand"></i> Claim Build</button>
+              <button class="act-btn amber" onclick="promptOrderAction('${o.orderNumber}', 'pay', 'Enter Player ID for customer payment:')"><i class="fa-solid fa-coins"></i> Send Pay ID</button>
+              <button class="act-btn green" onclick="runOrderAction('${o.orderNumber}', 'paid')"><i class="fa-solid fa-circle-check"></i> Mark Paid</button>
+              <button class="act-btn" onclick="promptStartOrComplete('${o.orderNumber}', 'start', 'Enter Progress Arena Code:')"><i class="fa-solid fa-hammer"></i> Start Build</button>
+              <button class="act-btn purple" onclick="promptStartOrComplete('${o.orderNumber}', 'complete', 'Enter Final Arena Access Code:')"><i class="fa-solid fa-flag-checkered"></i> Complete</button>
+              <button class="act-btn red" onclick="promptOrderAction('${o.orderNumber}', 'cancel', 'Cancellation reason:')"><i class="fa-solid fa-ban"></i> Cancel</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function runOrderAction(orderNumber, action, value = null, imageUrl = null) {
+      const { apiUrl, password, staffName } = getAuth();
+      try {
+        const res = await fetch(`${apiUrl}/api/admin/order-action`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': password,
+          },
+          body: JSON.stringify({ orderNumber, action, staffName, value, imageUrl }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Action failed');
+
+        showToast(`Order #${orderNumber} updated (${action}) & customer DMed!`);
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function promptOrderAction(orderNumber, action, promptText) {
+      const val = prompt(promptText);
+      if (val === null || !val.trim()) return;
+      runOrderAction(orderNumber, action, val.trim());
+    }
+
+    function promptStartOrComplete(orderNumber, action, promptText) {
+      const code = prompt(promptText);
+      if (code === null || !code.trim()) return;
+      const img = prompt('Optional screenshot image URL to attach in DM (or leave blank):');
+      runOrderAction(orderNumber, action, code.trim(), img ? img.trim() : null);
+    }
+
+    async function toggleOrdersState(ordersOpen) {
+      const { apiUrl, password } = getAuth();
+      const closedReason = document.getElementById('closedReasonInput').value.trim();
+
+      try {
+        const res = await fetch(`${apiUrl}/api/admin/toggle`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': password,
+          },
+          body: JSON.stringify({ ordersOpen, closedReason }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Toggle failed');
+
+        showToast(`Stadium orders are now ${ordersOpen ? 'OPEN' : 'CLOSED'}!`);
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function announceMap(type) {
+      const { apiUrl, password } = getAuth();
+      const payload =
+        type === 'public'
+          ? {
+              type: 'public',
+              name: document.getElementById('pubMapName').value.trim(),
+              mapSize: document.getElementById('pubMapSize').value,
+              mapCode: document.getElementById('pubMapCode').value.trim(),
+              maker: document.getElementById('pubMapMaker').value.trim(),
+              imageUrl: document.getElementById('pubMapImage').value.trim(),
+            }
+          : {
+              type: 'private',
+              name: document.getElementById('privMapName').value.trim(),
+              mapSize: document.getElementById('privMapSize').value,
+              cost: document.getElementById('privMapCost').value.trim(),
+              maker: document.getElementById('privMapMaker').value.trim(),
+              owner: document.getElementById('privMapOwner').value.trim(),
+              imageUrl: document.getElementById('privMapImage').value.trim(),
+            };
+
+      try {
+        const res = await fetch(`${apiUrl}/api/admin/announce-map`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': password,
+          },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to announce map');
+
+        showToast(`${type === 'public' ? 'Public' : 'Private'} map announced in Discord!`);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('ordersTab').classList.add('hidden');
+      document.getElementById('mapsTab').classList.add('hidden');
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    // Auto-login if saved in browser
+    if (localStorage.getItem('tsb_admin_pass')) {
+      document.getElementById('apiUrlInput').value = localStorage.getItem('tsb_api_url') || 'https://cheers-prague-humanity-breaking.trycloudflare.com';
+      document.getElementById('staffNameInput').value = localStorage.getItem('tsb_staff_name') || '';
+      document.getElementById('loginScreen').classList.add('hidden');
+      loadDashboard();
+    }
+  </script>
+</body>
+</html>
