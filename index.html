@@ -10,23 +10,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --purple-main: #a855f7;
-      --purple-glow: #9333ea;
-      --purple-light: #c084fc;
-      --green-pitch: #22c55e;
-      --green-glow: #16a34a;
-      --bg-dark: #08080a;
-      --bg-card: #121118;
-      --bg-card-hover: #1b1926;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-glow: rgba(168, 85, 247, 0.25);
+      --teal-main: #133532;
+      --teal-dark: #0d2523;
+      --teal-light: #1b4a46;
+      --cream-main: #F1EBDD;
+      --cream-muted: rgba(241, 235, 221, 0.78);
+      --orange-accent: #ED8137;
+      --orange-hover: #d86e26;
+      --border-glow: rgba(237, 129, 55, 0.35);
+      --border-cream: rgba(241, 235, 221, 0.22);
     }
 
     body.high-contrast {
-      --text-main: #ffffff;
-      --text-muted: #cbd5e1;
-      --border-glow: rgba(168, 85, 247, 0.6);
+      --cream-main: #ffffff;
+      --cream-muted: #F1EBDD;
+      --border-glow: rgba(237, 129, 55, 0.75);
     }
 
     body.disable-glow .bg-glow {
@@ -40,8 +38,8 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--teal-main);
+      color: var(--cream-main);
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
       line-height: 1.6;
@@ -60,9 +58,9 @@
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 60%);
+        radial-gradient(circle at 12% 18%, rgba(237, 129, 55, 0.14) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(241, 235, 221, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(13, 37, 35, 0.45) 0%, transparent 65%);
     }
 
     /* WELCOME GATE / LANDING MENU OVERLAY */
@@ -72,8 +70,8 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(4, 4, 6, 0.95);
-      backdrop-filter: blur(25px);
+      background: rgba(10, 29, 27, 0.94);
+      backdrop-filter: blur(22px);
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -89,33 +87,34 @@
     }
 
     .welcome-modal-box {
-      background: #121118;
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+      background: var(--cream-main);
+      border: 2px solid var(--orange-accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
       border-radius: 24px;
       max-width: 700px;
       width: 100%;
       padding: 3rem 2rem;
       text-align: center;
+      color: var(--teal-main);
     }
 
     .welcome-modal-box img {
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      border: 2px solid var(--purple-main);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      border: 3px solid var(--orange-accent);
+      box-shadow: 0 6px 20px rgba(237, 129, 55, 0.35);
       margin-bottom: 1rem;
     }
 
     .welcome-modal-box h2 {
       font-size: 2.4rem;
-      color: #ffffff;
+      color: var(--teal-main);
       margin-bottom: 0.5rem;
     }
 
     .welcome-modal-box p {
-      color: var(--text-muted);
+      color: rgba(19, 53, 50, 0.8);
       margin-bottom: 2.2rem;
       font-size: 1.1rem;
     }
@@ -127,8 +126,8 @@
     }
 
     .modal-option-card {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.25);
+      background: var(--teal-main);
+      border: 2px solid transparent;
       border-radius: 18px;
       padding: 2rem 1rem;
       cursor: pointer;
@@ -140,10 +139,10 @@
     }
 
     .modal-option-card:hover {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
-      border-color: var(--purple-main);
+      background: var(--teal-dark);
+      border-color: var(--orange-accent);
       transform: translateY(-6px);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 12px 28px rgba(19, 53, 50, 0.35);
     }
 
     .modal-option-card span.emoji-icon {
@@ -154,7 +153,7 @@
     .modal-option-card span.option-title {
       font-size: 1.15rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--cream-main);
     }
 
     /* HEADER & NAV */
@@ -163,8 +162,8 @@
       top: 0;
       z-index: 100;
       backdrop-filter: blur(16px);
-      background: rgba(8, 8, 10, 0.88);
-      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+      background: rgba(13, 37, 35, 0.92);
+      border-bottom: 1px solid var(--border-cream);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -186,19 +185,19 @@
       height: 45px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--purple-main);
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+      border: 2px solid var(--orange-accent);
+      box-shadow: 0 0 12px rgba(237, 129, 55, 0.4);
     }
 
     .brand-title {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--cream-main);
       letter-spacing: 0.5px;
     }
 
     .brand-title span {
-      color: var(--purple-main);
+      color: var(--orange-accent);
     }
 
     nav ul {
@@ -209,20 +208,19 @@
     }
 
     nav a {
-      color: var(--text-muted);
+      color: var(--cream-muted);
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
-      padding: 0.4rem 0.8rem;
+      padding: 0.4rem 0.85rem;
       border-radius: 12px;
       cursor: pointer;
     }
 
     nav a:hover, nav a.nav-active {
-      color: #ffffff;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+      color: var(--teal-dark);
+      background: var(--cream-main);
+      border: 1px solid var(--orange-accent);
     }
 
     .nav-actions {
@@ -232,10 +230,10 @@
     }
 
     .currency-select-nav {
-      background: #000000;
-      border: 1px solid var(--purple-main);
-      color: var(--text-main);
-      padding: 0.4rem 0.6rem;
+      background: var(--teal-dark);
+      border: 1px solid var(--orange-accent);
+      color: var(--cream-main);
+      padding: 0.45rem 0.7rem;
       border-radius: 14px;
       font-weight: 700;
       font-size: 0.85rem;
@@ -244,9 +242,9 @@
     }
 
     .btn-settings {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
+      background: rgba(241, 235, 221, 0.12);
+      border: 1px solid var(--border-cream);
+      color: var(--cream-main);
       padding: 0.5rem 0.9rem;
       border-radius: 20px;
       font-weight: 700;
@@ -256,13 +254,13 @@
     }
 
     .btn-settings:hover {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: #ffffff;
+      background: var(--cream-main);
+      color: var(--teal-main);
     }
 
     .btn-discord {
-      background: linear-gradient(135deg, #5865F2, #4752C4);
-      color: white;
+      background: linear-gradient(135deg, var(--orange-accent), var(--orange-hover));
+      color: #ffffff;
       padding: 0.6rem 1.3rem;
       border-radius: 30px;
       text-decoration: none;
@@ -270,7 +268,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      box-shadow: 0 0 15px rgba(88, 101, 242, 0.45);
+      box-shadow: 0 4px 16px rgba(237, 129, 55, 0.4);
       transition: all 0.3s ease;
       border: none;
       cursor: pointer;
@@ -279,7 +277,7 @@
 
     .btn-discord:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(88, 101, 242, 0.75);
+      box-shadow: 0 6px 24px rgba(237, 129, 55, 0.65);
     }
 
     .btn-discord:disabled {
@@ -292,11 +290,11 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(88, 101, 242, 0.16);
-      border: 1px solid #5865F2;
+      background: var(--cream-main);
+      border: 2px solid var(--orange-accent);
       padding: 0.35rem 0.85rem 0.35rem 0.4rem;
       border-radius: 30px;
-      color: #fff;
+      color: var(--teal-main);
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
@@ -334,30 +332,35 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid var(--purple-main);
+      background: rgba(241, 235, 221, 0.12);
+      border: 1px solid var(--orange-accent);
       padding: 0.4rem 1rem;
       border-radius: 20px;
-      color: var(--purple-light);
+      color: var(--cream-main);
       font-size: 0.85rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
+    }
+
+    .hero-badge i {
+      color: var(--orange-accent);
     }
 
     .hero h1 {
       font-size: 3.5rem;
       line-height: 1.1;
       margin-bottom: 1.5rem;
+      color: var(--cream-main);
     }
 
     .hero h1 span.highlight-purple {
-      color: var(--purple-main);
-      text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      color: var(--orange-accent);
+      text-shadow: 0 0 24px rgba(237, 129, 55, 0.35);
     }
 
     .hero p {
       font-size: 1.2rem;
-      color: var(--text-muted);
+      color: var(--cream-muted);
       margin-bottom: 2.5rem;
     }
 
@@ -369,9 +372,9 @@
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: white;
+      background: var(--cream-main);
+      border: 1px solid var(--cream-main);
+      color: var(--teal-main);
       padding: 0.8rem 1.8rem;
       border-radius: 30px;
       text-decoration: none;
@@ -381,8 +384,9 @@
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--purple-light);
+      background: transparent;
+      color: var(--cream-main);
+      border-color: var(--orange-accent);
     }
 
     section {
@@ -399,10 +403,11 @@
     .section-title h2 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
+      color: var(--cream-main);
     }
 
     .section-title p {
-      color: var(--text-muted);
+      color: var(--cream-muted);
     }
 
     .portfolio-grid {
@@ -416,26 +421,28 @@
     }
 
     .stadium-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
+      background: var(--cream-main);
+      color: var(--teal-main);
+      border: 2px solid transparent;
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     .stadium-card:hover {
       transform: translateY(-6px);
-      border-color: var(--purple-main);
-      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+      border-color: var(--orange-accent);
+      box-shadow: 0 14px 32px rgba(237, 129, 55, 0.28);
     }
 
     .stadium-img-wrapper {
       position: relative;
       width: 100%;
       height: 220px;
-      background: #1a1a24;
+      background: var(--teal-dark);
       overflow: hidden;
     }
 
@@ -446,7 +453,8 @@
       transition: transform 0.5s ease;
     }
 
-    .stadium-card:hover .stadium-img {
+    .stadium-card:hover .stadium-img,
+    .for-sale-card:hover .stadium-img {
       transform: scale(1.05);
     }
 
@@ -454,14 +462,13 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(8, 8, 10, 0.85);
-      border: 1px solid var(--green-pitch);
-      color: var(--green-pitch);
-      font-size: 0.75rem;
+      background: var(--teal-main);
+      border: 1px solid var(--orange-accent);
+      color: var(--cream-main);
+      font-size: 0.78rem;
       font-weight: 700;
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
-      backdrop-filter: blur(4px);
     }
 
     .stadium-content {
@@ -474,18 +481,19 @@
     .stadium-content h3 {
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
+      color: var(--teal-main);
     }
 
     .stadium-content p {
-      color: var(--text-muted);
+      color: rgba(19, 53, 50, 0.82);
       font-size: 0.95rem;
       margin-bottom: 1rem;
     }
 
     .builder-subsection {
       margin-bottom: 4rem;
-      background: rgba(18, 17, 24, 0.5);
-      border: 1px solid rgba(168, 85, 247, 0.15);
+      background: var(--teal-dark);
+      border: 1px solid var(--border-cream);
       border-radius: 20px;
       padding: 2rem;
     }
@@ -496,41 +504,43 @@
       gap: 1rem;
       margin-bottom: 2rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+      border-bottom: 1px solid var(--border-cream);
     }
 
     .builder-header i {
       font-size: 1.8rem;
-      color: var(--purple-main);
+      color: var(--orange-accent);
     }
 
     .builder-header h3 {
       font-size: 1.8rem;
-      color: #ffffff;
+      color: var(--cream-main);
     }
 
     .for-sale-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(34, 197, 94, 0.3);
+      background: var(--cream-main);
+      color: var(--teal-main);
+      border: 2px solid transparent;
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     .for-sale-card:hover {
       transform: translateY(-6px);
-      border-color: var(--green-pitch);
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
+      border-color: var(--orange-accent);
+      box-shadow: 0 14px 32px rgba(237, 129, 55, 0.32);
     }
 
     .sale-badge {
       position: absolute;
       top: 12px;
       left: 12px;
-      background: var(--green-pitch);
-      color: #000000;
+      background: var(--orange-accent);
+      color: #ffffff;
       font-size: 0.75rem;
       font-weight: 800;
       padding: 0.3rem 0.8rem;
@@ -546,7 +556,7 @@
     }
 
     .sale-features li {
-      color: var(--text-muted);
+      color: rgba(19, 53, 50, 0.88);
       font-size: 0.88rem;
       margin-bottom: 0.4rem;
       display: flex;
@@ -555,14 +565,14 @@
     }
 
     .sale-features li i {
-      color: var(--green-pitch);
-      font-size: 0.8rem;
+      color: var(--orange-accent);
+      font-size: 0.85rem;
     }
 
     .sale-price-box {
       margin-top: auto;
       padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(19, 53, 50, 0.15);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -571,17 +581,18 @@
     .sale-price {
       font-size: 1.4rem;
       font-weight: 800;
-      color: var(--green-pitch);
+      color: var(--teal-main);
     }
 
+    /* MODALS */
     .admin-modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(4, 4, 6, 0.92);
-      backdrop-filter: blur(20px);
+      background: rgba(10, 29, 27, 0.9);
+      backdrop-filter: blur(18px);
       z-index: 10000;
       display: flex;
       align-items: center;
@@ -597,9 +608,10 @@
     }
 
     .admin-modal-box {
-      background: #121118;
-      border: 1px solid var(--purple-main);
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
+      background: var(--cream-main);
+      color: var(--teal-main);
+      border: 2px solid var(--orange-accent);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
       border-radius: 20px;
       max-width: 520px;
       width: 100%;
@@ -612,12 +624,12 @@
 
     .admin-modal-box h3 {
       font-size: 1.8rem;
-      color: #ffffff;
+      color: var(--teal-main);
       margin-bottom: 0.5rem;
     }
 
     .admin-modal-box p {
-      color: var(--text-muted);
+      color: rgba(19, 53, 50, 0.8);
       font-size: 0.9rem;
       margin-bottom: 1.2rem;
     }
@@ -626,24 +638,24 @@
       position: absolute;
       top: 1rem;
       right: 1.2rem;
-      color: var(--text-muted);
-      font-size: 1.2rem;
+      color: var(--teal-main);
+      font-size: 1.25rem;
       cursor: pointer;
     }
 
     .close-modal-btn:hover {
-      color: #ffffff;
+      color: var(--orange-accent);
     }
 
     .order-summary-box {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      border: 1px solid var(--orange-accent);
       border-radius: 12px;
       padding: 1rem;
       text-align: left;
       margin-bottom: 1rem;
       font-size: 0.9rem;
-      color: var(--text-main);
+      color: var(--cream-main);
       white-space: pre-wrap;
       line-height: 1.5;
       max-height: 180px;
@@ -654,12 +666,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(88, 101, 242, 0.14);
-      border: 1px solid #5865F2;
+      background: var(--teal-main);
+      border: 1px solid var(--orange-accent);
       border-radius: 12px;
       padding: 0.75rem 1rem;
       margin-bottom: 1rem;
       text-align: left;
+      color: var(--cream-main);
     }
 
     .verified-user-info {
@@ -672,6 +685,7 @@
       width: 38px;
       height: 38px;
       border-radius: 50%;
+      border: 2px solid var(--orange-accent);
     }
 
     .modal-field-group {
@@ -684,7 +698,7 @@
       font-size: 0.85rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
-      color: #ffffff;
+      color: var(--teal-main);
     }
 
     .modal-colors-row {
@@ -697,10 +711,10 @@
     .tsb-select {
       width: 100%;
       padding: 0.65rem 0.7rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      border: 1px solid rgba(237, 129, 55, 0.45);
       border-radius: 10px;
-      color: #ffffff;
+      color: var(--cream-main);
       font-family: inherit;
       font-size: 0.9rem;
       outline: none;
@@ -714,9 +728,9 @@
     }
 
     .api-status-banner {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid var(--green-pitch);
-      color: var(--green-pitch);
+      background: rgba(19, 53, 50, 0.12);
+      border: 1px solid var(--teal-main);
+      color: var(--teal-main);
       padding: 0.85rem;
       border-radius: 12px;
       font-size: 0.9rem;
@@ -726,9 +740,9 @@
     }
 
     .api-status-banner.error {
-      background: rgba(239, 68, 68, 0.12);
-      border-color: #ef4444;
-      color: #fca5a5;
+      background: rgba(237, 129, 55, 0.18);
+      border-color: var(--orange-accent);
+      color: #7c2d12;
     }
 
     /* SETTINGS MODAL TOGGLES */
@@ -743,20 +757,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.25);
+      background: var(--teal-main);
+      border: 1px solid rgba(237, 129, 55, 0.35);
       padding: 0.9rem 1rem;
       border-radius: 12px;
     }
 
     .setting-info h4 {
       font-size: 0.95rem;
-      color: #ffffff;
+      color: var(--cream-main);
     }
 
     .setting-info p {
       font-size: 0.8rem;
       margin: 0;
+      color: var(--cream-muted);
     }
 
     .switch {
@@ -776,7 +791,7 @@
       position: absolute;
       cursor: pointer;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #27272a;
+      background-color: var(--teal-dark);
       transition: 0.3s;
       border-radius: 24px;
     }
@@ -788,13 +803,13 @@
       width: 18px;
       left: 3px;
       bottom: 3px;
-      background-color: white;
+      background-color: var(--cream-main);
       transition: 0.3s;
       border-radius: 50%;
     }
 
     input:checked + .slider {
-      background-color: var(--purple-main);
+      background-color: var(--orange-accent);
     }
 
     input:checked + .slider:before {
@@ -802,13 +817,15 @@
     }
 
     .calculator-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
+      background: var(--cream-main);
+      color: var(--teal-main);
+      border: 2px solid var(--orange-accent);
       border-radius: 20px;
       padding: 2.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
     }
 
     @media (max-width: 850px) {
@@ -823,7 +840,7 @@
       display: block;
       font-weight: 700;
       margin-bottom: 0.75rem;
-      color: #ffffff;
+      color: var(--teal-main);
       font-size: 1rem;
     }
 
@@ -831,15 +848,15 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      border: 1px solid rgba(19, 53, 50, 0.2);
       padding: 0.5rem;
       border-radius: 14px;
     }
 
     .option-btn {
       background: transparent;
-      color: #ffffff;
+      color: var(--cream-main);
       border: none;
       padding: 0.75rem 1rem;
       border-radius: 10px;
@@ -855,14 +872,14 @@
     }
 
     .option-btn:hover {
-      background: rgba(168, 85, 247, 0.15);
-      color: #ffffff;
+      background: rgba(241, 235, 221, 0.12);
+      color: var(--cream-main);
     }
 
     .option-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
+      background: linear-gradient(135deg, var(--orange-accent), var(--orange-hover));
       color: #ffffff;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 4px 14px rgba(237, 129, 55, 0.45);
       font-weight: 700;
     }
 
@@ -872,8 +889,9 @@
     }
 
     .calc-summary {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.2);
+      background: var(--teal-main);
+      color: var(--cream-main);
+      border: 1px solid var(--orange-accent);
       border-radius: 14px;
       padding: 2rem;
       display: flex;
@@ -884,7 +902,7 @@
     .calc-price {
       font-size: 2.2rem;
       font-weight: 800;
-      color: var(--green-pitch);
+      color: var(--orange-accent);
       margin: 1rem 0;
     }
 
@@ -896,20 +914,28 @@
       display: block;
       font-weight: 700;
       margin-bottom: 0.5rem;
-      color: #ffffff;
+      color: var(--teal-main);
     }
 
     .tsb-input, .tsb-textarea {
       width: 100%;
       padding: 0.85rem 1rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      border: 1px solid rgba(19, 53, 50, 0.25);
       border-radius: 12px;
-      color: #ffffff;
+      color: var(--cream-main);
       font-family: inherit;
       font-size: 1rem;
       outline: none;
       transition: border-color 0.3s ease;
+    }
+
+    .tsb-input::placeholder {
+      color: var(--cream-muted);
+    }
+
+    .tsb-input:focus {
+      border-color: var(--orange-accent);
     }
 
     .color-pickers-grid {
@@ -920,14 +946,14 @@
 
     .color-picker-item label {
       font-size: 0.85rem;
-      color: var(--text-muted);
+      color: rgba(19, 53, 50, 0.85);
     }
 
     .tsb-color-input {
       width: 100%;
       height: 45px;
-      background: #000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      border: 1px solid rgba(19, 53, 50, 0.3);
       border-radius: 10px;
       cursor: pointer;
       padding: 0.2rem;
@@ -941,8 +967,9 @@
     }
 
     .kit-design-card {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-main);
+      color: var(--cream-main);
+      border: 2px solid transparent;
       border-radius: 12px;
       padding: 1rem;
       text-align: center;
@@ -950,19 +977,32 @@
       transition: all 0.25s ease;
     }
 
+    .kit-design-card i {
+      color: var(--orange-accent);
+      margin-bottom: 0.35rem;
+    }
+
     .kit-design-card.active {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(147, 51, 234, 0.15));
-      border-color: var(--purple-main);
+      background: var(--teal-dark);
+      border-color: var(--orange-accent);
+      box-shadow: 0 4px 14px rgba(237, 129, 55, 0.35);
     }
 
     .upload-zone {
-      background: #000000;
-      border: 1px dashed rgba(168, 85, 247, 0.4);
+      background: var(--teal-main);
+      color: var(--cream-main);
+      border: 2px dashed var(--orange-accent);
       border-radius: 12px;
       padding: 1.2rem;
       text-align: center;
       position: relative;
       cursor: pointer;
+    }
+
+    .upload-zone i {
+      color: var(--orange-accent);
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .upload-zone input[type="file"] {
@@ -978,7 +1018,8 @@
       gap: 0.5rem;
       margin-top: 0.6rem;
       font-size: 0.85rem;
-      color: var(--green-pitch);
+      font-weight: 700;
+      color: var(--teal-main);
     }
 
     .image-preview-container {
@@ -999,14 +1040,14 @@
       height: 100%;
       object-fit: cover;
       border-radius: 8px;
-      border: 1px solid var(--purple-main);
+      border: 2px solid var(--orange-accent);
     }
 
     .delete-thumb-btn {
       position: absolute;
       top: -6px;
       right: -6px;
-      background: #ef4444;
+      background: var(--orange-accent);
       color: white;
       border: none;
       border-radius: 50%;
@@ -1025,9 +1066,9 @@
     }
 
     .part-tab-btn {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: var(--text-muted);
+      background: var(--teal-dark);
+      border: 1px solid var(--border-cream);
+      color: var(--cream-muted);
       padding: 0.4rem 0.8rem;
       border-radius: 8px;
       font-size: 0.8rem;
@@ -1037,9 +1078,9 @@
     }
 
     .part-tab-btn.active {
-      background: var(--purple-main);
+      background: var(--orange-accent);
       color: #ffffff;
-      border-color: var(--purple-main);
+      border-color: var(--orange-accent);
     }
 
     /* KIT VISUALIZER GRID & DYNAMIC MASK STYLES */
@@ -1052,8 +1093,8 @@
     }
 
     .kit-part-card {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: var(--teal-dark);
+      border: 1px solid var(--border-cream);
       border-radius: 12px;
       padding: 0.6rem;
       text-align: center;
@@ -1063,7 +1104,7 @@
     .kit-part-card span {
       display: block;
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--cream-main);
       margin-top: 0.4rem;
       font-weight: 600;
     }
@@ -1072,14 +1113,14 @@
       width: 100%;
       height: 80px;
       border-radius: 6px;
-      background-color: var(--part-color, #a855f7);
+      background-color: var(--part-color, #ED8137);
       -webkit-mask-size: contain;
       mask-size: contain;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
       -webkit-mask-position: center;
       mask-position: center;
-      border: 1px solid rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(241, 235, 221, 0.15);
       transition: background-color 0.2s ease;
     }
 
@@ -1117,9 +1158,9 @@
     .irl-btn {
       flex: 1;
       padding: 0.75rem;
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #ffffff;
+      background: var(--teal-main);
+      border: 1px solid rgba(19, 53, 50, 0.25);
+      color: var(--cream-main);
       border-radius: 12px;
       font-weight: 700;
       cursor: pointer;
@@ -1127,8 +1168,9 @@
     }
 
     .irl-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      border-color: var(--purple-main);
+      background: linear-gradient(135deg, var(--orange-accent), var(--orange-hover));
+      border-color: var(--orange-accent);
+      color: #ffffff;
     }
 
     .time-slot-grid {
@@ -1139,9 +1181,9 @@
     }
 
     .slot-btn {
-      background: #000000;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #ffffff;
+      background: var(--teal-main);
+      border: 1px solid rgba(19, 53, 50, 0.25);
+      color: var(--cream-main);
       padding: 0.6rem;
       border-radius: 10px;
       font-weight: 700;
@@ -1150,15 +1192,17 @@
     }
 
     .slot-btn.active {
-      background: linear-gradient(135deg, var(--purple-main), var(--purple-glow));
-      border-color: var(--purple-main);
+      background: linear-gradient(135deg, var(--orange-accent), var(--orange-hover));
+      border-color: var(--orange-accent);
+      color: #ffffff;
     }
 
     footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--border-cream);
+      background: var(--teal-dark);
       padding: 3rem 2rem;
       text-align: center;
-      color: var(--text-muted);
+      color: var(--cream-muted);
       position: relative;
       z-index: 1;
     }
@@ -1198,7 +1242,7 @@
   <div class="admin-modal-overlay hidden" id="orderConfirmModal">
     <div class="admin-modal-box">
       <span class="close-modal-btn" onclick="closeOrderConfirmModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--green-pitch); margin-bottom: 0.8rem;"></i>
+      <i class="fa-solid fa-cart-shopping" style="font-size: 2.2rem; color: var(--orange-accent); margin-bottom: 0.8rem;"></i>
       <h3>Confirm Your Order</h3>
       <p>Sign in with Discord so TSB Bot can verify your account and DM your tracker number</p>
 
@@ -1217,8 +1261,8 @@
           <div class="verified-user-info">
             <img id="modalUserAvatar" src="" alt="Avatar">
             <div>
-              <div style="font-weight: 800; color: #fff;" id="modalUserName"></div>
-              <div style="font-size: 0.78rem; color: #86efac;"><i class="fa-solid fa-circle-check"></i> Verified Discord Account</div>
+              <div style="font-weight: 800; color: var(--cream-main);" id="modalUserName"></div>
+              <div style="font-size: 0.78rem; color: var(--orange-accent);"><i class="fa-solid fa-circle-check"></i> Verified Discord Account</div>
             </div>
           </div>
           <button onclick="logoutDiscord()" class="btn-secondary" style="padding: 0.35rem 0.7rem; font-size: 0.78rem;">Switch</button>
@@ -1235,13 +1279,13 @@
 
         <div class="coupon-container">
           <input type="text" class="tsb-input" id="couponInput" placeholder="Promo Code (e.g. TSB10)" style="padding: 0.6rem;">
-          <button onclick="applyCoupon()" class="btn-secondary" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem;">Apply</button>
+          <button onclick="applyCoupon()" class="btn-secondary" style="padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; background: var(--teal-main); color: var(--cream-main);">Apply</button>
         </div>
         <div id="couponMessage" style="font-size: 0.8rem; margin-bottom: 0.8rem; text-align: left; display: none;"></div>
 
         <div class="api-status-banner" id="apiStatusBanner"></div>
 
-        <button id="sendOrderBtn" onclick="dispatchFinalOrder()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem; background: linear-gradient(135deg, #22c55e, #16a34a);">
+        <button id="sendOrderBtn" onclick="dispatchFinalOrder()" class="btn-discord" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
           <i class="fa-solid fa-paper-plane"></i> Confirm & Send Order
         </button>
       </div>
@@ -1252,14 +1296,14 @@
   <div class="admin-modal-overlay hidden" id="settingsModal">
     <div class="admin-modal-box">
       <span class="close-modal-btn" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></span>
-      <i class="fa-solid fa-gear" style="font-size: 2.2rem; color: var(--purple-main); margin-bottom: 1rem;"></i>
+      <i class="fa-solid fa-gear" style="font-size: 2.2rem; color: var(--orange-accent); margin-bottom: 1rem;"></i>
       <h3>Website Preferences</h3>
       <p>Adjust graphics, controls, and display settings</p>
 
       <div class="settings-list">
         <div class="setting-row">
           <div class="setting-info">
-            <h4>Dynamic Neon Glow</h4>
+            <h4>Dynamic Ambient Glow</h4>
             <p>Toggle background lighting effects</p>
           </div>
           <label class="switch">
@@ -1589,9 +1633,9 @@
 
         <div class="calc-summary">
           <div>
-            <h3 style="color: #ffffff;">Estimated Total</h3>
+            <h3 style="color: var(--cream-main);">Estimated Total</h3>
             <div class="calc-price" id="total-price">14 VRFS Credits</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
+            <p style="font-size: 0.85rem; color: var(--cream-muted);">
               *Rate: 1 Credit = 7p (£0.07) or $0.09 USD. Discord login required to place order.
             </p>
           </div>
@@ -1661,19 +1705,19 @@
             <div class="color-pickers-grid">
               <div class="color-picker-item">
                 <label>Shirt Primary</label>
-                <input type="color" class="tsb-color-input" id="color-shirt-primary" value="#a855f7" onchange="updateKitPartColors()">
+                <input type="color" class="tsb-color-input" id="color-shirt-primary" value="#ED8137" onchange="updateKitPartColors()">
               </div>
               <div class="color-picker-item">
                 <label>Shirt Secondary</label>
-                <input type="color" class="tsb-color-input" id="color-shirt-secondary" value="#ffffff" onchange="updateKitPartColors()">
+                <input type="color" class="tsb-color-input" id="color-shirt-secondary" value="#F1EBDD" onchange="updateKitPartColors()">
               </div>
               <div class="color-picker-item">
                 <label>Shorts Color</label>
-                <input type="color" class="tsb-color-input" id="color-shorts" value="#08080a" onchange="updateKitPartColors()">
+                <input type="color" class="tsb-color-input" id="color-shorts" value="#133532" onchange="updateKitPartColors()">
               </div>
               <div class="color-picker-item">
                 <label>Back Number Color</label>
-                <input type="color" class="tsb-color-input" id="color-number" value="#22c55e" onchange="updateKitPartColors()">
+                <input type="color" class="tsb-color-input" id="color-number" value="#F1EBDD" onchange="updateKitPartColors()">
               </div>
             </div>
           </div>
@@ -1682,7 +1726,7 @@
             <label>5. Upload Logo / Sponsor Reference Images</label>
             <div class="upload-zone" id="uploadDropZone">
               <i class="fa-solid fa-cloud-arrow-up"></i>
-              <p>Click or drag & drop PNG/JPG image files here</p>
+              <p style="color: var(--cream-main); margin: 0;">Click or drag & drop PNG/JPG image files here</p>
               <input type="file" id="kit-image-upload" accept="image/png, image/jpeg, image/webp" multiple onchange="handleImageUpload(event)">
             </div>
             
@@ -1693,7 +1737,7 @@
 
         <div class="calc-summary">
           <div>
-            <h4 style="color:#ffffff; margin-bottom: 0.5rem; font-size: 0.95rem; text-align: center;">Live Kit Parts Preview</h4>
+            <h4 style="color: var(--cream-main); margin-bottom: 0.5rem; font-size: 0.95rem; text-align: center;">Live Kit Parts Preview</h4>
             
             <div class="part-filter-tabs">
               <button type="button" class="part-tab-btn active" onclick="filterKitParts('all', this)">All Parts</button>
@@ -1728,7 +1772,7 @@
             </div>
             
             <div class="calc-price" style="font-size: 1.6rem; margin: 0.8rem 0 0.4rem;">Custom Kit Package</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
+            <p style="font-size: 0.85rem; color: var(--cream-muted);">
               Includes HD textured VRFS shirt files, vector badge graphics, and pitch board placement.
             </p>
           </div>
@@ -1791,9 +1835,9 @@
 
         <div class="calc-summary">
           <div>
-            <h3 style="color: #ffffff;">Stream Booking Details</h3>
+            <h3 style="color: var(--cream-main);">Stream Booking Details</h3>
             <div class="calc-price" style="font-size: 1.8rem; margin: 0.8rem 0;">Live Broadcast Booking</div>
-            <p style="font-size: 0.9rem; color: var(--text-muted);">
+            <p style="font-size: 0.9rem; color: var(--cream-muted);">
               Includes multi-cam observer angles, live commentary booth, animated scoreboard, and HD VOD archive.
             </p>
           </div>
@@ -1820,7 +1864,7 @@
 
     function populateColorDropdowns() {
       const ids = ['calcColor1', 'calcColor2', 'calcColor3', 'modalColor1', 'modalColor2', 'modalColor3'];
-      const defaults = ['Purple', 'White', 'Black'];
+      const defaults = ['Orange', 'White', 'Green'];
       ids.forEach((id, idx) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -2059,11 +2103,13 @@
       if (code === 'TSB10') {
         appliedDiscountPercentage = 10;
         msgBox.style.display = 'block';
-        msgBox.style.color = 'var(--green-pitch)';
+        msgBox.style.color = '#133532';
+        msgBox.style.fontWeight = '700';
         msgBox.innerText = '✓ Promo Code Applied: 10% Discount Applied!';
       } else {
         msgBox.style.display = 'block';
-        msgBox.style.color = '#ef4444';
+        msgBox.style.color = '#b91c1c';
+        msgBox.style.fontWeight = '700';
         msgBox.innerText = '✕ Invalid Promo Code';
       }
     }
